@@ -389,7 +389,7 @@
     <main class="flex-1 p-4 sm:p-6 lg:p-8 min-w-0 overflow-x-hidden">
 
       <!-- Top Single Google Ad Banner -->
-      <div id="ad-container-top" class="mb-6 w-full overflow-hidden rounded-2xl bg-slate-900/60 border border-slate-800/80 p-2 min-h-[90px] flex items-center justify-center text-center">
+      <div id="ad-container-top" class="w-full overflow-hidden text-center transition-all" style="display: none;">
         <ins class="adsbygoogle"
              style="display:block"
              data-ad-client="ca-pub-6854824605420161"
@@ -1416,7 +1416,7 @@
       </section>
 
       <!-- Bottom Single Google Ad Banner -->
-      <div id="ad-container-bottom" class="mt-8 w-full overflow-hidden rounded-2xl bg-slate-900/60 border border-slate-800/80 p-2 min-h-[100px] flex items-center justify-center text-center">
+      <div id="ad-container-bottom" class="w-full overflow-hidden text-center transition-all" style="display: none;">
         <ins class="adsbygoogle"
              style="display:block"
              data-ad-client="ca-pub-6854824605420161"
@@ -1874,8 +1874,40 @@
       }
     }
 
+    /* ==========================================================================
+       AUTO-HIDE UNFILLED AD CONTAINERS (Zero Blank Space / Zero Empty Boxes)
+       ========================================================================== */
+    function initAdWatcher() {
+      const checkAd = (containerId) => {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        const ins = container.querySelector('ins.adsbygoogle');
+        if (!ins) return;
+
+        const iframe = ins.querySelector('iframe');
+        const isFilled = ins.getAttribute('data-ad-status') === 'filled' || (iframe && iframe.offsetHeight > 10);
+
+        if (isFilled) {
+          container.style.display = 'block';
+          ins.style.display = 'block';
+        } else {
+          container.style.display = 'none';
+          ins.style.display = 'none';
+        }
+      };
+
+      const pollAds = () => {
+        checkAd('ad-container-top');
+        checkAd('ad-container-bottom');
+      };
+
+      pollAds();
+      setInterval(pollAds, 1000);
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       initThemeManager();
+      initAdWatcher();
       setLanguage(currentLang);
       initQRGenerator();
       initQRScanner();
