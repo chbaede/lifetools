@@ -2992,7 +2992,8 @@
        ========================================================================== */
     function initWorldClock() {
       const userTz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/Berlin';
-      document.getElementById('local-tz-badge').textContent = `${currentLang === 'ko' ? '현재 위치' : 'Location'}: ${userTz}`;
+      const badge = document.getElementById('local-tz-badge');
+      if (badge) badge.textContent = `${currentLang === 'ko' ? '현재 위치' : 'Location'}: ${userTz}`;
 
       const fromSelect = document.getElementById('tz-from-select');
       const toSelect = document.getElementById('tz-to-select');
@@ -3008,50 +3009,58 @@
 
       let currentMode = 'time';
 
-      const fromOption = Array.from(fromSelect.options).find(o => o.value === userTz);
-      if (fromOption) {
-        fromSelect.value = userTz;
-      } else {
-        const opt = new Option(`${userTz} (Local)`, userTz, true, true);
-        fromSelect.add(opt, 0);
+      if (fromSelect) {
+        const fromOption = Array.from(fromSelect.options).find(o => o.value === userTz);
+        if (fromOption) {
+          fromSelect.value = userTz;
+        } else {
+          const opt = new Option(`${userTz} (Local)`, userTz, true, true);
+          fromSelect.add(opt, 0);
+        }
       }
 
-      if (userTz === 'Europe/Berlin') {
-        toSelect.value = 'Asia/Seoul';
-      } else if (userTz === 'Asia/Seoul') {
-        toSelect.value = 'Europe/Berlin';
+      if (toSelect) {
+        if (userTz === 'Europe/Berlin') {
+          toSelect.value = 'Asia/Seoul';
+        } else if (userTz === 'Asia/Seoul') {
+          toSelect.value = 'Europe/Berlin';
+        }
       }
 
       function ensureInputsValue() {
-        if (!timeInput.value) timeInput.value = '14:30';
-        if (!datetimeInput.value) {
+        if (timeInput && !timeInput.value) timeInput.value = '14:30';
+        if (datetimeInput && !datetimeInput.value) {
           const nowLocal = new Date();
           datetimeInput.value = new Date(nowLocal.getTime() - (nowLocal.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
         }
       }
       ensureInputsValue();
 
-      modeTimeBtn.addEventListener('click', (e) => {
-        if (e) e.preventDefault();
-        currentMode = 'time';
-        modeTimeBtn.className = 'px-3 py-1 rounded-lg font-semibold bg-cyan-600 text-white transition cursor-pointer';
-        modeDateTimeBtn.className = 'px-3 py-1 rounded-lg font-semibold text-slate-400 hover:text-white transition cursor-pointer';
-        timeGroup.classList.remove('hidden');
-        datetimeGroup.classList.add('hidden');
-        ensureInputsValue();
-        convertTimezone();
-      });
+      if (modeTimeBtn) {
+        modeTimeBtn.addEventListener('click', (e) => {
+          if (e) e.preventDefault();
+          currentMode = 'time';
+          modeTimeBtn.className = 'px-3 py-1 rounded-lg font-semibold bg-cyan-600 text-white transition cursor-pointer';
+          if (modeDateTimeBtn) modeDateTimeBtn.className = 'px-3 py-1 rounded-lg font-semibold text-slate-400 hover:text-white transition cursor-pointer';
+          if (timeGroup) timeGroup.classList.remove('hidden');
+          if (datetimeGroup) datetimeGroup.classList.add('hidden');
+          ensureInputsValue();
+          convertTimezone();
+        });
+      }
 
-      modeDateTimeBtn.addEventListener('click', (e) => {
-        if (e) e.preventDefault();
-        currentMode = 'datetime';
-        modeDateTimeBtn.className = 'px-3 py-1 rounded-lg font-semibold bg-cyan-600 text-white transition cursor-pointer';
-        modeTimeBtn.className = 'px-3 py-1 rounded-lg font-semibold text-slate-400 hover:text-white transition cursor-pointer';
-        datetimeGroup.classList.remove('hidden');
-        timeGroup.classList.add('hidden');
-        ensureInputsValue();
-        convertTimezone();
-      });
+      if (modeDateTimeBtn) {
+        modeDateTimeBtn.addEventListener('click', (e) => {
+          if (e) e.preventDefault();
+          currentMode = 'datetime';
+          modeDateTimeBtn.className = 'px-3 py-1 rounded-lg font-semibold bg-cyan-600 text-white transition cursor-pointer';
+          if (modeTimeBtn) modeTimeBtn.className = 'px-3 py-1 rounded-lg font-semibold text-slate-400 hover:text-white transition cursor-pointer';
+          if (datetimeGroup) datetimeGroup.classList.remove('hidden');
+          if (timeGroup) timeGroup.classList.add('hidden');
+          ensureInputsValue();
+          convertTimezone();
+        });
+      }
 
       function getZonedDate(isoStr, tz) {
         if (!isoStr) return new Date();
@@ -3089,6 +3098,7 @@
       }
 
       function convertTimezone() {
+        if (!fromSelect || !toSelect || !resultText) return;
         const fromTz = fromSelect.value;
         const toTz = toSelect.value;
 
@@ -3101,10 +3111,11 @@
         const d = String(now.getDate()).padStart(2, '0');
 
         if (currentMode === 'time') {
-          const timeVal = timeInput.value || '14:30';
+          const timeVal = (timeInput && timeInput.value) ? timeInput.value : '14:30';
           dateInFromTz = getZonedDate(`${y}-${m}-${d}T${timeVal}`, fromTz);
         } else {
-          dateInFromTz = getZonedDate(datetimeInput.value, fromTz);
+          const dtVal = (datetimeInput && datetimeInput.value) ? datetimeInput.value : `${y}-${m}-${d}T14:30`;
+          dateInFromTz = getZonedDate(dtVal, fromTz);
         }
 
         const optionsTime = {
@@ -3131,10 +3142,11 @@
 
         if (currentMode === 'time') {
           const timeFormatted = new Intl.DateTimeFormat(currentLang === 'ko' ? 'ko-KR' : 'en-US', optionsTime).format(dateInFromTz);
-          resultText.textContent = `${timeInput.value || '14:30'} (${fromName}) ➔ ${timeFormatted} (${toName})`;
+          resultText.textContent = `${(timeInput && timeInput.value) || '14:30'} (${fromName}) ➔ ${timeFormatted} (${toName})`;
         } else {
           const targetFormatted = new Intl.DateTimeFormat(currentLang === 'ko' ? 'ko-KR' : 'en-US', optionsDate).format(dateInFromTz);
-          resultText.textContent = `${datetimeInput.value.replace('T', ' ')} (${fromName}) ➔ ${targetFormatted} (${toName})`;
+          const rawDt = (datetimeInput && datetimeInput.value) || '';
+          resultText.textContent = `${rawDt.replace('T', ' ')} (${fromName}) ➔ ${targetFormatted} (${toName})`;
         }
 
         const dateNow = new Date();
@@ -3143,13 +3155,13 @@
         const diffHours = Math.round((toOffsetMs - fromOffsetMs) / (1000 * 60 * 60));
 
         const diffStr = diffHours >= 0 ? `+${diffHours} Hours` : `${diffHours} Hours`;
-        diffBadge.textContent = diffStr;
+        if (diffBadge) diffBadge.textContent = diffStr;
       }
 
-      timeInput.addEventListener('input', convertTimezone);
-      datetimeInput.addEventListener('input', convertTimezone);
-      fromSelect.addEventListener('change', convertTimezone);
-      toSelect.addEventListener('change', convertTimezone);
+      if (timeInput) timeInput.addEventListener('input', convertTimezone);
+      if (datetimeInput) datetimeInput.addEventListener('input', convertTimezone);
+      if (fromSelect) fromSelect.addEventListener('change', convertTimezone);
+      if (toSelect) toSelect.addEventListener('change', convertTimezone);
 
       window.convertTimezone = convertTimezone;
       convertTimezone();
