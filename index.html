@@ -1799,7 +1799,7 @@
 
         printWindow.document.write(`
           <!DOCTYPE html>
-          <html>
+          <' + 'html>
           <head>
             <title>${titleText}</title>
             <style>
@@ -1815,21 +1815,16 @@
               }
             </style>
           </head>
-          <body>
+          <' + 'body>
             <div class="qr-card">
               <img src="${src}" alt="QR Code" />
               <h2>${titleText}</h2>
               <p>${payloadText}</p>
               <div class="footer">Printed via LifeTools (life.yocto.co.kr)</div>
             </div>
-            <script>
-              window.onload = function() {
-                window.print();
-                setTimeout(function() { window.close(); }, 500);
-              };
-            <\/script>
-          </body>
-          </html>
+            <' + '/script>
+          <' + '/body>
+          <' + '/html>
         `);
         printWindow.document.close();
       });
