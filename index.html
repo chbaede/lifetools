@@ -201,6 +201,16 @@
           <span class="text-lg">🔢</span>
           <span data-i18n="tool_unit_conv">Unit Converter</span>
         </a>
+
+        <a href="#/currency-converter" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" data-path="#/currency-converter">
+          <span class="text-lg">💱</span>
+          <span data-i18n="tool_currency_conv">Currency Converter</span>
+        </a>
+
+        <a href="#/world-clock" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" data-path="#/world-clock">
+          <span class="text-lg">🌐</span>
+          <span data-i18n="tool_world_clock">World Clock & Timezone</span>
+        </a>
       </nav>
 
       <div class="p-4 border-t border-slate-800 text-xs text-slate-500">
@@ -361,6 +371,30 @@
               </div>
             </div>
             <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_unit_conv_desc">Convert units for Length, Area, Weight, Speed, and Data storage.</p>
+          </a>
+
+          <!-- Card 11 -->
+          <a href="#/currency-converter" class="block p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-800/80 transition-all duration-200 group shadow-md">
+            <div class="flex items-center gap-4 mb-3">
+              <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">💱</div>
+              <div>
+                <h3 class="font-bold text-slate-100 text-base group-hover:text-emerald-400 transition-colors" data-i18n="tool_currency_conv">Currency Converter</h3>
+                <span class="text-xs text-emerald-300 font-medium">Finance</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_currency_conv_desc">Convert live exchange rates across USD, EUR, KRW, JPY, GBP, and major world currencies.</p>
+          </a>
+
+          <!-- Card 12 -->
+          <a href="#/world-clock" class="block p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:bg-slate-800/80 transition-all duration-200 group shadow-md">
+            <div class="flex items-center gap-4 mb-3">
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">🌐</div>
+              <div>
+                <h3 class="font-bold text-slate-100 text-base group-hover:text-cyan-400 transition-colors" data-i18n="tool_world_clock">World Clock & Timezone</h3>
+                <span class="text-xs text-cyan-300 font-medium">Time & Date</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_world_clock_desc">Convert date and time between world timezones with local timezone auto-detection.</p>
           </a>
 
         </div>
@@ -990,6 +1024,164 @@
         <div id="unit-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </section>
 
+      <!-- View 11: Currency Converter -->
+      <section id="view-currency-converter" class="view-section hidden space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <span>💱</span> <span data-i18n="tool_currency_conv">Currency Converter</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1" data-i18n="currency_sub">Real-time exchange rates for major global currencies.</p>
+          </div>
+          <button id="curr-refresh-btn" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-emerald-400 border border-slate-700 transition flex items-center gap-1.5">
+            <span>🔄</span> <span data-i18n="btn_refresh_rates">Refresh Rates</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-5">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1.5" data-i18n="label_amount">Amount</label>
+              <input type="number" id="curr-amount" value="100" min="0" step="any" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-lg font-mono text-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-5 gap-3 items-center">
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="label_from_curr">From Currency</label>
+                <select id="curr-from" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-100 font-semibold focus:outline-none">
+                  <option value="EUR">EUR - Euro (€)</option>
+                  <option value="USD" selected>USD - US Dollar ($)</option>
+                  <option value="KRW">KRW - Korean Won (₩)</option>
+                  <option value="JPY">JPY - Japanese Yen (¥)</option>
+                  <option value="GBP">GBP - British Pound (£)</option>
+                  <option value="CAD">CAD - Canadian Dollar (C$)</option>
+                  <option value="AUD">AUD - Australian Dollar (A$)</option>
+                  <option value="CHF">CHF - Swiss Franc (Fr)</option>
+                  <option value="CNY">CNY - Chinese Yuan (¥)</option>
+                  <option value="SGD">SGD - Singapore Dollar (S$)</option>
+                </select>
+              </div>
+
+              <div class="flex justify-center pt-2 sm:pt-4">
+                <button id="curr-swap-btn" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-700 transition hover:rotate-180 duration-300">
+                  🔄
+                </button>
+              </div>
+
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="label_to_curr">To Currency</label>
+                <select id="curr-to" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-100 font-semibold focus:outline-none">
+                  <option value="KRW" selected>KRW - Korean Won (₩)</option>
+                  <option value="EUR">EUR - Euro (€)</option>
+                  <option value="USD">USD - US Dollar ($)</option>
+                  <option value="JPY">JPY - Japanese Yen (¥)</option>
+                  <option value="GBP">GBP - British Pound (£)</option>
+                  <option value="CAD">CAD - Canadian Dollar (C$)</option>
+                  <option value="AUD">AUD - Australian Dollar (A$)</option>
+                  <option value="CHF">CHF - Swiss Franc (Fr)</option>
+                  <option value="CNY">CNY - Chinese Yuan (¥)</option>
+                  <option value="SGD">SGD - Singapore Dollar (S$)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between space-y-4">
+            <div>
+              <span class="text-xs font-semibold text-slate-400" data-i18n="label_converted_result">Converted Result</span>
+              <div id="curr-result-val" class="text-3xl sm:text-4xl font-extrabold text-emerald-400 font-mono mt-2 break-all">
+                ₩0
+              </div>
+              <div id="curr-rate-ratio" class="text-xs text-slate-400 mt-2 font-mono">
+                1 USD = 1,335.50 KRW
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-slate-800 text-[11px] text-slate-500 flex justify-between items-center">
+              <span>Source: Open Exchange Rates API</span>
+              <span id="curr-last-update">Updated: Live</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- View 12: World Clock & Timezone Converter -->
+      <section id="view-world-clock" class="view-section hidden space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <span>🌐</span> <span data-i18n="tool_world_clock">World Clock & Timezone</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1" data-i18n="world_clock_sub">Convert time across world timezones with local timezone auto-detection.</p>
+          </div>
+          <div id="local-tz-badge" class="px-3 py-1.5 rounded-xl bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 text-xs font-semibold">
+            Location: Auto
+          </div>
+        </div>
+
+        <!-- Converter Box -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+          <h3 class="font-bold text-sm text-cyan-400 flex items-center gap-2" data-i18n="title_tz_converter">
+            <span>⏱️</span> Timezone Converter (e.g. Berlin ➔ Seoul)
+          </h3>
+
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+            <div class="sm:col-span-4">
+              <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="label_from_tz">From Timezone</label>
+              <select id="tz-from-select" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 font-semibold focus:outline-none">
+                <option value="Europe/Berlin">Berlin (CET / UTC+1 or +2)</option>
+                <option value="Asia/Seoul">Seoul (KST / UTC+9)</option>
+                <option value="Europe/London">London (GMT / UTC+0 or +1)</option>
+                <option value="America/New_York">New York (EST / UTC-5 or -4)</option>
+                <option value="America/Los_Angeles">San Francisco / LA (PST / UTC-8 or -7)</option>
+                <option value="Asia/Tokyo">Tokyo (JST / UTC+9)</option>
+                <option value="Australia/Sydney">Sydney (AEST / UTC+10 or +11)</option>
+                <option value="Asia/Singapore">Singapore (SGT / UTC+8)</option>
+              </select>
+            </div>
+
+            <div class="sm:col-span-4">
+              <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="label_select_datetime">Date & Time</label>
+              <input type="datetime-local" id="tz-datetime-input" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none">
+            </div>
+
+            <div class="sm:col-span-4">
+              <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="label_to_tz">To Timezone</label>
+              <select id="tz-to-select" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 font-semibold focus:outline-none">
+                <option value="Asia/Seoul">Seoul (KST / UTC+9)</option>
+                <option value="Europe/Berlin">Berlin (CET / UTC+1 or +2)</option>
+                <option value="Europe/London">London (GMT / UTC+0 or +1)</option>
+                <option value="America/New_York">New York (EST / UTC-5 or -4)</option>
+                <option value="America/Los_Angeles">San Francisco / LA (PST / UTC-8 or -7)</option>
+                <option value="Asia/Tokyo">Tokyo (JST / UTC+9)</option>
+                <option value="Australia/Sydney">Sydney (AEST / UTC+10 or +11)</option>
+                <option value="Asia/Singapore">Singapore (SGT / UTC+8)</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="tz-result-box" class="p-4 bg-slate-950 rounded-xl text-xs space-y-2 text-slate-200">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <span data-i18n="label_converted_time">Converted Target Time:</span>
+                <span id="tz-result-text" class="font-bold text-cyan-300 text-sm block sm:inline sm:ml-2">-</span>
+              </div>
+              <span id="tz-diff-badge" class="px-2.5 py-1 rounded-lg bg-cyan-600/20 text-cyan-300 font-semibold border border-cyan-500/30 text-right">
+                +0 Hours
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live World Clocks Grid -->
+        <div class="space-y-3">
+          <h3 class="font-bold text-sm text-slate-300 flex items-center gap-2" data-i18n="title_live_clocks">
+            <span>🕐</span> Live Global City Clocks
+          </h3>
+          <div id="world-clocks-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+        </div>
+      </section>
+
       <!-- Bottom Single Google Ad Banner -->
       <div id="ad-container-bottom" class="mt-8 w-full overflow-hidden rounded-2xl bg-slate-900/60 border border-slate-800/80 p-2 min-h-[100px] flex items-center justify-center text-center">
         <ins class="adsbygoogle"
@@ -1133,7 +1325,24 @@
         unit_tab_length: "Length",
         unit_tab_area: "Area (incl. Pyeong)",
         unit_tab_weight: "Weight / Mass",
-        unit_tab_data: "Data Storage"
+        unit_tab_data: "Data Storage",
+        tool_currency_conv: "Currency Converter",
+        tool_world_clock: "World Clock & Timezone",
+        card_currency_conv_desc: "Convert live exchange rates across USD, EUR, KRW, JPY, GBP, and major world currencies.",
+        card_world_clock_desc: "Convert date and time between world timezones with local timezone auto-detection.",
+        currency_sub: "Real-time exchange rates for major global currencies.",
+        btn_refresh_rates: "Refresh Rates",
+        label_amount: "Amount",
+        label_from_curr: "From Currency",
+        label_to_curr: "To Currency",
+        label_converted_result: "Converted Result",
+        world_clock_sub: "Convert time across world timezones with local timezone auto-detection.",
+        title_tz_converter: "Timezone Converter (e.g. Berlin ➔ Seoul)",
+        label_from_tz: "From Timezone",
+        label_select_datetime: "Date & Time",
+        label_to_tz: "To Timezone",
+        label_converted_time: "Converted Target Time:",
+        title_live_clocks: "Live Global City Clocks"
       },
       ko: {
         tagline: "100% 클라이언트 사이드 실생활 도구 모음",
@@ -1256,7 +1465,24 @@
         unit_tab_length: "길이 (Length)",
         unit_tab_area: "넓이 (Area - 평 포함)",
         unit_tab_weight: "무게 (Mass)",
-        unit_tab_data: "데이터 (Data)"
+        unit_tab_data: "데이터 (Data)",
+        tool_currency_conv: "실시간 환율 변환기",
+        tool_world_clock: "세계 시간 & 타임존 변환기",
+        card_currency_conv_desc: "USD, EUR, KRW, JPY 등 실시간 환율 정보로 금액을 동시 변환합니다.",
+        card_world_clock_desc: "접속 지역(베를린 ➔ 서울 등) 타임존 자동 감지 및 세계 도시 시간차를 계산합니다.",
+        currency_sub: "실시간 환율 정보를 기반으로 금액을 변환합니다.",
+        btn_refresh_rates: "환율 새로고침",
+        label_amount: "금액 (Amount)",
+        label_from_curr: "기준 통화 (From)",
+        label_to_curr: "대상 통화 (To)",
+        label_converted_result: "변환된 환율 결과",
+        world_clock_sub: "현재 위치 타임존을 자동 감지하여 세계 주요 도시 시각 및 시간차를 계산합니다.",
+        title_tz_converter: "타임존 시간 변환 (베를린 ➔ 서울 등)",
+        label_from_tz: "출발 타임존",
+        label_select_datetime: "날짜 및 시간",
+        label_to_tz: "도착 타임존",
+        label_converted_time: "변환된 목표 시각:",
+        title_live_clocks: "실시간 세계 주요 도시 시계"
       }
     };
 
@@ -1354,6 +1580,8 @@
       initCountdownSuite();
       initDateCalculator();
       initUnitConverter();
+      initCurrencyConverter();
+      initWorldClock();
     });
 
     document.getElementById('mobile-menu-btn').addEventListener('click', () => {
@@ -2533,6 +2761,206 @@
       };
 
       window.renderUnitGrid();
+    }
+
+
+    /* ==========================================================================
+       11. CURRENCY CONVERTER LOGIC
+       ========================================================================== */
+    function initCurrencyConverter() {
+      const amountInput = document.getElementById('curr-amount');
+      const fromSelect = document.getElementById('curr-from');
+      const toSelect = document.getElementById('curr-to');
+      const resultVal = document.getElementById('curr-result-val');
+      const rateRatio = document.getElementById('curr-rate-ratio');
+      const lastUpdate = document.getElementById('curr-last-update');
+      const refreshBtn = document.getElementById('curr-refresh-btn');
+      const swapBtn = document.getElementById('curr-swap-btn');
+
+      const symbols = {
+        USD: '$', EUR: '€', KRW: '₩', JPY: '¥', GBP: '£',
+        CAD: 'C$', AUD: 'A$', CHF: 'Fr', CNY: '¥', SGD: 'S$'
+      };
+
+      let rates = {
+        USD: 1.0,
+        EUR: 0.915,
+        KRW: 1335.50,
+        JPY: 146.20,
+        GBP: 0.778,
+        CAD: 1.352,
+        AUD: 1.481,
+        CHF: 0.852,
+        CNY: 7.120,
+        SGD: 1.305
+      };
+
+      async function fetchRates() {
+        try {
+          const res = await fetch('https://open.er-api.com/v6/latest/USD');
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.rates) {
+              rates = { ...rates, ...data.rates };
+              const dateStr = data.time_last_update_utc ? new Date(data.time_last_update_utc).toLocaleTimeString() : 'Live';
+              lastUpdate.textContent = `${currentLang === 'ko' ? '업데이트' : 'Updated'}: ${dateStr}`;
+            }
+          }
+        } catch (err) {
+          console.warn('Using offline fallback rates', err);
+          lastUpdate.textContent = `${currentLang === 'ko' ? '기본 환율 (오프라인)' : 'Default (Offline)'}`;
+        }
+        calculateCurrency();
+      }
+
+      function calculateCurrency() {
+        const amount = parseFloat(amountInput.value);
+        if (isNaN(amount) || amount < 0) {
+          resultVal.textContent = '0';
+          return;
+        }
+        const from = fromSelect.value;
+        const to = toSelect.value;
+
+        const rateFrom = rates[from] || 1;
+        const rateTo = rates[to] || 1;
+
+        const converted = (amount / rateFrom) * rateTo;
+        const singleRate = rateTo / rateFrom;
+
+        const sym = symbols[to] || '';
+        resultVal.textContent = `${sym}${converted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        rateRatio.textContent = `1 ${from} = ${singleRate.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 })} ${to}`;
+      }
+
+      amountInput.addEventListener('input', calculateCurrency);
+      fromSelect.addEventListener('change', calculateCurrency);
+      toSelect.addEventListener('change', calculateCurrency);
+
+      swapBtn.addEventListener('click', () => {
+        const temp = fromSelect.value;
+        fromSelect.value = toSelect.value;
+        toSelect.value = temp;
+        calculateCurrency();
+      });
+
+      refreshBtn.addEventListener('click', () => {
+        showToast(currentLang === 'ko' ? '실시간 환율 정보를 불러옵니다...' : 'Fetching live rates...');
+        fetchRates();
+      });
+
+      fetchRates();
+    }
+
+
+    /* ==========================================================================
+       12. WORLD CLOCK & TIMEZONE CONVERTER LOGIC
+       ========================================================================== */
+    function initWorldClock() {
+      const userTz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/Berlin';
+      document.getElementById('local-tz-badge').textContent = `${currentLang === 'ko' ? '현재 위치' : 'Location'}: ${userTz}`;
+
+      const fromSelect = document.getElementById('tz-from-select');
+      const toSelect = document.getElementById('tz-to-select');
+      const datetimeInput = document.getElementById('tz-datetime-input');
+      const resultText = document.getElementById('tz-result-text');
+      const diffBadge = document.getElementById('tz-diff-badge');
+
+      const fromOption = Array.from(fromSelect.options).find(o => o.value === userTz);
+      if (fromOption) {
+        fromSelect.value = userTz;
+      } else {
+        const opt = new Option(`${userTz} (Local)`, userTz, true, true);
+        fromSelect.add(opt, 0);
+      }
+
+      if (userTz === 'Europe/Berlin') {
+        toSelect.value = 'Asia/Seoul';
+      } else if (userTz === 'Asia/Seoul') {
+        toSelect.value = 'Europe/Berlin';
+      }
+
+      const nowLocal = new Date();
+      const localIso = new Date(nowLocal.getTime() - (nowLocal.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
+      datetimeInput.value = localIso;
+
+      function convertTimezone() {
+        const inputVal = datetimeInput.value;
+        if (!inputVal) return;
+
+        const fromTz = fromSelect.value;
+        const toTz = toSelect.value;
+
+        const localDate = new Date(inputVal);
+        if (isNaN(localDate.getTime())) return;
+
+        const optionsDate = {
+          timeZone: toTz,
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          weekday: 'short',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        };
+
+        const targetFormatted = new Intl.DateTimeFormat(currentLang === 'ko' ? 'ko-KR' : 'en-US', optionsDate).format(localDate);
+        resultText.textContent = targetFormatted;
+
+        const dateNow = new Date();
+        const fromOffsetMs = new Date(dateNow.toLocaleString('en-US', { timeZone: fromTz })).getTime();
+        const toOffsetMs = new Date(dateNow.toLocaleString('en-US', { timeZone: toTz })).getTime();
+        const diffHours = Math.round((toOffsetMs - fromOffsetMs) / (1000 * 60 * 60));
+
+        const diffStr = diffHours >= 0 ? `+${diffHours} Hours` : `${diffHours} Hours`;
+        diffBadge.textContent = diffStr;
+      }
+
+      datetimeInput.addEventListener('input', convertTimezone);
+      fromSelect.addEventListener('change', convertTimezone);
+      toSelect.addEventListener('change', convertTimezone);
+
+      convertTimezone();
+
+      const cityList = [
+        { name: 'Berlin 🇩🇪', tz: 'Europe/Berlin', desc: 'CET / UTC+1 (+2 DST)' },
+        { name: 'Seoul 🇰🇷', tz: 'Asia/Seoul', desc: 'KST / UTC+9' },
+        { name: 'London 🇬🇧', tz: 'Europe/London', desc: 'GMT / UTC+0 (+1 DST)' },
+        { name: 'New York 🇺🇸', tz: 'America/New_York', desc: 'EST / UTC-5 (-4 DST)' },
+        { name: 'San Francisco 🇺🇸', tz: 'America/Los_Angeles', desc: 'PST / UTC-8 (-7 DST)' },
+        { name: 'Tokyo 🇯🇵', tz: 'Asia/Tokyo', desc: 'JST / UTC+9' },
+        { name: 'Sydney 🇦🇺', tz: 'Australia/Sydney', desc: 'AEST / UTC+10 (+11 DST)' },
+        { name: 'Singapore 🇸🇬', tz: 'Asia/Singapore', desc: 'SGT / UTC+8' }
+      ];
+
+      function renderLiveClocks() {
+        const grid = document.getElementById('world-clocks-grid');
+        if (!grid) return;
+        const now = new Date();
+
+        grid.innerHTML = '';
+        cityList.forEach(city => {
+          const timeStr = now.toLocaleTimeString(currentLang === 'ko' ? 'ko-KR' : 'en-US', { timeZone: city.tz, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+          const dateStr = now.toLocaleDateString(currentLang === 'ko' ? 'ko-KR' : 'en-US', { timeZone: city.tz, month: 'short', day: 'numeric', weekday: 'short' });
+
+          const card = document.createElement('div');
+          card.className = 'bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between space-y-2';
+          card.innerHTML = `
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-sm text-slate-100">${city.name}</span>
+              <span class="text-[10px] text-slate-500 font-mono">${city.desc}</span>
+            </div>
+            <div class="text-2xl font-extrabold text-cyan-400 font-mono tracking-tight">${timeStr}</div>
+            <div class="text-xs text-slate-400 font-medium">${dateStr}</div>
+          `;
+          grid.appendChild(card);
+        });
+      }
+
+      setInterval(renderLiveClocks, 1000);
+      renderLiveClocks();
     }
   </script>
 </body>
