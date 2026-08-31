@@ -56,6 +56,25 @@
       accent-color: #6366f1;
     }
 
+    /* Date & Time Picker High Contrast Dark Theme Styling */
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="time"] {
+      color-scheme: dark;
+    }
+
+    ::-webkit-calendar-picker-indicator {
+      filter: invert(0.9) sepia(1) saturate(5) hue-rotate(185deg);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 6px;
+      transition: background-color 0.2s;
+    }
+
+    ::-webkit-calendar-picker-indicator:hover {
+      background-color: rgba(99, 102, 241, 0.3);
+    }
+
     /* Ad Container Protection & Layout Safeguards */
     #ad-container-top {
       min-height: 90px;
