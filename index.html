@@ -1147,6 +1147,8 @@
               <select id="tz-from-select" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 font-semibold focus:outline-none">
                 <option value="Europe/Berlin">Berlin (CET / UTC+1 or +2)</option>
                 <option value="Asia/Seoul">Seoul (KST / UTC+9)</option>
+                <option value="Asia/Shanghai">Shanghai (CST / UTC+8)</option>
+                <option value="Asia/Kolkata">Chennai / India (IST / UTC+5:30)</option>
                 <option value="Europe/London">London (GMT / UTC+0 or +1)</option>
                 <option value="America/New_York">New York (EST / UTC-5 or -4)</option>
                 <option value="America/Los_Angeles">San Francisco / LA (PST / UTC-8 or -7)</option>
@@ -1173,6 +1175,8 @@
               <select id="tz-to-select" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 font-semibold focus:outline-none">
                 <option value="Asia/Seoul">Seoul (KST / UTC+9)</option>
                 <option value="Europe/Berlin">Berlin (CET / UTC+1 or +2)</option>
+                <option value="Asia/Shanghai">Shanghai (CST / UTC+8)</option>
+                <option value="Asia/Kolkata">Chennai / India (IST / UTC+5:30)</option>
                 <option value="Europe/London">London (GMT / UTC+0 or +1)</option>
                 <option value="America/New_York">New York (EST / UTC-5 or -4)</option>
                 <option value="America/Los_Angeles">San Francisco / LA (PST / UTC-8 or -7)</option>
@@ -2964,25 +2968,34 @@
         toSelect.value = 'Europe/Berlin';
       }
 
-      const nowLocal = new Date();
-      const localIso = new Date(nowLocal.getTime() - (nowLocal.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
-      datetimeInput.value = localIso;
+      function ensureInputsValue() {
+        if (!timeInput.value) timeInput.value = '14:30';
+        if (!datetimeInput.value) {
+          const nowLocal = new Date();
+          datetimeInput.value = new Date(nowLocal.getTime() - (nowLocal.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
+        }
+      }
+      ensureInputsValue();
 
-      modeTimeBtn.addEventListener('click', () => {
+      modeTimeBtn.addEventListener('click', (e) => {
+        if (e) e.preventDefault();
         currentMode = 'time';
-        modeTimeBtn.className = 'px-3 py-1 rounded-lg font-semibold bg-cyan-600 text-white transition';
-        modeDateTimeBtn.className = 'px-3 py-1 rounded-lg font-semibold text-slate-400 hover:text-white transition';
+        modeTimeBtn.className = 'px-3 py-1 rounded-lg font-semibold bg-cyan-600 text-white transition cursor-pointer';
+        modeDateTimeBtn.className = 'px-3 py-1 rounded-lg font-semibold text-slate-400 hover:text-white transition cursor-pointer';
         timeGroup.classList.remove('hidden');
         datetimeGroup.classList.add('hidden');
+        ensureInputsValue();
         convertTimezone();
       });
 
-      modeDateTimeBtn.addEventListener('click', () => {
+      modeDateTimeBtn.addEventListener('click', (e) => {
+        if (e) e.preventDefault();
         currentMode = 'datetime';
-        modeDateTimeBtn.className = 'px-3 py-1 rounded-lg font-semibold bg-cyan-600 text-white transition';
-        modeTimeBtn.className = 'px-3 py-1 rounded-lg font-semibold text-slate-400 hover:text-white transition';
+        modeDateTimeBtn.className = 'px-3 py-1 rounded-lg font-semibold bg-cyan-600 text-white transition cursor-pointer';
+        modeTimeBtn.className = 'px-3 py-1 rounded-lg font-semibold text-slate-400 hover:text-white transition cursor-pointer';
         datetimeGroup.classList.remove('hidden');
         timeGroup.classList.add('hidden');
+        ensureInputsValue();
         convertTimezone();
       });
 
@@ -2992,7 +3005,7 @@
         let targetDate = new Date();
 
         if (currentMode === 'time') {
-          const timeVal = timeInput.value || '12:00';
+          const timeVal = timeInput.value || '14:30';
           const [hrs, mins] = timeVal.split(':').map(Number);
           targetDate.setHours(hrs, mins, 0, 0);
 
@@ -3007,10 +3020,10 @@
           const timeFormatted = new Intl.DateTimeFormat(currentLang === 'ko' ? 'ko-KR' : 'en-US', optionsTime).format(targetDate);
           resultText.textContent = `${timeVal} (${fromTz.split('/')[1] || fromTz}) ➔ ${timeFormatted} (${toTz.split('/')[1] || toTz})`;
         } else {
+          ensureInputsValue();
           const inputVal = datetimeInput.value;
-          if (!inputVal) return;
           targetDate = new Date(inputVal);
-          if (isNaN(targetDate.getTime())) return;
+          if (isNaN(targetDate.getTime())) targetDate = new Date();
 
           const optionsDate = {
             timeZone: toTz,
@@ -3046,6 +3059,8 @@
       const cityList = [
         { name: 'Berlin 🇩🇪', tz: 'Europe/Berlin', desc: 'CET / UTC+1 (+2 DST)' },
         { name: 'Seoul 🇰🇷', tz: 'Asia/Seoul', desc: 'KST / UTC+9' },
+        { name: 'Shanghai 🇨🇳', tz: 'Asia/Shanghai', desc: 'CST / UTC+8' },
+        { name: 'Chennai 🇮🇳', tz: 'Asia/Kolkata', desc: 'IST / UTC+5:30' },
         { name: 'London 🇬🇧', tz: 'Europe/London', desc: 'GMT / UTC+0 (+1 DST)' },
         { name: 'New York 🇺🇸', tz: 'America/New_York', desc: 'EST / UTC-5 (-4 DST)' },
         { name: 'San Francisco 🇺🇸', tz: 'America/Los_Angeles', desc: 'PST / UTC-8 (-7 DST)' },
