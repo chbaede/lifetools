@@ -82,7 +82,7 @@
       background-color: rgba(99, 102, 241, 0.1);
     }
 
-    /* Modern Apple/Stripe-Grade Premium Light Mode Styling */
+    /* Ultra-Refined Modern Apple/Stripe Light Mode Overrides */
     html:not(.dark) {
       background-color: #f8fafc !important;
       background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
@@ -120,18 +120,58 @@
       color: #4338ca !important;
       font-weight: 700 !important;
     }
-    html:not(.dark) .bg-slate-900,
-    html:not(.dark) .bg-slate-950 {
+    
+    /* Main Cards */
+    html:not(.dark) .bg-slate-900 {
       background-color: #ffffff !important;
       border-color: #e2e8f0 !important;
       color: #0f172a !important;
       box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02) !important;
     }
+
+    /* Inner Sub-Containers & Result Boxes */
+    html:not(.dark) .bg-slate-950,
+    html:not(.dark) #tz-result-box,
+    html:not(.dark) #date-diff-result,
+    html:not(.dark) #date-offset-result,
+    html:not(.dark) #curr-result-box,
+    html:not(.dark) #qr-preview-box,
+    html:not(.dark) #comp-preview-box,
+    html:not(.dark) #resize-preview-box {
+      background-color: #f8fafc !important;
+      border-color: #e2e8f0 !important;
+      color: #0f172a !important;
+    }
+
+    /* File Dropzone Boxes (Upload Boxes) */
+    html:not(.dark) [id$="-dropzone"],
+    html:not(.dark) .border-dashed {
+      background-color: #f0f4ff !important;
+      border-color: #a5b4fc !important;
+      color: #312e81 !important;
+    }
+    html:not(.dark) [id$="-dropzone"]:hover {
+      background-color: #e0e7ff !important;
+      border-color: #6366f1 !important;
+    }
+    html:not(.dark) [id$="-dropzone"] p,
+    html:not(.dark) [id$="-dropzone"] span,
+    html:not(.dark) [id$="-dropzone"] div {
+      color: #4338ca !important;
+    }
+
+    /* Tab Bars & Secondary Controls */
     html:not(.dark) .bg-slate-800 {
       background-color: #f1f5f9 !important;
       border-color: #cbd5e1 !important;
       color: #1e293b !important;
     }
+    html:not(.dark) .bg-slate-800:hover {
+      background-color: #e2e8f0 !important;
+      color: #0f172a !important;
+    }
+
+    /* Form Inputs, Selects & Textareas */
     html:not(.dark) input,
     html:not(.dark) select,
     html:not(.dark) textarea {
@@ -146,6 +186,8 @@
       border-color: #6366f1 !important;
       box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
     }
+
+    /* Text Color Overrides for High Contrast */
     html:not(.dark) .text-white {
       color: #0f172a !important;
     }
