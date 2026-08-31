@@ -3144,10 +3144,34 @@
           resultText.textContent = `${rawDt.replace('T', ' ')} (${fromName}) ➔ ${targetFormatted} (${toName})`;
         }
 
-        const dateNow = new Date();
-        const fromOffsetMs = new Date(dateNow.toLocaleString('en-US', { timeZone: fromTz })).getTime();
-        const toOffsetMs = new Date(dateNow.toLocaleString('en-US', { timeZone: toTz })).getTime();
-        const diffHours = Math.round((toOffsetMs - fromOffsetMs) / (1000 * 60 * 60));
+      function getTimezoneOffsetHours(tz) {
+        try {
+          const now = new Date();
+          const formatter = new Intl.DateTimeFormat('en-US', {
+            timeZone: tz,
+            year: 'numeric', month: '2-digit', day: '2-digit',
+            hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+          });
+          const parts = formatter.formatToParts(now);
+          const getP = type => parseInt(parts.find(p => p.type === type)?.value || 0, 10);
+          const y = getP('year');
+          const m = getP('month');
+          const d = getP('day');
+          let h = getP('hour');
+          if (h === 24) h = 0;
+          const min = getP('minute');
+
+          const utcTime = now.getTime();
+          const tzAsUtc = Date.UTC(y, m - 1, d, h, min, 0);
+          return (tzAsUtc - utcTime) / (1000 * 60 * 60);
+        } catch (e) {
+          return 0;
+        }
+      }
+
+        const fromHours = getTimezoneOffsetHours(fromTz);
+        const toHours = getTimezoneOffsetHours(toTz);
+        const diffHours = Math.round(toHours - fromHours);
 
         const diffStr = diffHours >= 0 ? `+${diffHours} Hours` : `${diffHours} Hours`;
         if (diffBadge) diffBadge.textContent = diffStr;
