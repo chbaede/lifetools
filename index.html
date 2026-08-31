@@ -466,6 +466,9 @@
               <button id="qr-copy-img" class="flex-1 py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold transition flex items-center justify-center gap-1.5" data-i18n="btn_copy_img">
                 <span>📋 Copy Image</span>
               </button>
+              <button id="qr-print-btn" class="flex-1 py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold transition flex items-center justify-center gap-1.5" data-i18n="btn_print_qr">
+                <span>🖨️ Print QR Code</span>
+              </button>
             </div>
           </div>
         </div>
@@ -1042,6 +1045,7 @@
         qr_btn_generate: "✨ Generate QR Code",
         btn_dl_png: "💾 Download PNG",
         btn_copy_img: "📋 Copy Image",
+        btn_print_qr: "🖨️ Print QR Code",
         qr_scan_sub: "Scan QR codes from image file uploads or live camera streams.",
         qr_scan_tab_file: "📂 Upload Image File",
         qr_scan_tab_cam: "🎥 Live Camera Stream",
@@ -1164,6 +1168,7 @@
         qr_btn_generate: "✨ QR 코드 생성하기",
         btn_dl_png: "💾 PNG 다운로드",
         btn_copy_img: "📋 이미지 복사",
+        btn_print_qr: "🖨️ QR 코드 인쇄",
         qr_scan_sub: "이미지 업로드 또는 스마트폰/웹캠 카메라로 실시간 스캔하세요.",
         qr_scan_tab_file: "📂 이미지 파일 업로드",
         qr_scan_tab_cam: "🎥 실시간 카메라 스캔",
@@ -1436,6 +1441,54 @@
             .then(() => showToast(currentLang === 'ko' ? '클립보드 복사 완료!' : 'Image copied to clipboard!'))
             .catch(() => showToast('Clipboard write failed.', 'error'));
         });
+      });
+
+      document.getElementById('qr-print-btn').addEventListener('click', () => {
+        const img = document.querySelector('#qr-preview-box img') || document.querySelector('#qr-preview-box canvas');
+        if (!img) return showToast(currentLang === 'ko' ? '먼저 QR 코드를 생성하세요.' : 'Generate a QR Code first.', 'error');
+
+        const src = img.tagName === 'CANVAS' ? img.toDataURL('image/png') : img.src;
+        const payloadText = document.getElementById('qr-text-input').value.trim() || 'QR Code';
+        const titleText = currentLang === 'ko' ? 'QR 코드 인쇄' : 'Print QR Code';
+
+        const printWindow = window.open('', '_blank');
+        if (!printWindow) return showToast(currentLang === 'ko' ? '팝업 차단을 해제하세요.' : 'Please allow pop-ups for printing.', 'error');
+
+        printWindow.document.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>${titleText}</title>
+            <style>
+              body { font-family: system-ui, -apple-system, sans-serif; text-align: center; padding: 40px; background: #fff; color: #000; }
+              .qr-card { display: inline-block; border: 2px solid #000; padding: 32px; border-radius: 20px; max-width: 420px; margin: 0 auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+              img { width: 260px; height: 260px; margin-bottom: 20px; display: block; margin-left: auto; margin-right: auto; }
+              h2 { margin: 0 0 12px 0; font-size: 24px; font-weight: 800; color: #111; }
+              p { color: #555; font-size: 13px; margin: 0; word-break: break-all; font-family: ui-monospace, monospace; line-height: 1.5; }
+              .footer { margin-top: 24px; font-size: 11px; color: #888; }
+              @media print {
+                body { padding: 0; }
+                .qr-card { border: none; box-shadow: none; }
+              }
+            </style>
+          </head>
+          <body>
+            <div class="qr-card">
+              <img src="${src}" alt="QR Code" />
+              <h2>${titleText}</h2>
+              <p>${payloadText}</p>
+              <div class="footer">Printed via LifeTools (life.yocto.co.kr)</div>
+            </div>
+            <script>
+              window.onload = function() {
+                window.print();
+                setTimeout(function() { window.close(); }, 500);
+              };
+            <\/script>
+          </body>
+          </html>
+        `);
+        printWindow.document.close();
       });
 
       generateQR();
