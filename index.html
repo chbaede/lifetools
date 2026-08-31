@@ -1,0 +1,2204 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LifeTools | Essential 100% Client-Side Web Utilities</title>
+  
+  <!-- Meta & SEO -->
+  <meta name="description" content="100% Private, offline-ready client-side daily tools: QR Generator/Scanner, Image Compressor, Resizer, PDF Merger, Password Generator, Random Picker, Countdown/Timer, Date Calc, Unit Converter.">
+  <meta name="keywords" content="LifeTools, QR Code Generator, QR Scanner, Image Compressor, PDF Merger, Password Generator, Random Picker, Countdown, Date Calculator, Unit Converter">
+  <meta name="author" content="LifeTools">
+  <link rel="canonical" href="https://life.yocto.co.kr">
+  
+  <!-- Vendor Scripts -->
+  <script src="vendor/tailwindcss.js"></script>
+  <script src="vendor/qrcode.min.js"></script>
+  <script src="vendor/jsQR.js"></script>
+  <script src="vendor/pdf-lib.min.js"></script>
+  <script src="vendor/jszip.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f3ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    .dropzone-active {
+      border-color: #6366f1 !important;
+      background-color: rgba(99, 102, 241, 0.1) !important;
+    }
+
+    input[type=range] {
+      accent-color: #6366f1;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+
+  <!-- Top Navigation Header -->
+  <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Brand & Title -->
+      <div class="flex items-center gap-3">
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-400 hover:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" aria-label="Open menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <a href="#/" class="flex items-center gap-2.5 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-500 flex items-center justify-center text-white font-extrabold text-xl shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+            ⚡
+          </div>
+          <div>
+            <span class="font-extrabold text-lg sm:text-xl tracking-tight text-white flex items-center gap-1.5">
+              LifeTools <span class="text-xs px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-medium border border-indigo-500/30">Free & Private</span>
+            </span>
+            <p class="text-[11px] text-slate-400 hidden sm:block" data-i18n="tagline">100% Client-Side Everyday Life Utilities</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Quick Actions & Language Toggle -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Language Switcher -->
+        <div class="flex items-center bg-slate-800 p-0.5 rounded-xl border border-slate-700">
+          <button id="lang-btn-en" class="px-2.5 py-1 rounded-lg text-xs font-bold transition bg-indigo-600 text-white">
+            🇺🇸 EN
+          </button>
+          <button id="lang-btn-ko" class="px-2.5 py-1 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white">
+            🇰🇷 KO
+          </button>
+        </div>
+
+        <a href="#/" class="text-xs font-semibold px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          <span class="hidden sm:inline" data-i18n="nav_home">Home</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="flex-1 max-w-7xl w-full mx-auto flex">
+
+    <!-- Mobile Drawer Overlay -->
+    <div id="mobile-drawer-overlay" class="fixed inset-0 bg-slate-950/80 z-50 hidden transition-opacity md:hidden"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar-drawer" class="fixed md:static inset-y-0 left-0 z-50 w-64 bg-slate-900 border-r border-slate-800 transform -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out flex flex-col shrink-0">
+      <div class="p-4 border-b border-slate-800 flex items-center justify-between md:hidden">
+        <span class="font-bold text-sm text-slate-300" data-i18n="menu_title">Tools Menu</span>
+        <button id="close-drawer-btn" class="p-1 text-slate-400 hover:text-white">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <nav class="flex-1 overflow-y-auto p-3 space-y-1 text-sm font-medium">
+        <div class="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-500" data-i18n="sidebar_heading">Everyday Tools</div>
+        
+        <a href="#/qr-generator" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" data-path="#/qr-generator">
+          <span class="text-lg">🔲</span>
+          <span data-i18n="tool_qr_gen">QR Code Generator</span>
+        </a>
+
+        <a href="#/qr-scanner" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" data-path="#/qr-scanner">
+          <span class="text-lg">📷</span>
+          <span data-i18n="tool_qr_scan">QR Code Scanner</span>
+        </a>
+
+        <a href="#/image-compressor" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" data-path="#/image-compressor">
+          <span class="text-lg">🖼️</span>
+          <span data-i18n="tool_img_comp">Image Compressor</span>
+        </a>
+
+        <a href="#/image-resizer" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" data-path="#/image-resizer">
+          <span class="text-lg">📐</span>
+          <span data-i18n="tool_img_resize">Image Resizer</span>
+        </a>
+
+        <a href="#/pdf-merger" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" data-path="#/pdf-merger">
+          <span class="text-lg">📄</span>
+          <span data-i18n="tool_pdf_merge">PDF Merger</span>
+        </a>
+
+        <a href="#/password-generator" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" data-path="#/password-generator">
+          <span class="text-lg">🔐</span>
+          <span data-i18n="tool_pwd_gen">Password Generator</span>
+        </a>
+
+        <a href="#/random-picker" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" data-path="#/random-picker">
+          <span class="text-lg">🎲</span>
+          <span data-i18n="tool_random_picker">Random Picker</span>
+        </a>
+
+        <a href="#/countdown" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" data-path="#/countdown">
+          <span class="text-lg">⏱️</span>
+          <span data-i18n="tool_timer">Countdown & Timer</span>
+        </a>
+
+        <a href="#/date-calc" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" data-path="#/date-calc">
+          <span class="text-lg">📅</span>
+          <span data-i18n="tool_date_calc">Date Calculator</span>
+        </a>
+
+        <a href="#/unit-converter" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" data-path="#/unit-converter">
+          <span class="text-lg">🔢</span>
+          <span data-i18n="tool_unit_conv">Unit Converter</span>
+        </a>
+      </nav>
+
+      <div class="p-4 border-t border-slate-800 text-xs text-slate-500">
+        <div class="flex items-center gap-2 text-emerald-400 font-medium mb-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          100% Client-Side Safe
+        </div>
+        <span data-i18n="footer_privacy">Zero server uploads. Your data stays in your browser.</span>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 min-w-0 overflow-x-hidden">
+
+      <!-- View: Home Dashboard -->
+      <section id="view-home" class="view-section space-y-6">
+        <!-- Hero Header -->
+        <div class="bg-gradient-to-r from-indigo-900/40 via-purple-900/30 to-slate-900 p-6 sm:p-8 rounded-2xl border border-indigo-500/20 shadow-xl">
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-white mb-2 tracking-tight" data-i18n="hero_title">
+            10 Essential Everyday Life Tools 🛠️
+          </h1>
+          <p class="text-slate-300 text-sm sm:text-base max-w-3xl leading-relaxed" data-i18n="hero_desc">
+            No signup or app installation required. All data processing runs 100% inside your browser for maximum privacy and zero latency.
+          </p>
+        </div>
+
+        <!-- Tool Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          
+          <!-- Card 1 -->
+          <a href="#/qr-generator" class="block p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800/80 transition-all duration-200 group shadow-md">
+            <div class="flex items-center gap-4 mb-3">
+              <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">🔲</div>
+              <div>
+                <h3 class="font-bold text-slate-100 text-base group-hover:text-indigo-400 transition-colors" data-i18n="tool_qr_gen">QR Code Generator</h3>
+                <span class="text-xs text-indigo-300 font-medium">Utility</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_qr_gen_desc">Generate customizable QR codes for text, URLs, Wi-Fi, and vCards with PNG/SVG export.</p>
+          </a>
+
+          <!-- Card 2 -->
+          <a href="#/qr-scanner" class="block p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800/80 transition-all duration-200 group shadow-md">
+            <div class="flex items-center gap-4 mb-3">
+              <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">📷</div>
+              <div>
+                <h3 class="font-bold text-slate-100 text-base group-hover:text-purple-400 transition-colors" data-i18n="tool_qr_scan">QR Code Scanner</h3>
+                <span class="text-xs text-purple-300 font-medium">Camera & Media</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_qr_scan_desc">Scan QR codes from uploaded image files or real-time webcam video feed.</p>
+          </a>
+
+          <!-- Card 3 -->
+          <a href="#/image-compressor" class="block p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800/80 transition-all duration-200 group shadow-md">
+            <div class="flex items-center gap-4 mb-3">
+              <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">🖼️</div>
+              <div>
+                <h3 class="font-bold text-slate-100 text-base group-hover:text-emerald-400 transition-colors" data-i18n="tool_img_comp">Image Compressor</h3>
+                <span class="text-xs text-emerald-300 font-medium">Media</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_img_comp_desc">Reduce image file size with real-time quality adjustment and ZIP batch export.</p>
+          </a>
+
+          <!-- Card 4 -->
+          <a href="#/image-resizer" class="block p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800/80 transition-all duration-200 group shadow-md">
+            <div class="flex items-center gap-4 mb-3">
+              <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">📐</div>
+              <div>
+                <h3 class="font-bold text-slate-100 text-base group-hover:text-blue-400 transition-colors" data-i18n="tool_img_resize">Image Resizer</h3>
+                <span class="text-xs text-blue-300 font-medium">Media</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_img_resize_desc">Resize image dimensions with aspect ratio lock and preset social media resolutions.</p>
+          </a>
+
+          <!-- Card 5 -->
+          <a href="#/pdf-merger" class="block p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800/80 transition-all duration-200 group shadow-md">
+            <div class="flex items-center gap-4 mb-3">
+              <div class="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">📄</div>
+              <div>
+                <h3 class="font-bold text-slate-100 text-base group-hover:text-rose-400 transition-colors" data-i18n="tool_pdf_merge">PDF Merger</h3>
+                <span class="text-xs text-rose-300 font-medium">Documents</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_pdf_merge_desc">Combine multiple PDF files in custom page order entirely within your browser.</p>
+          </a>
+
+          <!-- Card 6 -->
+          <a href="#/password-generator" class="block p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800/80 transition-all duration-200 group shadow-md">
+            <div class="flex items-center gap-4 mb-3">
+              <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">🔐</div>
+              <div>
+                <h3 class="font-bold text-slate-100 text-base group-hover:text-amber-400 transition-colors" data-i18n="tool_pwd_gen">Password Generator</h3>
+                <span class="text-xs text-amber-300 font-medium">Security</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_pwd_gen_desc">Generate secure random passwords or readable passphrases with strength meter.</p>
+          </a>
+
+          <!-- Card 7 -->
+          <a href="#/random-picker" class="block p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800/80 transition-all duration-200 group shadow-md">
+            <div class="flex items-center gap-4 mb-3">
+              <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">🎲</div>
+              <div>
+                <h3 class="font-bold text-slate-100 text-base group-hover:text-pink-400 transition-colors" data-i18n="tool_random_picker">Random Picker</h3>
+                <span class="text-xs text-pink-300 font-medium">Decision</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_picker_desc">Draw random choices or raffle winners with an animated roulette and sound effects.</p>
+          </a>
+
+          <!-- Card 8 -->
+          <a href="#/countdown" class="block p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800/80 transition-all duration-200 group shadow-md">
+            <div class="flex items-center gap-4 mb-3">
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">⏱️</div>
+              <div>
+                <h3 class="font-bold text-slate-100 text-base group-hover:text-cyan-400 transition-colors" data-i18n="tool_timer">Countdown & Timer</h3>
+                <span class="text-xs text-cyan-300 font-medium">Time</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_timer_desc">Track D-Day target dates, Pomodoro focus timers, and millisecond stopwatch laps.</p>
+          </a>
+
+          <!-- Card 9 -->
+          <a href="#/date-calc" class="block p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800/80 transition-all duration-200 group shadow-md">
+            <div class="flex items-center gap-4 mb-3">
+              <div class="w-12 h-12 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">📅</div>
+              <div>
+                <h3 class="font-bold text-slate-100 text-base group-hover:text-teal-400 transition-colors" data-i18n="tool_date_calc">Date Calculator</h3>
+                <span class="text-xs text-teal-300 font-medium">Calculator</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_date_calc_desc">Calculate intervals, working days (excluding weekends), and target date offsets.</p>
+          </a>
+
+          <!-- Card 10 -->
+          <a href="#/unit-converter" class="block p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800/80 transition-all duration-200 group shadow-md">
+            <div class="flex items-center gap-4 mb-3">
+              <div class="w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">🔢</div>
+              <div>
+                <h3 class="font-bold text-slate-100 text-base group-hover:text-violet-400 transition-colors" data-i18n="tool_unit_conv">Unit Converter</h3>
+                <span class="text-xs text-violet-300 font-medium">Converter</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_unit_conv_desc">Convert units for Length, Area, Weight, Temperature, Speed, and Data storage.</p>
+          </a>
+
+        </div>
+      </section>
+
+
+      <!-- View 1: QR Generator -->
+      <section id="view-qr-generator" class="view-section hidden space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <span>🔲</span> <span data-i18n="tool_qr_gen">QR Code Generator</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1" data-i18n="qr_gen_sub">Generate QR codes for text, links, Wi-Fi, and contacts.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-5">
+            <div class="flex border-b border-slate-800 space-x-4">
+              <button id="qr-tab-text" class="qr-type-btn py-2 text-xs font-bold border-b-2 border-indigo-500 text-indigo-400" data-type="text">Text / URL</button>
+              <button id="qr-tab-wifi" class="qr-type-btn py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200" data-type="wifi">Wi-Fi Network</button>
+              <button id="qr-tab-vcard" class="qr-type-btn py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200" data-type="vcard">Contact (vCard)</button>
+            </div>
+
+            <div id="qr-input-group-text" class="space-y-3">
+              <label class="block text-xs font-semibold text-slate-300" data-i18n="qr_label_text">Text or URL Payload</label>
+              <textarea id="qr-text-input" rows="4" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="https://example.com or any text..."></textarea>
+            </div>
+
+            <div id="qr-input-group-wifi" class="space-y-3 hidden">
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Wi-Fi Network Name (SSID)</label>
+                <input type="text" id="qr-wifi-ssid" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100" placeholder="My Wi-Fi Name">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Password</label>
+                <input type="text" id="qr-wifi-pass" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100" placeholder="Password (leave empty if open)">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Encryption Type</label>
+                <select id="qr-wifi-type" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100">
+                  <option value="WPA">WPA / WPA2 / WPA3</option>
+                  <option value="WEP">WEP</option>
+                  <option value="nopass">None (Open Network)</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="qr-input-group-vcard" class="grid grid-cols-1 sm:grid-cols-2 gap-3 hidden">
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Full Name</label>
+                <input type="text" id="qr-vcard-name" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100" placeholder="John Doe">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Phone Number</label>
+                <input type="text" id="qr-vcard-phone" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100" placeholder="+1-555-0199">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Email Address</label>
+                <input type="email" id="qr-vcard-email" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100" placeholder="john@example.com">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Organization</label>
+                <input type="text" id="qr-vcard-org" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100" placeholder="Acme Corp">
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-slate-800 grid grid-cols-2 sm:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-1">Foreground Color</label>
+                <input type="color" id="qr-color-dark" value="#000000" class="w-full h-9 bg-slate-950 border border-slate-700 rounded-lg p-1 cursor-pointer">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-1">Background Color</label>
+                <input type="color" id="qr-color-light" value="#ffffff" class="w-full h-9 bg-slate-950 border border-slate-700 rounded-lg p-1 cursor-pointer">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-1">Error Correction</label>
+                <select id="qr-ecl" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2 py-2 text-xs text-slate-100">
+                  <option value="L">L (7% recovery)</option>
+                  <option value="M">M (15% recovery)</option>
+                  <option value="Q">Q (25% recovery)</option>
+                  <option value="H" selected>H (30% High)</option>
+                </select>
+              </div>
+            </div>
+
+            <button id="qr-generate-btn" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm shadow-lg shadow-indigo-500/25 transition" data-i18n="qr_btn_generate">
+              ✨ Generate QR Code
+            </button>
+          </div>
+
+          <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col items-center justify-center text-center space-y-4">
+            <div id="qr-preview-box" class="p-4 bg-white rounded-2xl shadow-inner min-w-[220px] min-h-[220px] flex items-center justify-center">
+              <span class="text-xs text-slate-400">QR Code Preview</span>
+            </div>
+
+            <div class="flex flex-wrap gap-2 w-full pt-2">
+              <button id="qr-download-png" class="flex-1 py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold transition flex items-center justify-center gap-1.5" data-i18n="btn_dl_png">
+                <span>💾 Download PNG</span>
+              </button>
+              <button id="qr-copy-img" class="flex-1 py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold transition flex items-center justify-center gap-1.5" data-i18n="btn_copy_img">
+                <span>📋 Copy Image</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- View 2: QR Scanner -->
+      <section id="view-qr-scanner" class="view-section hidden space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <span>📷</span> <span data-i18n="tool_qr_scan">QR Code Scanner</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1" data-i18n="qr_scan_sub">Scan QR codes from image file uploads or live camera streams.</p>
+          </div>
+        </div>
+
+        <div class="flex border-b border-slate-800 space-x-4">
+          <button id="scanner-mode-file-btn" class="py-2 text-xs font-bold border-b-2 border-indigo-500 text-indigo-400">📂 Upload Image File</button>
+          <button id="scanner-mode-cam-btn" class="py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200">🎥 Live Camera Stream</button>
+        </div>
+
+        <div id="scanner-file-container" class="space-y-4">
+          <div id="qr-dropzone" class="border-2 border-dashed border-slate-700 hover:border-indigo-500 bg-slate-900/50 rounded-2xl p-8 text-center cursor-pointer transition">
+            <div class="text-4xl mb-2">📥</div>
+            <p class="text-sm font-semibold text-slate-200" data-i18n="qr_scan_dropzone">Drag & Drop QR image or click to browse</p>
+            <p class="text-xs text-slate-500 mt-1">PNG, JPG, WEBP supported</p>
+            <input type="file" id="qr-file-input" accept="image/*" class="hidden">
+          </div>
+        </div>
+
+        <div id="scanner-cam-container" class="space-y-4 hidden">
+          <div class="relative bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden aspect-video max-w-xl mx-auto flex items-center justify-center">
+            <video id="qr-video" class="w-full h-full object-cover"></video>
+            <canvas id="qr-canvas" class="hidden"></canvas>
+            <div id="qr-video-overlay" class="absolute inset-0 border-2 border-indigo-500/50 pointer-events-none rounded-2xl flex items-center justify-center">
+              <div class="w-48 h-48 border-2 border-indigo-400 border-dashed rounded-xl animate-pulse"></div>
+            </div>
+          </div>
+          <div class="flex justify-center gap-3">
+            <button id="toggle-cam-btn" class="py-2 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition">
+              🎥 Start Camera
+            </button>
+            <button id="switch-cam-btn" class="py-2 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 transition">
+              🔄 Switch Camera (Front/Back)
+            </button>
+          </div>
+        </div>
+
+        <div id="qr-result-box" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 hidden space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Scan Result Detected!
+            </span>
+            <button id="copy-scan-result" class="text-xs px-3 py-1.5 rounded-lg bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 transition">
+              📋 Copy Text
+            </button>
+          </div>
+          <div id="qr-result-text" class="p-3 bg-slate-950 rounded-xl text-sm font-mono text-slate-100 break-all select-all"></div>
+          <div id="qr-result-action" class="pt-2"></div>
+        </div>
+      </section>
+
+
+      <!-- View 3: Image Compressor -->
+      <section id="view-image-compressor" class="view-section hidden space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <span>🖼️</span> <span data-i18n="tool_img_comp">Image Compressor</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1" data-i18n="img_comp_sub">Compress image files locally with instant size savings preview.</p>
+          </div>
+        </div>
+
+        <div id="compress-dropzone" class="border-2 border-dashed border-slate-700 hover:border-emerald-500 bg-slate-900/50 rounded-2xl p-8 text-center cursor-pointer transition">
+          <div class="text-4xl mb-2">🖼️</div>
+          <p class="text-sm font-semibold text-slate-200" data-i18n="dropzone_img">Drag & drop images here or click to browse</p>
+          <p class="text-xs text-slate-500 mt-1">JPG, PNG, WEBP supported (Multiple files allowed)</p>
+          <input type="file" id="compress-file-input" accept="image/*" multiple class="hidden">
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <label class="text-xs font-semibold text-slate-300">Compression Quality</label>
+                <span id="quality-val" class="text-xs font-bold text-indigo-400">80%</span>
+              </div>
+              <input type="range" id="compress-quality" min="10" max="100" value="80" class="w-full cursor-pointer">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-2">Output Format</label>
+              <select id="compress-format" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none">
+                <option value="image/jpeg">JPEG (.jpg)</option>
+                <option value="image/webp" selected>WEBP (.webp - Optimal size)</option>
+                <option value="image/png">PNG (.png)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div id="compress-results-container" class="space-y-3"></div>
+
+        <div id="compress-batch-actions" class="hidden justify-end gap-3 pt-2">
+          <button id="download-all-zip" class="py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition flex items-center gap-2">
+            <span>📦 Download All as ZIP</span>
+          </button>
+        </div>
+      </section>
+
+
+      <!-- View 4: Image Resizer -->
+      <section id="view-image-resizer" class="view-section hidden space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <span>📐</span> <span data-i18n="tool_img_resize">Image Resizer</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">Resize image dimensions in pixels or percentages.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-7 space-y-4">
+            <div id="resize-dropzone" class="border-2 border-dashed border-slate-700 hover:border-blue-500 bg-slate-900/50 rounded-2xl p-6 text-center cursor-pointer transition">
+              <div class="text-3xl mb-2">📏</div>
+              <p class="text-sm font-semibold text-slate-200">Select Image to Resize</p>
+              <input type="file" id="resize-file-input" accept="image/*" class="hidden">
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-2">Preset Resolutions</label>
+                <div class="flex flex-wrap gap-2">
+                  <button class="resize-preset-btn text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300" data-w="1920" data-h="1080">FHD (1920x1080)</button>
+                  <button class="resize-preset-btn text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300" data-w="1280" data-h="720">HD (1280x720)</button>
+                  <button class="resize-preset-btn text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300" data-w="1080" data-h="1080">Square (1080x1080)</button>
+                  <button class="resize-preset-btn text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300" data-w="512" data-h="512">Avatar (512x512)</button>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4 pt-2">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Width (px)</label>
+                  <input type="number" id="resize-width" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100" placeholder="Width">
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Height (px)</label>
+                  <input type="number" id="resize-height" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100" placeholder="Height">
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between pt-2">
+                <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+                  <input type="checkbox" id="resize-aspect-ratio" checked class="rounded bg-slate-950 border-slate-700 text-blue-600 focus:ring-blue-500">
+                  <span>Lock Aspect Ratio</span>
+                </label>
+
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-slate-400">Format:</span>
+                  <select id="resize-format" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-xs text-slate-200">
+                    <option value="image/png">PNG</option>
+                    <option value="image/jpeg">JPEG</option>
+                    <option value="image/webp">WEBP</option>
+                  </select>
+                </div>
+              </div>
+
+              <button id="resize-execute-btn" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg transition">
+                📐 Resize & Download
+              </button>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col items-center justify-center text-center">
+            <div id="resize-preview-box" class="max-w-full max-h-[300px] overflow-hidden rounded-xl border border-slate-800 p-2 flex items-center justify-center">
+              <span class="text-xs text-slate-500">Image preview will appear here</span>
+            </div>
+            <div id="resize-info-text" class="text-xs text-slate-400 mt-3"></div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- View 5: PDF Merger -->
+      <section id="view-pdf-merger" class="view-section hidden space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <span>📄</span> <span data-i18n="tool_pdf_merge">PDF Merger</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">Combine multiple PDF documents into a single document.</p>
+          </div>
+        </div>
+
+        <div id="pdf-dropzone" class="border-2 border-dashed border-slate-700 hover:border-rose-500 bg-slate-900/50 rounded-2xl p-8 text-center cursor-pointer transition">
+          <div class="text-4xl mb-2">📑</div>
+          <p class="text-sm font-semibold text-slate-200">Drag & drop PDF files here or click to browse</p>
+          <input type="file" id="pdf-file-input" accept="application/pdf" multiple class="hidden">
+        </div>
+
+        <div id="pdf-file-list" class="space-y-3"></div>
+
+        <div id="pdf-action-bar" class="hidden flex justify-between items-center pt-3 border-t border-slate-800">
+          <button id="pdf-clear-all" class="text-xs px-3 py-2 rounded-xl bg-slate-800 text-slate-400 hover:text-rose-400 transition">
+            🗑️ Clear All
+          </button>
+          <button id="pdf-merge-btn" class="py-3 px-6 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-sm shadow-lg shadow-rose-500/20 transition flex items-center gap-2">
+            <span>✨ Merge PDFs Now</span>
+          </button>
+        </div>
+      </section>
+
+
+      <!-- View 6: Password Generator -->
+      <section id="view-password-generator" class="view-section hidden space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <span>🔐</span> <span data-i18n="tool_pwd_gen">Password Generator</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">Generate cryptographically secure passwords and readable passphrases.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-5">
+            <div class="flex border-b border-slate-800 space-x-4">
+              <button id="pwd-mode-random-btn" class="py-2 text-xs font-bold border-b-2 border-amber-500 text-amber-400">🔑 Random Password</button>
+              <button id="pwd-mode-passphrase-btn" class="py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200">📝 Passphrase (Memorable Words)</button>
+            </div>
+
+            <div id="pwd-group-random" class="space-y-4">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <label class="text-xs font-semibold text-slate-300">Password Length</label>
+                  <span id="pwd-length-val" class="text-xs font-bold text-amber-400">16 chars</span>
+                </div>
+                <input type="range" id="pwd-length" min="6" max="64" value="16" class="w-full cursor-pointer">
+              </div>
+
+              <div class="grid grid-cols-2 gap-3 pt-2">
+                <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+                  <input type="checkbox" id="pwd-opt-upper" checked class="rounded bg-slate-950 border-slate-700 text-amber-500">
+                  <span>Uppercase (A-Z)</span>
+                </label>
+                <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+                  <input type="checkbox" id="pwd-opt-lower" checked class="rounded bg-slate-950 border-slate-700 text-amber-500">
+                  <span>Lowercase (a-z)</span>
+                </label>
+                <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+                  <input type="checkbox" id="pwd-opt-num" checked class="rounded bg-slate-950 border-slate-700 text-amber-500">
+                  <span>Numbers (0-9)</span>
+                </label>
+                <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+                  <input type="checkbox" id="pwd-opt-sym" checked class="rounded bg-slate-950 border-slate-700 text-amber-500">
+                  <span>Symbols (!@#$%)</span>
+                </label>
+              </div>
+
+              <label class="flex items-center gap-2 text-xs text-slate-400 pt-1 cursor-pointer">
+                <input type="checkbox" id="pwd-opt-avoid" checked class="rounded bg-slate-950 border-slate-700 text-amber-500">
+                <span>Exclude ambiguous characters (0, O, o, 1, I, l)</span>
+              </label>
+            </div>
+
+            <div id="pwd-group-phrase" class="space-y-4 hidden">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <label class="text-xs font-semibold text-slate-300">Word Count</label>
+                  <span id="phrase-count-val" class="text-xs font-bold text-amber-400">4 words</span>
+                </div>
+                <input type="range" id="phrase-count" min="3" max="8" value="4" class="w-full cursor-pointer">
+              </div>
+            </div>
+
+            <button id="pwd-generate-btn" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-sm shadow-lg transition">
+              ⚡ Generate Password
+            </button>
+          </div>
+
+          <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between space-y-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-2">Generated Password</label>
+              <textarea id="pwd-output" readonly rows="3" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 font-mono text-base text-amber-300 focus:outline-none resize-none break-all select-all"></textarea>
+            </div>
+
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-xs font-semibold">
+                <span class="text-slate-400">Security Strength</span>
+                <span id="pwd-strength-label" class="text-emerald-400">Very Strong</span>
+              </div>
+              <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden">
+                <div id="pwd-strength-bar" class="h-full bg-emerald-500 w-full transition-all duration-300"></div>
+              </div>
+            </div>
+
+            <button id="pwd-copy-btn" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-100 font-bold text-xs transition flex items-center justify-center gap-2">
+              📋 Copy to Clipboard
+            </button>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- View 7: Random Picker -->
+      <section id="view-random-picker" class="view-section hidden space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <span>🎲</span> <span data-i18n="tool_random_picker">Random Picker</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">Draw random choices or raffle winners with animated effects.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-2">Candidate Items (One per line)</label>
+              <textarea id="picker-items-input" rows="8" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-slate-100 focus:ring-2 focus:ring-pink-500 focus:outline-none" placeholder="Pizza&#10;Burger&#10;Sushi&#10;Tacos&#10;Pasta"></textarea>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Pick Count</label>
+                <input type="number" id="picker-count" min="1" value="1" class="w-24 bg-slate-950 border border-slate-700 rounded-xl px-3 py-1.5 text-sm text-slate-100 text-center">
+              </div>
+              <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer pt-4">
+                <input type="checkbox" id="picker-allow-dup" class="rounded bg-slate-950 border-slate-700 text-pink-600">
+                <span>Allow Duplicates</span>
+              </label>
+            </div>
+
+            <button id="picker-draw-btn" class="w-full py-3 rounded-xl bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-extrabold text-sm shadow-lg shadow-pink-500/25 transition">
+              🎰 Start Random Draw!
+            </button>
+          </div>
+
+          <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col items-center justify-center min-h-[300px] text-center space-y-4">
+            <div id="picker-display-box" class="w-full py-12 px-6 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-center">
+              <span id="picker-result-text" class="text-3xl sm:text-5xl font-extrabold text-pink-400 tracking-wide animate-pulse">
+                🎲 Ready
+              </span>
+            </div>
+            <div id="picker-history" class="w-full text-xs text-slate-400 text-left pt-2"></div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- View 8: Countdown & Timer -->
+      <section id="view-countdown" class="view-section hidden space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <span>⏱️</span> <span data-i18n="tool_timer">Countdown & Timer</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">D-Day countdown clock, Pomodoro focus timer, and millisecond stopwatch.</p>
+          </div>
+        </div>
+
+        <!-- Mode Selector -->
+        <div class="flex border-b border-slate-800 space-x-4">
+          <button id="timer-tab-dday" class="py-2 text-xs font-bold border-b-2 border-cyan-500 text-cyan-400">📅 D-Day Target Countdown</button>
+          <button id="timer-tab-pomodoro" class="py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200">⏳ Quick Timer (Pomodoro)</button>
+          <button id="timer-tab-stopwatch" class="py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200">⏱️ Stopwatch</button>
+        </div>
+
+        <!-- Section 1: D-Day Countdown -->
+        <div id="timer-group-dday" class="space-y-6">
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Target Event Name</label>
+              <input type="text" id="dday-title-input" value="Target Event" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Target Date & Time</label>
+              <input type="datetime-local" id="dday-target-input" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100">
+            </div>
+            <div class="flex items-end">
+              <button id="dday-start-btn" class="w-full py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs transition">
+                Start Countdown
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center space-y-4">
+            <h3 id="dday-display-title" class="text-lg font-bold text-cyan-300">Set a Target Date Above</h3>
+            <div class="grid grid-cols-4 gap-2 sm:gap-4 max-w-xl mx-auto">
+              <div class="bg-slate-950 border border-slate-800 rounded-xl p-3">
+                <div id="dday-days" class="text-2xl sm:text-4xl font-extrabold text-white">00</div>
+                <div class="text-[11px] text-slate-400 mt-1">DAYS</div>
+              </div>
+              <div class="bg-slate-950 border border-slate-800 rounded-xl p-3">
+                <div id="dday-hours" class="text-2xl sm:text-4xl font-extrabold text-white">00</div>
+                <div class="text-[11px] text-slate-400 mt-1">HOURS</div>
+              </div>
+              <div class="bg-slate-950 border border-slate-800 rounded-xl p-3">
+                <div id="dday-mins" class="text-2xl sm:text-4xl font-extrabold text-white">00</div>
+                <div class="text-[11px] text-slate-400 mt-1">MINS</div>
+              </div>
+              <div class="bg-slate-950 border border-slate-800 rounded-xl p-3">
+                <div id="dday-secs" class="text-2xl sm:text-4xl font-extrabold text-white">00</div>
+                <div class="text-[11px] text-slate-400 mt-1">SECS</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Quick Timer -->
+        <div id="timer-group-pomodoro" class="space-y-6 hidden">
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center space-y-6">
+            <div id="pomo-display" class="text-6xl font-extrabold font-mono text-cyan-400 tracking-wider">25:00</div>
+            <div class="flex justify-center flex-wrap gap-2">
+              <button class="pomo-preset-btn text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold border border-slate-700" data-sec="300">5 Mins</button>
+              <button class="pomo-preset-btn text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold border border-slate-700" data-sec="600">10 Mins</button>
+              <button class="pomo-preset-btn text-xs px-3.5 py-2 rounded-xl bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-bold" data-sec="1500">25 Mins (Pomodoro)</button>
+              <button class="pomo-preset-btn text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold border border-slate-700" data-sec="3600">60 Mins</button>
+            </div>
+            <div class="flex justify-center gap-4">
+              <button id="pomo-start-btn" class="py-3 px-8 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-sm shadow-lg transition">Start</button>
+              <button id="pomo-reset-btn" class="py-3 px-6 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-sm border border-slate-700 transition">Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Stopwatch -->
+        <div id="timer-group-stopwatch" class="space-y-6 hidden">
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center space-y-6">
+            <div id="stopwatch-display" class="text-6xl font-extrabold font-mono text-cyan-400 tracking-wider">00:00.00</div>
+            <div class="flex justify-center gap-4">
+              <button id="sw-start-btn" class="py-3 px-8 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-sm shadow-lg transition">Start</button>
+              <button id="sw-lap-btn" class="py-3 px-6 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-sm border border-slate-700 transition">Record Lap</button>
+              <button id="sw-reset-btn" class="py-3 px-6 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-sm border border-slate-700 transition">Reset</button>
+            </div>
+            <div id="sw-laps-container" class="max-w-md mx-auto text-left space-y-1.5 text-xs font-mono text-slate-300 pt-4"></div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- View 9: Date Calculator -->
+      <section id="view-date-calc" class="view-section hidden space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <span>📅</span> <span data-i18n="tool_date_calc">Date Calculator</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">Calculate date intervals, working days, and date offsets.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+            <h3 class="font-bold text-sm text-teal-400 flex items-center gap-2">
+              <span>📏</span> Date Interval (Days & Working Days)
+            </h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-1">Start Date</label>
+                <input type="date" id="date-diff-start" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-1">End Date</label>
+                <input type="date" id="date-diff-end" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
+              </div>
+            </div>
+
+            <div id="date-diff-result" class="p-4 bg-slate-950 rounded-xl text-xs space-y-1.5 text-slate-300">
+              <div>Total Interval: <span id="diff-total-days" class="font-bold text-teal-400 text-sm">0 Days</span></div>
+              <div>Working Days (Excl. Weekends): <span id="diff-work-days" class="font-bold text-slate-200">0 Days</span></div>
+            </div>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+            <h3 class="font-bold text-sm text-teal-400 flex items-center gap-2">
+              <span>➕</span> Add / Subtract Days
+            </h3>
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Base Date</label>
+              <input type="date" id="date-offset-base" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-1">Days to Add/Subtract</label>
+                <input type="number" id="date-offset-days" value="100" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
+              </div>
+              <div class="flex items-end">
+                <button id="date-offset-calc-btn" class="w-full py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs transition">
+                  Calculate Target Date
+                </button>
+              </div>
+            </div>
+
+            <div id="date-offset-result" class="p-4 bg-slate-950 rounded-xl text-xs text-slate-300">
+              Target Date Result: <span id="offset-result-text" class="font-bold text-teal-400 text-sm">-</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- View 10: Unit Converter -->
+      <section id="view-unit-converter" class="view-section hidden space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <span>🔢</span> <span data-i18n="tool_unit_conv">Unit Converter</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">Convert values across units in real-time.</p>
+          </div>
+        </div>
+
+        <div class="flex border-b border-slate-800 space-x-4 overflow-x-auto">
+          <button class="unit-cat-btn py-2 text-xs font-bold border-b-2 border-violet-500 text-violet-400 whitespace-nowrap" data-cat="length">Length</button>
+          <button class="unit-cat-btn py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap" data-cat="area">Area (incl. Pyeong)</button>
+          <button class="unit-cat-btn py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap" data-cat="weight">Weight / Mass</button>
+          <button class="unit-cat-btn py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap" data-cat="data">Data Storage</button>
+        </div>
+
+        <div id="unit-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Application Script -->
+  <script>
+    // i18n Translation Dictionary (Default: English)
+    const translations = {
+      en: {
+        tagline: "100% Client-Side Everyday Life Utilities",
+        nav_home: "Home",
+        menu_title: "Tools Menu",
+        sidebar_heading: "Everyday Tools",
+        footer_privacy: "Zero server uploads. Your data stays in your browser.",
+        hero_title: "10 Essential Everyday Life Tools 🛠️",
+        hero_desc: "No signup or app installation required. All data processing runs 100% inside your browser for maximum privacy and zero latency.",
+        tool_qr_gen: "QR Code Generator",
+        tool_qr_scan: "QR Code Scanner",
+        tool_img_comp: "Image Compressor",
+        tool_img_resize: "Image Resizer",
+        tool_pdf_merge: "PDF Merger",
+        tool_pwd_gen: "Password Generator",
+        tool_random_picker: "Random Picker",
+        tool_timer: "Countdown & Timer",
+        tool_date_calc: "Date Calculator",
+        tool_unit_conv: "Unit Converter",
+        card_qr_gen_desc: "Generate customizable QR codes for text, URLs, Wi-Fi, and vCards with PNG/SVG export.",
+        card_qr_scan_desc: "Scan QR codes from uploaded image files or real-time webcam video feed.",
+        card_img_comp_desc: "Reduce image file size with real-time quality adjustment and ZIP batch export.",
+        card_img_resize_desc: "Resize image dimensions with aspect ratio lock and preset resolutions.",
+        card_pdf_merge_desc: "Combine multiple PDF files in custom page order entirely within your browser.",
+        card_pwd_gen_desc: "Generate secure random passwords or readable passphrases with strength meter.",
+        card_picker_desc: "Draw random choices or raffle winners with an animated roulette and sound effects.",
+        card_timer_desc: "Track D-Day target dates, Pomodoro focus timers, and millisecond stopwatch laps.",
+        card_date_calc_desc: "Calculate intervals, working days (excluding weekends), and target date offsets.",
+        card_unit_conv_desc: "Convert units for Length, Area, Weight, Speed, and Data storage.",
+        qr_gen_sub: "Generate QR codes for text, links, Wi-Fi, and contacts.",
+        qr_label_text: "Text or URL Payload",
+        qr_btn_generate: "✨ Generate QR Code",
+        btn_dl_png: "💾 Download PNG",
+        btn_copy_img: "📋 Copy Image",
+        qr_scan_sub: "Scan QR codes from image file uploads or live camera streams.",
+        qr_scan_dropzone: "Drag & Drop QR image or click to browse",
+        dropzone_img: "Drag & drop images here or click to browse"
+      },
+      ko: {
+        tagline: "100% 클라이언트 사이드 실생활 도구 모음",
+        nav_home: "홈 대시보드",
+        menu_title: "도구 목록",
+        sidebar_heading: "실생활 도구 바로가기",
+        footer_privacy: "서버 전송 없이 브라우저 내에서만 안전하게 동작합니다.",
+        hero_title: "실생활에 꼭 필요한 10가지 스마트 도구 🛠️",
+        hero_desc: "별도의 회원가입이나 앱 설치 없이 브라우저에서 바로 사용하세요. 개인정보나 작업한 파일은 서버로 절대 전송되지 않습니다.",
+        tool_qr_gen: "QR 코드 생성기",
+        tool_qr_scan: "QR 코드 스캐너",
+        tool_img_comp: "이미지 압축기",
+        tool_img_resize: "이미지 리사이저",
+        tool_pdf_merge: "PDF 병합기",
+        tool_pwd_gen: "비밀번호 생성기",
+        tool_random_picker: "랜덤 추첨기",
+        tool_timer: "카운트다운 / 타이머",
+        tool_date_calc: "날짜 계산기",
+        tool_unit_conv: "단위 변환기",
+        card_qr_gen_desc: "텍스트, URL, Wi-Fi 접속 정보, 명함(vCard)을 간편하게 QR 코드로 만들고 저장합니다.",
+        card_qr_scan_desc: "스마트폰 웹캠 실시간 카메라 스캔 또는 QR 이미지 파일 업로드로 내용을 확인합니다.",
+        card_img_comp_desc: "화질 손상을 최소화하여 이미지 용량을 수십 % 압축합니다. ZIP 다운로드 지원.",
+        card_img_resize_desc: "원하는 해상도(px)나 비율(%)로 이미지를 변경하고 웹용 확장자로 전환합니다.",
+        card_pdf_merge_desc: "여러 개의 PDF 문서를 끌어다 놓아 원하는 순서대로 하나로 안전하게 합칩니다.",
+        card_pwd_gen_desc: "강력한 난수 기반 보안 비밀번호 및 읽기 쉬운 단어 조합 패스프레이즈를 생성합니다.",
+        card_picker_desc: "점심 메뉴, 순서 정하기, 이벤트 당첨자를 긴장감 있는 애니메이션으로 추첨합니다.",
+        card_timer_desc: "중요한 날 D-Day 카운트다운, 뽀모도로 타이머 및 랩타임 측정이 가능한 스톱워치.",
+        card_date_calc_desc: "두 날짜 사이의 일수/평일 계산, 100일 후 날짜 계산 및 D-Day 메모 관리 기능.",
+        card_unit_conv_desc: "길이, 넓이(평), 무게, 온도, 데이터, 속도 등 모든 단위값을 한눈에 동시 변환합니다.",
+        qr_gen_sub: "원하는 입력값으로 QR 코드를 맞춤 생성하세요.",
+        qr_label_text: "내용 또는 URL 주소",
+        qr_btn_generate: "✨ QR 코드 생성하기",
+        btn_dl_png: "💾 PNG 다운로드",
+        btn_copy_img: "📋 이미지 복사",
+        qr_scan_sub: "이미지 업로드 또는 스마트폰/웹캠 카메라로 실시간 스캔하세요.",
+        qr_scan_dropzone: "QR 코드 이미지를 드래그하거나 클릭하여 선택하세요",
+        dropzone_img: "압축할 이미지를 여기에 끌어다 놓거나 클릭하세요"
+      }
+    };
+
+    let currentLang = localStorage.getItem('lifetools_lang') || 'en';
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('lifetools_lang', lang);
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+
+      const btnEn = document.getElementById('lang-btn-en');
+      const btnKo = document.getElementById('lang-btn-ko');
+      if (lang === 'en') {
+        btnEn.className = 'px-2.5 py-1 rounded-lg text-xs font-bold transition bg-indigo-600 text-white';
+        btnKo.className = 'px-2.5 py-1 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white';
+      } else {
+        btnKo.className = 'px-2.5 py-1 rounded-lg text-xs font-bold transition bg-indigo-600 text-white';
+        btnEn.className = 'px-2.5 py-1 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white';
+      }
+    }
+
+    document.getElementById('lang-btn-en').addEventListener('click', () => setLanguage('en'));
+    document.getElementById('lang-btn-ko').addEventListener('click', () => setLanguage('ko'));
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const bgClass = type === 'error' ? 'bg-rose-900/90 border-rose-500' : 'bg-slate-800/90 border-indigo-500';
+      toast.className = `pointer-events-auto flex items-center gap-2 px-4 py-3 rounded-xl border text-slate-100 text-xs font-semibold shadow-xl backdrop-blur-md transition-all duration-300 transform translate-y-2 opacity-0 ${bgClass}`;
+      toast.innerHTML = `<span>${type === 'error' ? '❌' : '✅'}</span> <span>${message}</span>`;
+      container.appendChild(toast);
+      
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    function handleRoute() {
+      const hash = window.location.hash || '#/';
+      document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.nav-item').forEach(el => {
+        el.classList.remove('bg-indigo-600/20', 'text-indigo-400', 'font-bold');
+      });
+
+      let targetViewId = 'view-home';
+      if (hash.startsWith('#/')) {
+        const viewName = hash.replace('#/', '');
+        if (viewName && document.getElementById(`view-${viewName}`)) {
+          targetViewId = `view-${viewName}`;
+        }
+      }
+
+      document.getElementById(targetViewId).classList.remove('hidden');
+
+      const activeNav = document.querySelector(`.nav-item[data-path="${hash}"]`);
+      if (activeNav) {
+        activeNav.classList.add('bg-indigo-600/20', 'text-indigo-400', 'font-bold');
+      }
+
+      document.getElementById('sidebar-drawer').classList.add('-translate-x-full');
+      document.getElementById('mobile-drawer-overlay').classList.add('hidden');
+      window.scrollTo(0, 0);
+    }
+
+    window.addEventListener('hashchange', handleRoute);
+    window.addEventListener('DOMContentLoaded', () => {
+      setLanguage(currentLang);
+      handleRoute();
+      initQRGenerator();
+      initQRScanner();
+      initImageCompressor();
+      initImageResizer();
+      initPDFMerger();
+      initPasswordGenerator();
+      initRandomPicker();
+      initCountdownSuite();
+      initDateCalculator();
+      initUnitConverter();
+    });
+
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      document.getElementById('sidebar-drawer').classList.remove('-translate-x-full');
+      document.getElementById('mobile-drawer-overlay').classList.remove('hidden');
+    });
+    document.getElementById('close-drawer-btn').addEventListener('click', () => {
+      document.getElementById('sidebar-drawer').classList.add('-translate-x-full');
+      document.getElementById('mobile-drawer-overlay').classList.add('hidden');
+    });
+    document.getElementById('mobile-drawer-overlay').addEventListener('click', () => {
+      document.getElementById('sidebar-drawer').classList.add('-translate-x-full');
+      document.getElementById('mobile-drawer-overlay').classList.add('hidden');
+    });
+
+
+    /* ==========================================================================
+       1. QR CODE GENERATOR LOGIC
+       ========================================================================== */
+    function initQRGenerator() {
+      let activeType = 'text';
+
+      document.querySelectorAll('.qr-type-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.qr-type-btn').forEach(b => {
+            b.classList.remove('border-indigo-500', 'text-indigo-400');
+            b.classList.add('border-transparent', 'text-slate-400');
+          });
+          btn.classList.remove('border-transparent', 'text-slate-400');
+          btn.classList.add('border-indigo-500', 'text-indigo-400');
+
+          activeType = btn.dataset.type;
+          document.getElementById('qr-input-group-text').classList.toggle('hidden', activeType !== 'text');
+          document.getElementById('qr-input-group-wifi').classList.toggle('hidden', activeType !== 'wifi');
+          document.getElementById('qr-input-group-vcard').classList.toggle('hidden', activeType !== 'vcard');
+        });
+      });
+
+      document.getElementById('qr-generate-btn').addEventListener('click', generateQR);
+
+      function generateQR() {
+        let payload = '';
+        if (activeType === 'text') {
+          payload = document.getElementById('qr-text-input').value.trim() || 'https://life.yocto.co.kr';
+        } else if (activeType === 'wifi') {
+          const ssid = document.getElementById('qr-wifi-ssid').value.trim();
+          const pass = document.getElementById('qr-wifi-pass').value.trim();
+          const type = document.getElementById('qr-wifi-type').value;
+          payload = `WIFI:S:${ssid};T:${type};P:${pass};;`;
+        } else if (activeType === 'vcard') {
+          const name = document.getElementById('qr-vcard-name').value.trim() || 'John Doe';
+          const phone = document.getElementById('qr-vcard-phone').value.trim();
+          const email = document.getElementById('qr-vcard-email').value.trim();
+          const org = document.getElementById('qr-vcard-org').value.trim();
+          payload = `BEGIN:VCARD\nVERSION:3.0\nN:${name}\nFN:${name}\nTEL:${phone}\nEMAIL:${email}\nORG:${org}\nEND:VCARD`;
+        }
+
+        const container = document.getElementById('qr-preview-box');
+        container.innerHTML = '';
+
+        const colorDark = document.getElementById('qr-color-dark').value;
+        const colorLight = document.getElementById('qr-color-light').value;
+        const ecl = document.getElementById('qr-ecl').value;
+
+        const correctLevels = {
+          L: QRCode.CorrectLevel.L,
+          M: QRCode.CorrectLevel.M,
+          Q: QRCode.CorrectLevel.Q,
+          H: QRCode.CorrectLevel.H
+        };
+
+        new QRCode(container, {
+          text: payload,
+          width: 200,
+          height: 200,
+          colorDark: colorDark,
+          colorLight: colorLight,
+          correctLevel: correctLevels[ecl] || QRCode.CorrectLevel.H
+        });
+        showToast(currentLang === 'ko' ? 'QR 코드가 생성되었습니다!' : 'QR Code Generated!');
+      }
+
+      document.getElementById('qr-download-png').addEventListener('click', () => {
+        const img = document.querySelector('#qr-preview-box img') || document.querySelector('#qr-preview-box canvas');
+        if (!img) return showToast('Generate a QR Code first.', 'error');
+        const src = img.tagName === 'CANVAS' ? img.toDataURL('image/png') : img.src;
+        const a = document.createElement('a');
+        a.href = src;
+        a.download = 'qrcode.png';
+        a.click();
+      });
+
+      document.getElementById('qr-copy-img').addEventListener('click', async () => {
+        const canvas = document.querySelector('#qr-preview-box canvas');
+        if (!canvas) return showToast('No canvas to copy.', 'error');
+        canvas.toBlob(blob => {
+          navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })])
+            .then(() => showToast(currentLang === 'ko' ? '클립보드 복사 완료!' : 'Image copied to clipboard!'))
+            .catch(() => showToast('Clipboard write failed.', 'error'));
+        });
+      });
+
+      generateQR();
+    }
+
+
+    /* ==========================================================================
+       2. QR CODE SCANNER LOGIC
+       ========================================================================== */
+    function initQRScanner() {
+      let isCamActive = false;
+      let currentStream = null;
+      let facingMode = 'environment';
+
+      document.getElementById('scanner-mode-file-btn').addEventListener('click', (e) => {
+        e.target.className = 'py-2 text-xs font-bold border-b-2 border-indigo-500 text-indigo-400';
+        document.getElementById('scanner-mode-cam-btn').className = 'py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200';
+        document.getElementById('scanner-file-container').classList.remove('hidden');
+        document.getElementById('scanner-cam-container').classList.add('hidden');
+        stopCamera();
+      });
+
+      document.getElementById('scanner-mode-cam-btn').addEventListener('click', (e) => {
+        e.target.className = 'py-2 text-xs font-bold border-b-2 border-indigo-500 text-indigo-400';
+        document.getElementById('scanner-mode-file-btn').className = 'py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200';
+        document.getElementById('scanner-cam-container').classList.remove('hidden');
+        document.getElementById('scanner-file-container').classList.add('hidden');
+      });
+
+      const dropzone = document.getElementById('qr-dropzone');
+      const fileInput = document.getElementById('qr-file-input');
+
+      dropzone.addEventListener('click', () => fileInput.click());
+      dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dropzone-active'); });
+      dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dropzone-active'));
+      dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('dropzone-active');
+        if (e.dataTransfer.files.length) handleQRFile(e.dataTransfer.files[0]);
+      });
+      fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length) handleQRFile(e.target.files[0]);
+      });
+
+      function handleQRFile(file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const code = jsQR(imageData.data, imageData.width, imageData.height);
+            if (code) {
+              displayScanResult(code.data);
+            } else {
+              showToast(currentLang === 'ko' ? 'QR 코드를 인식할 수 없습니다.' : 'Could not detect QR code in image.', 'error');
+            }
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function displayScanResult(text) {
+        const resultBox = document.getElementById('qr-result-box');
+        const resultText = document.getElementById('qr-result-text');
+        const resultAction = document.getElementById('qr-result-action');
+
+        resultBox.classList.remove('hidden');
+        resultText.textContent = text;
+        resultAction.innerHTML = '';
+
+        if (text.startsWith('http://') || text.startsWith('https://')) {
+          const link = document.createElement('a');
+          link.href = text;
+          link.target = '_blank';
+          link.className = 'inline-flex items-center gap-1.5 text-xs font-bold text-indigo-400 hover:underline';
+          link.innerHTML = `🔗 Open URL (${text})`;
+          resultAction.appendChild(link);
+        }
+        showToast(currentLang === 'ko' ? 'QR 스캔 성공!' : 'QR Code Scanned!');
+      }
+
+      document.getElementById('copy-scan-result').addEventListener('click', () => {
+        const text = document.getElementById('qr-result-text').textContent;
+        navigator.clipboard.writeText(text).then(() => showToast(currentLang === 'ko' ? '복사되었습니다!' : 'Copied to clipboard!'));
+      });
+
+      document.getElementById('toggle-cam-btn').addEventListener('click', () => {
+        if (isCamActive) stopCamera();
+        else startCamera();
+      });
+
+      document.getElementById('switch-cam-btn').addEventListener('click', () => {
+        facingMode = facingMode === 'environment' ? 'user' : 'environment';
+        if (isCamActive) { stopCamera(); startCamera(); }
+      });
+
+      function startCamera() {
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: facingMode } })
+          .then(stream => {
+            currentStream = stream;
+            const video = document.getElementById('qr-video');
+            video.srcObject = stream;
+            video.play();
+            isCamActive = true;
+            document.getElementById('toggle-cam-btn').textContent = '⏹️ Stop Camera';
+            requestAnimationFrame(scanVideoFrame);
+          })
+          .catch(() => showToast('Camera permission required.', 'error'));
+      }
+
+      function stopCamera() {
+        if (currentStream) {
+          currentStream.getTracks().forEach(t => t.stop());
+          currentStream = null;
+        }
+        isCamActive = false;
+        document.getElementById('toggle-cam-btn').textContent = '🎥 Start Camera';
+      }
+
+      function scanVideoFrame() {
+        if (!isCamActive) return;
+        const video = document.getElementById('qr-video');
+        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+          const canvas = document.getElementById('qr-canvas');
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const code = jsQR(imageData.data, imageData.width, imageData.height);
+          if (code) {
+            displayScanResult(code.data);
+            stopCamera();
+            return;
+          }
+        }
+        requestAnimationFrame(scanVideoFrame);
+      }
+    }
+
+
+    /* ==========================================================================
+       3. IMAGE COMPRESSOR LOGIC
+       ========================================================================== */
+    function initImageCompressor() {
+      let filesToCompress = [];
+      const dropzone = document.getElementById('compress-dropzone');
+      const fileInput = document.getElementById('compress-file-input');
+      const qualitySlider = document.getElementById('compress-quality');
+      const qualityVal = document.getElementById('quality-val');
+
+      qualitySlider.addEventListener('input', (e) => {
+        qualityVal.textContent = `${e.target.value}%`;
+      });
+
+      dropzone.addEventListener('click', () => fileInput.click());
+      dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dropzone-active'); });
+      dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dropzone-active'));
+      dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('dropzone-active');
+        if (e.dataTransfer.files.length) processCompressFiles(Array.from(e.dataTransfer.files));
+      });
+      fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length) processCompressFiles(Array.from(e.target.files));
+      });
+
+      qualitySlider.addEventListener('change', () => { if (filesToCompress.length) recompressAll(); });
+      document.getElementById('compress-format').addEventListener('change', () => { if (filesToCompress.length) recompressAll(); });
+
+      function processCompressFiles(files) {
+        filesToCompress = files.filter(f => f.type.startsWith('image/'));
+        recompressAll();
+      }
+
+      function recompressAll() {
+        const container = document.getElementById('compress-results-container');
+        container.innerHTML = '';
+        const quality = parseInt(qualitySlider.value) / 100;
+        const mimeType = document.getElementById('compress-format').value;
+
+        document.getElementById('compress-batch-actions').classList.toggle('hidden', filesToCompress.length < 2);
+
+        filesToCompress.forEach((file, idx) => {
+          const card = document.createElement('div');
+          card.className = 'bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4';
+          card.id = `compress-card-${idx}`;
+          card.innerHTML = `<div class="text-xs text-slate-400">Compressing... (${file.name})</div>`;
+          container.appendChild(card);
+
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+              const canvas = document.createElement('canvas');
+              canvas.width = img.width;
+              canvas.height = img.height;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0);
+
+              canvas.toBlob((blob) => {
+                const origKB = (file.size / 1024).toFixed(1);
+                const compKB = (blob.size / 1024).toFixed(1);
+                const savings = (((file.size - blob.size) / file.size) * 100).toFixed(1);
+
+                card.innerHTML = `
+                  <div class="flex items-center gap-3 w-full sm:w-auto">
+                    <img src="${URL.createObjectURL(blob)}" class="w-12 h-12 object-cover rounded-lg border border-slate-800">
+                    <div>
+                      <div class="text-xs font-bold text-slate-100 truncate max-w-[200px]">${file.name}</div>
+                      <div class="text-[11px] text-slate-400 mt-0.5">
+                        ${origKB} KB ➔ <span class="text-emerald-400 font-bold">${compKB} KB</span> 
+                        <span class="text-xs font-extrabold ${savings >= 0 ? 'text-emerald-400' : 'text-rose-400'}">(${savings >= 0 ? '-' : '+'}${Math.abs(savings)}%)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="${URL.createObjectURL(blob)}" download="compressed_${file.name}" class="w-full sm:w-auto py-2 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-bold transition text-center">
+                    💾 Download
+                  </a>
+                `;
+              }, mimeType, quality);
+            };
+            img.src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      document.getElementById('download-all-zip').addEventListener('click', async () => {
+        if (!filesToCompress.length) return;
+        const zip = new JSZip();
+        const quality = parseInt(qualitySlider.value) / 100;
+        const mimeType = document.getElementById('compress-format').value;
+
+        showToast('Generating ZIP file...');
+
+        const promises = filesToCompress.map((file) => {
+          return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              const img = new Image();
+              img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                canvas.toBlob((blob) => {
+                  zip.file(`compressed_${file.name}`, blob);
+                  resolve();
+                }, mimeType, quality);
+              };
+              img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+          });
+        });
+
+        await Promise.all(promises);
+        const zipBlob = await zip.generateAsync({ type: 'blob' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(zipBlob);
+        a.download = 'compressed_images.zip';
+        a.click();
+        showToast('ZIP downloaded!');
+      });
+    }
+
+
+    /* ==========================================================================
+       4. IMAGE RESIZER LOGIC
+       ========================================================================== */
+    function initImageResizer() {
+      let originalImg = null;
+      const dropzone = document.getElementById('resize-dropzone');
+      const fileInput = document.getElementById('resize-file-input');
+      const widthInput = document.getElementById('resize-width');
+      const heightInput = document.getElementById('resize-height');
+      const aspectCheckbox = document.getElementById('resize-aspect-ratio');
+
+      dropzone.addEventListener('click', () => fileInput.click());
+      fileInput.addEventListener('change', (e) => { if (e.target.files.length) loadResizeImage(e.target.files[0]); });
+
+      function loadResizeImage(file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          originalImg = new Image();
+          originalImg.onload = () => {
+            widthInput.value = originalImg.width;
+            heightInput.value = originalImg.height;
+            updatePreview();
+          };
+          originalImg.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      widthInput.addEventListener('input', () => {
+        if (originalImg && aspectCheckbox.checked && widthInput.value) {
+          const ratio = originalImg.height / originalImg.width;
+          heightInput.value = Math.round(widthInput.value * ratio);
+        }
+        updatePreview();
+      });
+
+      heightInput.addEventListener('input', () => {
+        if (originalImg && aspectCheckbox.checked && heightInput.value) {
+          const ratio = originalImg.width / originalImg.height;
+          widthInput.value = Math.round(heightInput.value * ratio);
+        }
+        updatePreview();
+      });
+
+      document.querySelectorAll('.resize-preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          widthInput.value = btn.dataset.w;
+          heightInput.value = btn.dataset.h;
+          updatePreview();
+        });
+      });
+
+      function updatePreview() {
+        if (!originalImg) return;
+        const previewBox = document.getElementById('resize-preview-box');
+        previewBox.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = originalImg.src;
+        img.className = 'max-h-[250px] object-contain rounded-lg';
+        previewBox.appendChild(img);
+
+        document.getElementById('resize-info-text').textContent = `Original: ${originalImg.width}x${originalImg.height} ➔ New: ${widthInput.value || 0}x${heightInput.value || 0}`;
+      }
+
+      document.getElementById('resize-execute-btn').addEventListener('click', () => {
+        if (!originalImg) return showToast('Please select an image first.', 'error');
+        const w = parseInt(widthInput.value);
+        const h = parseInt(heightInput.value);
+        if (!w || !h) return showToast('Enter valid width and height.', 'error');
+
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(originalImg, 0, 0, w, h);
+
+        const format = document.getElementById('resize-format').value;
+        const ext = format === 'image/jpeg' ? 'jpg' : (format === 'image/webp' ? 'webp' : 'png');
+
+        canvas.toBlob((blob) => {
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = `resized_${w}x${h}.${ext}`;
+          a.click();
+          showToast('Image Resized successfully!');
+        }, format);
+      });
+    }
+
+
+    /* ==========================================================================
+       5. PDF MERGER LOGIC
+       ========================================================================== */
+    function initPDFMerger() {
+      let pdfFiles = [];
+      const dropzone = document.getElementById('pdf-dropzone');
+      const fileInput = document.getElementById('pdf-file-input');
+
+      dropzone.addEventListener('click', () => fileInput.click());
+      dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dropzone-active'); });
+      dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dropzone-active'));
+      dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('dropzone-active');
+        if (e.dataTransfer.files.length) addPDFFiles(Array.from(e.dataTransfer.files));
+      });
+      fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length) addPDFFiles(Array.from(e.target.files));
+      });
+
+      function addPDFFiles(files) {
+        const valid = files.filter(f => f.type === 'application/pdf');
+        pdfFiles = pdfFiles.concat(valid);
+        renderPDFList();
+      }
+
+      function renderPDFList() {
+        const list = document.getElementById('pdf-file-list');
+        list.innerHTML = '';
+        document.getElementById('pdf-action-bar').classList.toggle('hidden', pdfFiles.length === 0);
+
+        pdfFiles.forEach((file, idx) => {
+          const item = document.createElement('div');
+          item.className = 'bg-slate-900 border border-slate-800 rounded-xl p-3.5 flex items-center justify-between gap-3';
+          item.innerHTML = `
+            <div class="flex items-center gap-3">
+              <span class="text-xl">📄</span>
+              <div>
+                <div class="text-xs font-bold text-slate-100">${file.name}</div>
+                <div class="text-[11px] text-slate-400">${(file.size / 1024 / 1024).toFixed(2)} MB</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button onclick="movePDF(${idx}, -1)" class="p-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs">⬆️</button>
+              <button onclick="movePDF(${idx}, 1)" class="p-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs">⬇️</button>
+              <button onclick="removePDF(${idx})" class="p-1.5 rounded-lg bg-slate-800 text-rose-400 hover:bg-slate-700 text-xs">🗑️</button>
+            </div>
+          `;
+          list.appendChild(item);
+        });
+      }
+
+      window.movePDF = (idx, dir) => {
+        const target = idx + dir;
+        if (target < 0 || target >= pdfFiles.length) return;
+        const temp = pdfFiles[idx];
+        pdfFiles[idx] = pdfFiles[target];
+        pdfFiles[target] = temp;
+        renderPDFList();
+      };
+
+      window.removePDF = (idx) => {
+        pdfFiles.splice(idx, 1);
+        renderPDFList();
+      };
+
+      document.getElementById('pdf-clear-all').addEventListener('click', () => {
+        pdfFiles = [];
+        renderPDFList();
+      });
+
+      document.getElementById('pdf-merge-btn').addEventListener('click', async () => {
+        if (pdfFiles.length < 2) return showToast('Please select at least 2 PDF files to merge.', 'error');
+        showToast('Merging PDF files...');
+
+        try {
+          const mergedPdf = await PDFLib.PDFDocument.create();
+          for (const file of pdfFiles) {
+            const bytes = await file.arrayBuffer();
+            const pdfDoc = await PDFLib.PDFDocument.load(bytes);
+            const copiedPages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
+            copiedPages.forEach(page => mergedPdf.addPage(page));
+          }
+
+          const pdfBytes = await mergedPdf.save();
+          const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = 'merged_document.pdf';
+          a.click();
+          showToast('PDF files merged successfully!');
+        } catch (err) {
+          showToast('Error merging PDF files.', 'error');
+        }
+      });
+    }
+
+
+    /* ==========================================================================
+       6. PASSWORD GENERATOR LOGIC
+       ========================================================================== */
+    function initPasswordGenerator() {
+      let isRandomMode = true;
+      const wordList = ['apple','beach','cloud','dance','eagle','forest','grape','house','island','juice','knight','lemon','music','nature','orange','planet','rocket','silver','tiger','umbra','velvet','window','xenon','yellow','zebra','amber','blitz','crystal','dragon','ember','frost','galaxy','harbor','iris','jasper','kodiak','lunar','matrix','nebula','oasis','phoenix','quartz','river','shadow','timber','unity','vortex','winter','zenith'];
+
+      document.getElementById('pwd-mode-random-btn').addEventListener('click', (e) => {
+        isRandomMode = true;
+        e.target.className = 'py-2 text-xs font-bold border-b-2 border-amber-500 text-amber-400';
+        document.getElementById('pwd-mode-passphrase-btn').className = 'py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200';
+        document.getElementById('pwd-group-random').classList.remove('hidden');
+        document.getElementById('pwd-group-phrase').classList.add('hidden');
+        generatePassword();
+      });
+
+      document.getElementById('pwd-mode-passphrase-btn').addEventListener('click', (e) => {
+        isRandomMode = false;
+        e.target.className = 'py-2 text-xs font-bold border-b-2 border-amber-500 text-amber-400';
+        document.getElementById('pwd-mode-random-btn').className = 'py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200';
+        document.getElementById('pwd-group-phrase').classList.remove('hidden');
+        document.getElementById('pwd-group-random').classList.add('hidden');
+        generatePassword();
+      });
+
+      const lenSlider = document.getElementById('pwd-length');
+      lenSlider.addEventListener('input', (e) => {
+        document.getElementById('pwd-length-val').textContent = `${e.target.value} chars`;
+      });
+
+      const phraseSlider = document.getElementById('phrase-count');
+      phraseSlider.addEventListener('input', (e) => {
+        document.getElementById('phrase-count-val').textContent = `${e.target.value} words`;
+      });
+
+      document.getElementById('pwd-generate-btn').addEventListener('click', generatePassword);
+
+      function generatePassword() {
+        let result = '';
+        if (isRandomMode) {
+          const len = parseInt(lenSlider.value);
+          let chars = '';
+          if (document.getElementById('pwd-opt-upper').checked) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+          if (document.getElementById('pwd-opt-lower').checked) chars += 'abcdefghijklmnopqrstuvwxyz';
+          if (document.getElementById('pwd-opt-num').checked) chars += '0123456789';
+          if (document.getElementById('pwd-opt-sym').checked) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+          if (document.getElementById('pwd-opt-avoid').checked) {
+            chars = chars.replace(/[0Oo1Il]/g, '');
+          }
+
+          if (!chars) return showToast('Please select at least one character type.', 'error');
+
+          const rand = new Uint32Array(len);
+          window.crypto.getRandomValues(rand);
+          for (let i = 0; i < len; i++) {
+            result += chars[rand[i] % chars.length];
+          }
+        } else {
+          const count = parseInt(phraseSlider.value);
+          const rand = new Uint32Array(count);
+          window.crypto.getRandomValues(rand);
+          const chosen = [];
+          for (let i = 0; i < count; i++) {
+            chosen.push(wordList[rand[i] % wordList.length]);
+          }
+          result = chosen.join('-');
+        }
+
+        document.getElementById('pwd-output').value = result;
+        updateStrength(result);
+      }
+
+      function updateStrength(pwd) {
+        const bar = document.getElementById('pwd-strength-bar');
+        const label = document.getElementById('pwd-strength-label');
+        const len = pwd.length;
+
+        if (len >= 16) {
+          bar.className = 'h-full bg-emerald-500 w-full';
+          label.textContent = 'Very Strong';
+          label.className = 'text-emerald-400';
+        } else if (len >= 12) {
+          bar.className = 'h-full bg-indigo-500 w-3/4';
+          label.textContent = 'Strong';
+          label.className = 'text-indigo-400';
+        } else if (len >= 8) {
+          bar.className = 'h-full bg-amber-500 w-1/2';
+          label.textContent = 'Moderate';
+          label.className = 'text-amber-400';
+        } else {
+          bar.className = 'h-full bg-rose-500 w-1/4';
+          label.textContent = 'Weak';
+          label.className = 'text-rose-400';
+        }
+      }
+
+      document.getElementById('pwd-copy-btn').addEventListener('click', () => {
+        const out = document.getElementById('pwd-output');
+        if (!out.value) return;
+        navigator.clipboard.writeText(out.value).then(() => showToast('Copied password to clipboard!'));
+      });
+
+      generatePassword();
+    }
+
+
+    /* ==========================================================================
+       7. RANDOM PICKER LOGIC
+       ========================================================================== */
+    function initRandomPicker() {
+      const drawBtn = document.getElementById('picker-draw-btn');
+      const resultText = document.getElementById('picker-result-text');
+
+      function playClickSound() {
+        try {
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = 600;
+          gain.gain.setValueAtTime(0.1, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.05);
+        } catch (e) {}
+      }
+
+      drawBtn.addEventListener('click', () => {
+        const input = document.getElementById('picker-items-input').value.trim();
+        if (!input) return showToast('Please enter candidate items.', 'error');
+
+        const items = input.split('\n').map(s => s.trim()).filter(Boolean);
+        if (!items.length) return;
+
+        const count = parseInt(document.getElementById('picker-count').value) || 1;
+        const allowDup = document.getElementById('picker-allow-dup').checked;
+
+        if (!allowDup && count > items.length) {
+          return showToast('Pick count cannot exceed unique items.', 'error');
+        }
+
+        let step = 0;
+        const maxSteps = 25;
+        const interval = setInterval(() => {
+          const tempWinner = items[Math.floor(Math.random() * items.length)];
+          resultText.textContent = tempWinner;
+          playClickSound();
+          step++;
+
+          if (step >= maxSteps) {
+            clearInterval(interval);
+            const winners = [];
+            const pool = [...items];
+
+            for (let i = 0; i < count; i++) {
+              const idx = Math.floor(Math.random() * pool.length);
+              winners.push(pool[idx]);
+              if (!allowDup) pool.splice(idx, 1);
+            }
+
+            resultText.textContent = winners.join(' 🎉 ');
+            showToast(`Winner(s): ${winners.join(', ')}`);
+          }
+        }, 80);
+      });
+    }
+
+
+    /* ==========================================================================
+       8. COUNTDOWN & TIMER LOGIC (ROBUST FIXED VERSION)
+       ========================================================================== */
+    function initCountdownSuite() {
+      // 1. D-Day Timer
+      let ddayInterval = null;
+      document.getElementById('dday-start-btn').addEventListener('click', () => {
+        const title = document.getElementById('dday-title-input').value || 'Target Event';
+        const targetVal = document.getElementById('dday-target-input').value;
+        if (!targetVal) return showToast('Please select a target date and time.', 'error');
+
+        const targetDate = new Date(targetVal).getTime();
+        document.getElementById('dday-display-title').textContent = title;
+
+        if (ddayInterval) clearInterval(ddayInterval);
+
+        function updateDDay() {
+          const now = new Date().getTime();
+          const diff = targetDate - now;
+
+          if (diff <= 0) {
+            clearInterval(ddayInterval);
+            document.getElementById('dday-days').textContent = '00';
+            document.getElementById('dday-hours').textContent = '00';
+            document.getElementById('dday-mins').textContent = '00';
+            document.getElementById('dday-secs').textContent = '00';
+            showToast(`🎉 ${title} has arrived!`);
+            return;
+          }
+
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+          document.getElementById('dday-days').textContent = String(days).padStart(2, '0');
+          document.getElementById('dday-hours').textContent = String(hours).padStart(2, '0');
+          document.getElementById('dday-mins').textContent = String(mins).padStart(2, '0');
+          document.getElementById('dday-secs').textContent = String(secs).padStart(2, '0');
+        }
+
+        updateDDay();
+        ddayInterval = setInterval(updateDDay, 1000);
+      });
+
+      // 2. Quick Pomodoro Timer
+      let pomoInitialSecs = 1500;
+      let pomoSecs = 1500;
+      let pomoInterval = null;
+      let pomoRunning = false;
+
+      function playChime() {
+        try {
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+          osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.2); // E5
+          osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.4); // G5
+          gain.gain.setValueAtTime(0.3, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1.2);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 1.2);
+        } catch(e) {}
+      }
+
+      document.querySelectorAll('.pomo-preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (pomoInterval) clearInterval(pomoInterval);
+          pomoRunning = false;
+          pomoInitialSecs = parseInt(btn.dataset.sec);
+          pomoSecs = pomoInitialSecs;
+          document.getElementById('pomo-start-btn').textContent = currentLang === 'ko' ? '시작' : 'Start';
+          updatePomoDisplay();
+        });
+      });
+
+      document.getElementById('pomo-start-btn').addEventListener('click', () => {
+        if (pomoRunning) {
+          clearInterval(pomoInterval);
+          pomoRunning = false;
+          document.getElementById('pomo-start-btn').textContent = currentLang === 'ko' ? '시작' : 'Start';
+        } else {
+          if (pomoSecs <= 0) pomoSecs = pomoInitialSecs;
+          pomoRunning = true;
+          document.getElementById('pomo-start-btn').textContent = currentLang === 'ko' ? '일시정지' : 'Pause';
+          pomoInterval = setInterval(() => {
+            pomoSecs--;
+            updatePomoDisplay();
+            if (pomoSecs <= 0) {
+              clearInterval(pomoInterval);
+              pomoRunning = false;
+              document.getElementById('pomo-start-btn').textContent = currentLang === 'ko' ? '시작' : 'Start';
+              playChime();
+              showToast(currentLang === 'ko' ? '🔔 타이머 시간 종료!' : '🔔 Timer finished!');
+            }
+          }, 1000);
+        }
+      });
+
+      document.getElementById('pomo-reset-btn').addEventListener('click', () => {
+        if (pomoInterval) clearInterval(pomoInterval);
+        pomoRunning = false;
+        pomoSecs = pomoInitialSecs;
+        document.getElementById('pomo-start-btn').textContent = currentLang === 'ko' ? '시작' : 'Start';
+        updatePomoDisplay();
+      });
+
+      function updatePomoDisplay() {
+        const m = Math.floor(pomoSecs / 60);
+        const s = pomoSecs % 60;
+        document.getElementById('pomo-display').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      }
+
+      // 3. Stopwatch Implementation
+      let swRunning = false;
+      let swStartTime = 0;
+      let swElapsedTime = 0;
+      let swTimerId = null;
+      let swLaps = [];
+
+      const swDisplay = document.getElementById('stopwatch-display');
+      const swStartBtn = document.getElementById('sw-start-btn');
+      const swLapBtn = document.getElementById('sw-lap-btn');
+      const swResetBtn = document.getElementById('sw-reset-btn');
+      const swLapsContainer = document.getElementById('sw-laps-container');
+
+      function formatStopwatchTime(ms) {
+        const totalSecs = Math.floor(ms / 1000);
+        const mins = Math.floor(totalSecs / 60);
+        const secs = totalSecs % 60;
+        const hundredths = Math.floor((ms % 1000) / 10);
+        return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}.${String(hundredths).padStart(2, '0')}`;
+      }
+
+      function updateStopwatch() {
+        if (!swRunning) return;
+        const now = performance.now();
+        const currentMs = swElapsedTime + (now - swStartTime);
+        swDisplay.textContent = formatStopwatchTime(currentMs);
+        swTimerId = requestAnimationFrame(updateStopwatch);
+      }
+
+      swStartBtn.addEventListener('click', () => {
+        if (swRunning) {
+          // Pause
+          swRunning = false;
+          swElapsedTime += performance.now() - swStartTime;
+          cancelAnimationFrame(swTimerId);
+          swStartBtn.textContent = currentLang === 'ko' ? '시작' : 'Start';
+          swStartBtn.className = 'py-3 px-8 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-sm shadow-lg transition';
+        } else {
+          // Start / Resume
+          swRunning = true;
+          swStartTime = performance.now();
+          swTimerId = requestAnimationFrame(updateStopwatch);
+          swStartBtn.textContent = currentLang === 'ko' ? '일시정지' : 'Pause';
+          swStartBtn.className = 'py-3 px-8 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-sm shadow-lg transition';
+        }
+      });
+
+      swLapBtn.addEventListener('click', () => {
+        if (!swRunning && swElapsedTime === 0) return;
+        const currentMs = swRunning ? swElapsedTime + (performance.now() - swStartTime) : swElapsedTime;
+        swLaps.unshift(currentMs);
+        renderLaps();
+      });
+
+      swResetBtn.addEventListener('click', () => {
+        swRunning = false;
+        cancelAnimationFrame(swTimerId);
+        swStartTime = 0;
+        swElapsedTime = 0;
+        swLaps = [];
+        swDisplay.textContent = '00:00.00';
+        swStartBtn.textContent = currentLang === 'ko' ? '시작' : 'Start';
+        swStartBtn.className = 'py-3 px-8 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-sm shadow-lg transition';
+        swLapsContainer.innerHTML = '';
+      });
+
+      function renderLaps() {
+        swLapsContainer.innerHTML = '';
+        swLaps.forEach((lapMs, idx) => {
+          const item = document.createElement('div');
+          item.className = 'bg-slate-950 border border-slate-800 rounded-lg p-2 flex justify-between items-center';
+          item.innerHTML = `<span class="text-cyan-400 font-bold">Lap ${swLaps.length - idx}</span> <span>${formatStopwatchTime(lapMs)}</span>`;
+          swLapsContainer.appendChild(item);
+        });
+      }
+
+      // Tab switcher
+      document.getElementById('timer-tab-dday').addEventListener('click', (e) => {
+        switchTimerTab(e.target, 'timer-group-dday');
+      });
+      document.getElementById('timer-tab-pomodoro').addEventListener('click', (e) => {
+        switchTimerTab(e.target, 'timer-group-pomodoro');
+      });
+      document.getElementById('timer-tab-stopwatch').addEventListener('click', (e) => {
+        switchTimerTab(e.target, 'timer-group-stopwatch');
+      });
+
+      function switchTimerTab(btn, groupName) {
+        document.querySelectorAll('#view-countdown button[id^="timer-tab-"]').forEach(b => {
+          b.className = 'py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200';
+        });
+        btn.className = 'py-2 text-xs font-bold border-b-2 border-cyan-500 text-cyan-400';
+        document.getElementById('timer-group-dday').classList.add('hidden');
+        document.getElementById('timer-group-pomodoro').classList.add('hidden');
+        document.getElementById('timer-group-stopwatch').classList.add('hidden');
+        document.getElementById(groupName).classList.remove('hidden');
+      }
+    }
+
+
+    /* ==========================================================================
+       9. DATE CALCULATOR LOGIC
+       ========================================================================== */
+    function initDateCalculator() {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('date-diff-start').value = today;
+      document.getElementById('date-diff-end').value = today;
+      document.getElementById('date-offset-base').value = today;
+
+      document.getElementById('date-diff-start').addEventListener('change', calcDateDiff);
+      document.getElementById('date-diff-end').addEventListener('change', calcDateDiff);
+
+      function calcDateDiff() {
+        const start = new Date(document.getElementById('date-diff-start').value);
+        const end = new Date(document.getElementById('date-diff-end').value);
+
+        if (isNaN(start) || isNaN(end)) return;
+
+        const diffTime = Math.abs(end - start);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        let workDays = 0;
+        let cur = new Date(Math.min(start, end));
+        const stop = new Date(Math.max(start, end));
+
+        while (cur <= stop) {
+          const day = cur.getDay();
+          if (day !== 0 && day !== 6) workDays++;
+          cur.setDate(cur.getDate() + 1);
+        }
+
+        document.getElementById('diff-total-days').textContent = `${diffDays} Days`;
+        document.getElementById('diff-work-days').textContent = `${workDays} Days`;
+      }
+
+      document.getElementById('date-offset-calc-btn').addEventListener('click', () => {
+        const base = new Date(document.getElementById('date-offset-base').value);
+        const days = parseInt(document.getElementById('date-offset-days').value) || 0;
+        if (isNaN(base)) return;
+
+        base.setDate(base.getDate() + days);
+        const y = base.getFullYear();
+        const m = String(base.getMonth() + 1).padStart(2, '0');
+        const d = String(base.getDate()).padStart(2, '0');
+        const weekEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][base.getDay()];
+
+        document.getElementById('offset-result-text').textContent = `${y}-${m}-${d} (${weekEn})`;
+      });
+    }
+
+
+    /* ==========================================================================
+       10. UNIT CONVERTER LOGIC
+       ========================================================================== */
+    function initUnitConverter() {
+      const unitsConfig = {
+        length: [
+          { name: 'Meters (m)', ratio: 1 },
+          { name: 'Kilometers (km)', ratio: 1000 },
+          { name: 'Centimeters (cm)', ratio: 0.01 },
+          { name: 'Millimeters (mm)', ratio: 0.001 },
+          { name: 'Inches (in)', ratio: 0.0254 },
+          { name: 'Feet (ft)', ratio: 0.3048 },
+          { name: 'Yards (yd)', ratio: 0.9144 },
+          { name: 'Miles (mi)', ratio: 1609.34 }
+        ],
+        area: [
+          { name: 'Square Meters (m²)', ratio: 1 },
+          { name: 'Pyeong (평)', ratio: 3.305785 },
+          { name: 'Square Kilometers (km²)', ratio: 1000000 },
+          { name: 'Square Feet (ft²)', ratio: 0.092903 },
+          { name: 'Acres (acre)', ratio: 4046.86 }
+        ],
+        weight: [
+          { name: 'Kilograms (kg)', ratio: 1 },
+          { name: 'Grams (g)', ratio: 0.001 },
+          { name: 'Milligrams (mg)', ratio: 0.000001 },
+          { name: 'Pounds (lb)', ratio: 0.453592 },
+          { name: 'Ounces (oz)', ratio: 0.0283495 },
+          { name: 'Metric Tons (t)', ratio: 1000 }
+        ],
+        data: [
+          { name: 'Bytes (B)', ratio: 1 },
+          { name: 'Kilobytes (KB)', ratio: 1024 },
+          { name: 'Megabytes (MB)', ratio: 1048576 },
+          { name: 'Gigabytes (GB)', ratio: 1073741824 },
+          { name: 'Terabytes (TB)', ratio: 1099511627776 }
+        ]
+      };
+
+      let activeCat = 'length';
+
+      document.querySelectorAll('.unit-cat-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.unit-cat-btn').forEach(b => {
+            b.className = 'unit-cat-btn py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap';
+          });
+          btn.className = 'unit-cat-btn py-2 text-xs font-bold border-b-2 border-violet-500 text-violet-400 whitespace-nowrap';
+          activeCat = btn.dataset.cat;
+          renderUnitGrid();
+        });
+      });
+
+      function renderUnitGrid() {
+        const grid = document.getElementById('unit-grid');
+        grid.innerHTML = '';
+        const list = unitsConfig[activeCat] || [];
+
+        list.forEach((u, idx) => {
+          const card = document.createElement('div');
+          card.className = 'bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-1.5';
+          card.innerHTML = `
+            <label class="block text-xs font-semibold text-slate-400">${u.name}</label>
+            <input type="number" class="unit-input w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-violet-300 font-mono focus:outline-none" data-index="${idx}" placeholder="0">
+          `;
+          grid.appendChild(card);
+        });
+
+        document.querySelectorAll('.unit-input').forEach(input => {
+          input.addEventListener('input', (e) => {
+            const idx = parseInt(e.target.dataset.index);
+            const val = parseFloat(e.target.value);
+            if (isNaN(val)) return;
+
+            const baseVal = val * list[idx].ratio;
+            document.querySelectorAll('.unit-input').forEach((inp, i) => {
+              if (i !== idx) {
+                const converted = baseVal / list[i].ratio;
+                inp.value = Number.isInteger(converted) ? converted : converted.toFixed(4).replace(/\.?0+$/, '');
+              }
+            });
+          });
+        });
+      }
+
+      renderUnitGrid();
+    }
+  </script>
+</body>
+</html>
