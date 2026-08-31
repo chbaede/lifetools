@@ -6,10 +6,89 @@
   <title>LifeTools | Essential 100% Client-Side Web Utilities</title>
   
   <!-- Meta & SEO -->
-  <meta name="description" content="100% Private, offline-ready client-side daily tools: QR Generator/Scanner, Image Compressor, Resizer, PDF Merger, Password Generator, Random Picker, Countdown/Timer, Date Calc, Unit Converter.">
-  <meta name="keywords" content="LifeTools, QR Code Generator, QR Scanner, Image Compressor, PDF Merger, Password Generator, Random Picker, Countdown, Date Calculator, Unit Converter">
+  <meta name="description" content="100% Free, Private, Client-Side Everyday Life Utilities. QR Generator/Scanner, Image Compressor, Resizer, PDF Merger, Password Generator, Random Picker, Countdown/Pomodoro, Date Calc, Unit Converter, Currency Converter, World Clock. Zero server uploads.">
+  <meta name="keywords" content="LifeTools, QR Code Generator, QR Scanner, Image Compressor, Image Resizer, PDF Merger, Password Generator, Random Picker, Countdown Timer, Date Calculator, Unit Converter, Currency Converter, World Clock, Timezone Converter, Free Online Tools">
   <meta name="author" content="LifeTools">
-  <link rel="canonical" href="https://life.yocto.co.kr">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" id="canonical-url" href="https://life.yocto.co.kr/">
+
+  <!-- Open Graph / Facebook / Kakao -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://life.yocto.co.kr/">
+  <meta property="og:title" id="og-title" content="LifeTools | 12 Free 100% Client-Side Web Utilities">
+  <meta property="og:description" id="og-desc" content="100% Private, offline-ready client-side daily tools: QR Code, Image Compressor, PDF Merger, Currency Converter, World Clock, Unit Converter & more. Zero server uploads.">
+  <meta property="og:site_name" content="LifeTools">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ko_KR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://life.yocto.co.kr/">
+  <meta name="twitter:title" id="twitter-title" content="LifeTools | 12 Free 100% Client-Side Web Utilities">
+  <meta name="twitter:description" id="twitter-desc" content="100% Private, offline-ready client-side daily tools: QR Code, Image Compressor, PDF Merger, Currency Converter, World Clock, Unit Converter & more. Zero server uploads.">
+
+  <!-- JSON-LD Structured Data for Google Rich Snippets -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "LifeTools",
+    "url": "https://life.yocto.co.kr/",
+    "description": "100% Free, Private, Client-Side Everyday Web Utilities including QR Generator, Image Compressor, PDF Merger, Currency Converter, World Clock, Unit Converter.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript. Requires HTML5.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "LifeTools"
+    }
+  }
+  </script>
+
+  <!-- JSON-LD Breadcrumb List -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://life.yocto.co.kr/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "QR Code Generator",
+        "item": "https://life.yocto.co.kr/#/qr-generator"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Currency Converter",
+        "item": "https://life.yocto.co.kr/#/currency-converter"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "World Clock & Timezone",
+        "item": "https://life.yocto.co.kr/#/world-clock"
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "name": "Unit Converter",
+        "item": "https://life.yocto.co.kr/#/unit-converter"
+      }
+    ]
+  }
+  </script>
   
   <!-- Google AdSense Main Script -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6854824605420161" crossorigin="anonymous"></script>
@@ -1755,6 +1834,12 @@
       if (window.calcDateDiff) window.calcDateDiff();
       if (window.calcDateOffset) window.calcDateOffset();
       if (window.renderUnitGrid) window.renderUnitGrid();
+
+      const currentHash = window.location.hash || '#/';
+      const viewName = currentHash.replace('#/', '') || 'home';
+      if (typeof updateSEOMeta === 'function') {
+        updateSEOMeta(`view-${viewName}`);
+      }
     }
 
     document.getElementById('lang-btn-en').addEventListener('click', () => setLanguage('en'));
@@ -1778,6 +1863,143 @@
       }, 3000);
     }
 
+    const seoConfig = {
+      en: {
+        'view-home': {
+          title: 'LifeTools | 12 Free 100% Client-Side Web Utilities',
+          desc: '100% Private, offline-ready client-side daily tools: QR Code, Image Compressor, PDF Merger, Currency Converter, World Clock, Unit Converter & more. Zero server uploads.'
+        },
+        'view-qr-generator': {
+          title: 'Free QR Code Generator with Print & SVG Download | LifeTools',
+          desc: 'Generate customized QR codes for URLs, WiFi, and vCards. Download in PNG or SVG vector format, or print directly with zero server tracking.'
+        },
+        'view-qr-scanner': {
+          title: 'Webcam & Image QR Code Scanner Online | LifeTools',
+          desc: 'Scan QR codes instantly using your device camera or by uploading image files. 100% client-side QR scanner with zero file uploads.'
+        },
+        'view-image-compressor': {
+          title: 'Bulk Image Compressor (JPG, PNG, WebP) Online | LifeTools',
+          desc: 'Compress images locally in your browser without quality loss. Batch process multiple files and download as ZIP with complete privacy.'
+        },
+        'view-image-resizer': {
+          title: 'Image Resizer & Crop Tool | LifeTools',
+          desc: 'Resize images by width, height, and custom aspect ratios in seconds. Fast browser canvas image scaling.'
+        },
+        'view-pdf-merger': {
+          title: 'PDF Merger - Combine PDF Files Online Free | LifeTools',
+          desc: 'Merge multiple PDF documents into a single file directly in your browser using WebAssembly PDF-Lib. No file size limits or server uploads.'
+        },
+        'view-password-generator': {
+          title: 'Secure Strong Password & Passphrase Generator | LifeTools',
+          desc: 'Generate cryptographically strong passwords and memorable passphrases with entropy score analysis.'
+        },
+        'view-random-picker': {
+          title: 'Random Item & Name Picker Wheel | LifeTools',
+          desc: 'Pick random winners, draw raffle names, and randomize lists instantly with animated slot spinner.'
+        },
+        'view-countdown': {
+          title: 'D-Day Countdown, Pomodoro & Stopwatch | LifeTools',
+          desc: 'Track D-day event countdowns, focus with Pomodoro timers, and record lap splits with digital stopwatch.'
+        },
+        'view-date-calc': {
+          title: 'Date Calculator - Interval & Working Days | LifeTools',
+          desc: 'Calculate exact date intervals, exclude weekends for working business days, and add or subtract days easily.'
+        },
+        'view-unit-converter': {
+          title: 'Unit Converter - Length, Area, Weight, Data Storage | LifeTools',
+          desc: 'Convert length (m, km, ft, in), area (pyeong, m²), weight (kg, lb), and data storage (GB, MB) in real time.'
+        },
+        'view-currency-converter': {
+          title: 'Live Currency Converter & Exchange Rates (USD, EUR, KRW) | LifeTools',
+          desc: 'Real-time exchange rate calculator for USD, EUR, KRW, JPY, GBP, CAD, AUD. Instant bilingual currency conversion.'
+        },
+        'view-world-clock': {
+          title: 'World Clock & Timezone Converter (Berlin ➔ Seoul) | LifeTools',
+          desc: 'Auto-detect local timezone and convert times across major global cities (Seoul, Berlin, New York, London, Tokyo, Shanghai).'
+        }
+      },
+      ko: {
+        'view-home': {
+          title: 'LifeTools | 12가지 무료 실시간 웹 도구 모음',
+          desc: '서버 업로드 없는 100% 개인정보 보호 웹 도구: QR 생성기/스캐너, 이미지 압축, PDF 병합, 실시간 환율, 세계 시간, 단위 변환기.'
+        },
+        'view-qr-generator': {
+          title: '무료 QR 코드 생성기 (인쇄 및 SVG/PNG 다운로드) | LifeTools',
+          desc: '텍스트, URL, 와이파이, 명함 QR 코드를 실시간 생성하세요. PNG, SVG 고화질 저장 및 바로 인쇄 기능을 제공합니다.'
+        },
+        'view-qr-scanner': {
+          title: '웹캠 및 이미지 QR 코드 스캐너 | LifeTools',
+          desc: '카메라 웹캠이나 이미지 파일 업로드로 QR 코드를 인스턴트 인식하세요. 서버 전송 없는 100% 브라우저 스캐너.'
+        },
+        'view-image-compressor': {
+          title: '이미지 용량 줄이기 및 일괄 압축 (JPG, PNG, WebP) | LifeTools',
+          desc: '화질 손실 없이 이미지 용량을 획기적으로 줄이세요. 다중 파일 압축 및 ZIP 다운로드 지원.'
+        },
+        'view-image-resizer': {
+          title: '이미지 해상도 조절 및 크기 변환기 | LifeTools',
+          desc: '이미지 가로/세로 비율에 맞춰 클릭 한 번으로 해상도를 조절하고 다운로드하세요.'
+        },
+        'view-pdf-merger': {
+          title: 'PDF 병합 - 여러 PDF 하나로 합치기 무료 | LifeTools',
+          desc: '개인정보 유출 걱정 없이 브라우저에서 바로 여러 개의 PDF 문서를 하나의 파일로 병합하세요.'
+        },
+        'view-password-generator': {
+          title: '안전한 강력 비밀번호 및 패스프레이즈 생성기 | LifeTools',
+          desc: '해킹 위험 없는 보안 암호 및 기억하기 쉬운 패스프레이즈를 생성하고 비밀번호 강도를 측정하세요.'
+        },
+        'view-random-picker': {
+          title: '랜덤 뽑기 및 당첨자 추첨기 | LifeTools',
+          desc: '이름이나 항목 목록을 입력하고 애니메이션 효과와 함께 랜덤 당첨자 및 순서를 추첨하세요.'
+        },
+        'view-countdown': {
+          title: '디데이(D-Day) 카운트다운, 뽀모도로 & 스톱워치 | LifeTools',
+          desc: '중요한 목표 디데이 계산, 집중력 뽀모도로 타이머, 구간 기록 스톱워치를 이용하세요.'
+        },
+        'view-date-calc': {
+          title: '날짜 계산기 - 일수 차이 및 주말 제외 영업일 계산 | LifeTools',
+          desc: '두 날짜 간의 총 일수와 주말을 제외한 일한 날(영업일)을 계산하고, 특정 날짜를 더하거나 빼세요.'
+        },
+        'view-unit-converter': {
+          title: '단위 변환기 - 길이, 평수/넓이, 무게, 데이터 용량 | LifeTools',
+          desc: '미터/인치/피트, 제곱미터/평수, 킬로그램/파운드, 기가바이트/메가바이트 단위를 실시간 변환하세요.'
+        },
+        'view-currency-converter': {
+          title: '실시간 환율 변환기 (달러, 유로, 원화, 엔화) | LifeTools',
+          desc: '미국 달러(USD), 유로(EUR), 원화(KRW), 엔화(JPY) 등 실시간 환율을 동시 변환 계산합니다.'
+        },
+        'view-world-clock': {
+          title: '세계 시간 & 타임존 변환기 (베를린 ➔ 서울 시차 계산) | LifeTools',
+          desc: '현재 사용자 위치의 타임존을 자동 감지하고 서울, 베를린, 뉴욕, 런던, 도쿄 등 세계 주요 도시의 시차를 계산합니다.'
+        }
+      }
+    };
+
+    function updateSEOMeta(viewId) {
+      const viewMeta = (seoConfig[currentLang] && seoConfig[currentLang][viewId]) || seoConfig.en[viewId] || seoConfig.en['view-home'];
+      document.title = viewMeta.title;
+
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) metaDesc.setAttribute('content', viewMeta.desc);
+
+      const ogTitle = document.getElementById('og-title');
+      if (ogTitle) ogTitle.setAttribute('content', viewMeta.title);
+
+      const ogDesc = document.getElementById('og-desc');
+      if (ogDesc) ogDesc.setAttribute('content', viewMeta.desc);
+
+      const twitterTitle = document.getElementById('twitter-title');
+      if (twitterTitle) twitterTitle.setAttribute('content', viewMeta.title);
+
+      const twitterDesc = document.getElementById('twitter-desc');
+      if (twitterDesc) twitterDesc.setAttribute('content', viewMeta.desc);
+
+      const canonicalLink = document.getElementById('canonical-url');
+      if (canonicalLink) {
+        const hash = window.location.hash || '#/';
+        canonicalLink.setAttribute('href', `https://life.yocto.co.kr/${hash}`);
+      }
+    }
+
     function handleRoute() {
       const hash = window.location.hash || '#/';
       document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
@@ -1797,6 +2019,8 @@
       if (targetEl) {
         targetEl.classList.remove('hidden');
       }
+
+      updateSEOMeta(targetViewId);
 
       if (targetViewId === 'view-unit-converter' && window.renderUnitGrid) {
         window.renderUnitGrid();
