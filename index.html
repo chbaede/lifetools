@@ -1021,7 +1021,40 @@
           <button class="unit-cat-btn py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap" data-cat="data" data-i18n="unit_tab_data">Data Storage</button>
         </div>
 
-        <div id="unit-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        <div id="unit-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-1.5">
+            <label class="block text-xs font-semibold text-slate-400">Meters (m)</label>
+            <input type="number" class="unit-input w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-violet-300 font-mono focus:outline-none" data-index="0" placeholder="0">
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-1.5">
+            <label class="block text-xs font-semibold text-slate-400">Kilometers (km)</label>
+            <input type="number" class="unit-input w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-violet-300 font-mono focus:outline-none" data-index="1" placeholder="0">
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-1.5">
+            <label class="block text-xs font-semibold text-slate-400">Centimeters (cm)</label>
+            <input type="number" class="unit-input w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-violet-300 font-mono focus:outline-none" data-index="2" placeholder="0">
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-1.5">
+            <label class="block text-xs font-semibold text-slate-400">Millimeters (mm)</label>
+            <input type="number" class="unit-input w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-violet-300 font-mono focus:outline-none" data-index="3" placeholder="0">
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-1.5">
+            <label class="block text-xs font-semibold text-slate-400">Inches (in)</label>
+            <input type="number" class="unit-input w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-violet-300 font-mono focus:outline-none" data-index="4" placeholder="0">
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-1.5">
+            <label class="block text-xs font-semibold text-slate-400">Feet (ft)</label>
+            <input type="number" class="unit-input w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-violet-300 font-mono focus:outline-none" data-index="5" placeholder="0">
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-1.5">
+            <label class="block text-xs font-semibold text-slate-400">Yards (yd)</label>
+            <input type="number" class="unit-input w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-violet-300 font-mono focus:outline-none" data-index="6" placeholder="0">
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-1.5">
+            <label class="block text-xs font-semibold text-slate-400">Miles (mi)</label>
+            <input type="number" class="unit-input w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-violet-300 font-mono focus:outline-none" data-index="7" placeholder="0">
+          </div>
+        </div>
       </section>
 
       <!-- View 11: Currency Converter -->
@@ -1638,7 +1671,6 @@
     });
     window.addEventListener('DOMContentLoaded', () => {
       setLanguage(currentLang);
-      handleRoute();
       initQRGenerator();
       initQRScanner();
       initImageCompressor();
@@ -1651,6 +1683,7 @@
       initUnitConverter();
       initCurrencyConverter();
       initWorldClock();
+      handleRoute();
     });
 
     document.getElementById('mobile-menu-btn').addEventListener('click', () => {
@@ -2796,8 +2829,9 @@
         });
       });
 
-      window.renderUnitGrid = function() {
+      function renderUnitGrid() {
         const grid = document.getElementById('unit-grid');
+        if (!grid) return;
         grid.innerHTML = '';
         const catMap = unitsConfig[currentLang] || unitsConfig.en;
         const list = catMap[activeCat] || [];
@@ -2827,9 +2861,10 @@
             });
           });
         });
-      };
+      }
 
-      window.renderUnitGrid();
+      window.renderUnitGrid = renderUnitGrid;
+      renderUnitGrid();
     }
 
 
