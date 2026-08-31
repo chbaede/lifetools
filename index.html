@@ -275,7 +275,7 @@
                 <span class="text-xs text-blue-300 font-medium">Media</span>
               </div>
             </div>
-            <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_img_resize_desc">Resize image dimensions with aspect ratio lock and preset social media resolutions.</p>
+            <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_img_resize_desc">Resize image dimensions with aspect ratio lock and preset resolutions.</p>
           </a>
 
           <!-- Card 5 -->
@@ -347,7 +347,7 @@
                 <span class="text-xs text-violet-300 font-medium">Converter</span>
               </div>
             </div>
-            <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_unit_conv_desc">Convert units for Length, Area, Weight, Temperature, Speed, and Data storage.</p>
+            <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_unit_conv_desc">Convert units for Length, Area, Weight, Speed, and Data storage.</p>
           </a>
 
         </div>
@@ -368,27 +368,27 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-5">
             <div class="flex border-b border-slate-800 space-x-4">
-              <button id="qr-tab-text" class="qr-type-btn py-2 text-xs font-bold border-b-2 border-indigo-500 text-indigo-400" data-type="text">Text / URL</button>
-              <button id="qr-tab-wifi" class="qr-type-btn py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200" data-type="wifi">Wi-Fi Network</button>
-              <button id="qr-tab-vcard" class="qr-type-btn py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200" data-type="vcard">Contact (vCard)</button>
+              <button id="qr-tab-text" class="qr-type-btn py-2 text-xs font-bold border-b-2 border-indigo-500 text-indigo-400" data-type="text" data-i18n="qr_tab_text">Text / URL</button>
+              <button id="qr-tab-wifi" class="qr-type-btn py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200" data-type="wifi" data-i18n="qr_tab_wifi">Wi-Fi Network</button>
+              <button id="qr-tab-vcard" class="qr-type-btn py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200" data-type="vcard" data-i18n="qr_tab_vcard">Contact (vCard)</button>
             </div>
 
             <div id="qr-input-group-text" class="space-y-3">
               <label class="block text-xs font-semibold text-slate-300" data-i18n="qr_label_text">Text or URL Payload</label>
-              <textarea id="qr-text-input" rows="4" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="https://example.com or any text..."></textarea>
+              <textarea id="qr-text-input" rows="4" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="https://example.com..."></textarea>
             </div>
 
             <div id="qr-input-group-wifi" class="space-y-3 hidden">
               <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-1">Wi-Fi Network Name (SSID)</label>
+                <label class="block text-xs font-semibold text-slate-300 mb-1" data-i18n="qr_label_ssid">Wi-Fi Network Name (SSID)</label>
                 <input type="text" id="qr-wifi-ssid" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100" placeholder="My Wi-Fi Name">
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-1">Password</label>
+                <label class="block text-xs font-semibold text-slate-300 mb-1" data-i18n="qr_label_pass">Password</label>
                 <input type="text" id="qr-wifi-pass" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100" placeholder="Password (leave empty if open)">
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-1">Encryption Type</label>
+                <label class="block text-xs font-semibold text-slate-300 mb-1" data-i18n="qr_label_enc">Encryption Type</label>
                 <select id="qr-wifi-type" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100">
                   <option value="WPA">WPA / WPA2 / WPA3</option>
                   <option value="WEP">WEP</option>
@@ -399,39 +399,39 @@
 
             <div id="qr-input-group-vcard" class="grid grid-cols-1 sm:grid-cols-2 gap-3 hidden">
               <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-1">Full Name</label>
+                <label class="block text-xs font-semibold text-slate-300 mb-1" data-i18n="qr_label_name">Full Name</label>
                 <input type="text" id="qr-vcard-name" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100" placeholder="John Doe">
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-1">Phone Number</label>
+                <label class="block text-xs font-semibold text-slate-300 mb-1" data-i18n="qr_label_phone">Phone Number</label>
                 <input type="text" id="qr-vcard-phone" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100" placeholder="+1-555-0199">
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-1">Email Address</label>
+                <label class="block text-xs font-semibold text-slate-300 mb-1" data-i18n="qr_label_email">Email Address</label>
                 <input type="email" id="qr-vcard-email" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100" placeholder="john@example.com">
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-1">Organization</label>
+                <label class="block text-xs font-semibold text-slate-300 mb-1" data-i18n="qr_label_org">Organization</label>
                 <input type="text" id="qr-vcard-org" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100" placeholder="Acme Corp">
               </div>
             </div>
 
             <div class="pt-3 border-t border-slate-800 grid grid-cols-2 sm:grid-cols-3 gap-4">
               <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1">Foreground Color</label>
+                <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="qr_label_dark">Foreground Color</label>
                 <input type="color" id="qr-color-dark" value="#000000" class="w-full h-9 bg-slate-950 border border-slate-700 rounded-lg p-1 cursor-pointer">
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1">Background Color</label>
+                <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="qr_label_light">Background Color</label>
                 <input type="color" id="qr-color-light" value="#ffffff" class="w-full h-9 bg-slate-950 border border-slate-700 rounded-lg p-1 cursor-pointer">
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1">Error Correction</label>
+                <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="qr_label_ecl">Error Correction</label>
                 <select id="qr-ecl" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2 py-2 text-xs text-slate-100">
-                  <option value="L">L (7% recovery)</option>
-                  <option value="M">M (15% recovery)</option>
-                  <option value="Q">Q (25% recovery)</option>
-                  <option value="H" selected>H (30% High)</option>
+                  <option value="L">L (7%)</option>
+                  <option value="M">M (15%)</option>
+                  <option value="Q">Q (25%)</option>
+                  <option value="H" selected>H (30%)</option>
                 </select>
               </div>
             </div>
@@ -471,8 +471,8 @@
         </div>
 
         <div class="flex border-b border-slate-800 space-x-4">
-          <button id="scanner-mode-file-btn" class="py-2 text-xs font-bold border-b-2 border-indigo-500 text-indigo-400">📂 Upload Image File</button>
-          <button id="scanner-mode-cam-btn" class="py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200">🎥 Live Camera Stream</button>
+          <button id="scanner-mode-file-btn" class="py-2 text-xs font-bold border-b-2 border-indigo-500 text-indigo-400" data-i18n="qr_scan_tab_file">📂 Upload Image File</button>
+          <button id="scanner-mode-cam-btn" class="py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200" data-i18n="qr_scan_tab_cam">🎥 Live Camera Stream</button>
         </div>
 
         <div id="scanner-file-container" class="space-y-4">
@@ -493,10 +493,10 @@
             </div>
           </div>
           <div class="flex justify-center gap-3">
-            <button id="toggle-cam-btn" class="py-2 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition">
+            <button id="toggle-cam-btn" class="py-2 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition" data-i18n="btn_start_cam">
               🎥 Start Camera
             </button>
-            <button id="switch-cam-btn" class="py-2 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 transition">
+            <button id="switch-cam-btn" class="py-2 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 transition" data-i18n="btn_switch_cam">
               🔄 Switch Camera (Front/Back)
             </button>
           </div>
@@ -507,7 +507,7 @@
             <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
               <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Scan Result Detected!
             </span>
-            <button id="copy-scan-result" class="text-xs px-3 py-1.5 rounded-lg bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 transition">
+            <button id="copy-scan-result" class="text-xs px-3 py-1.5 rounded-lg bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30 transition" data-i18n="btn_copy_text">
               📋 Copy Text
             </button>
           </div>
@@ -539,13 +539,13 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <div class="flex justify-between items-center mb-2">
-                <label class="text-xs font-semibold text-slate-300">Compression Quality</label>
+                <label class="text-xs font-semibold text-slate-300" data-i18n="label_quality">Compression Quality</label>
                 <span id="quality-val" class="text-xs font-bold text-indigo-400">80%</span>
               </div>
               <input type="range" id="compress-quality" min="10" max="100" value="80" class="w-full cursor-pointer">
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-2">Output Format</label>
+              <label class="block text-xs font-semibold text-slate-300 mb-2" data-i18n="label_out_fmt">Output Format</label>
               <select id="compress-format" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none">
                 <option value="image/jpeg">JPEG (.jpg)</option>
                 <option value="image/webp" selected>WEBP (.webp - Optimal size)</option>
@@ -558,7 +558,7 @@
         <div id="compress-results-container" class="space-y-3"></div>
 
         <div id="compress-batch-actions" class="hidden justify-end gap-3 pt-2">
-          <button id="download-all-zip" class="py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition flex items-center gap-2">
+          <button id="download-all-zip" class="py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition flex items-center gap-2" data-i18n="btn_dl_zip">
             <span>📦 Download All as ZIP</span>
           </button>
         </div>
@@ -572,7 +572,7 @@
             <h2 class="text-xl font-bold text-white flex items-center gap-2">
               <span>📐</span> <span data-i18n="tool_img_resize">Image Resizer</span>
             </h2>
-            <p class="text-xs text-slate-400 mt-1">Resize image dimensions in pixels or percentages.</p>
+            <p class="text-xs text-slate-400 mt-1" data-i18n="img_resize_sub">Resize image dimensions in pixels or percentages.</p>
           </div>
         </div>
 
@@ -580,13 +580,13 @@
           <div class="lg:col-span-7 space-y-4">
             <div id="resize-dropzone" class="border-2 border-dashed border-slate-700 hover:border-blue-500 bg-slate-900/50 rounded-2xl p-6 text-center cursor-pointer transition">
               <div class="text-3xl mb-2">📏</div>
-              <p class="text-sm font-semibold text-slate-200">Select Image to Resize</p>
+              <p class="text-sm font-semibold text-slate-200" data-i18n="dropzone_resize">Select Image to Resize</p>
               <input type="file" id="resize-file-input" accept="image/*" class="hidden">
             </div>
 
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
               <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-2">Preset Resolutions</label>
+                <label class="block text-xs font-semibold text-slate-400 mb-2" data-i18n="label_presets">Preset Resolutions</label>
                 <div class="flex flex-wrap gap-2">
                   <button class="resize-preset-btn text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300" data-w="1920" data-h="1080">FHD (1920x1080)</button>
                   <button class="resize-preset-btn text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300" data-w="1280" data-h="720">HD (1280x720)</button>
@@ -597,11 +597,11 @@
 
               <div class="grid grid-cols-2 gap-4 pt-2">
                 <div>
-                  <label class="block text-xs font-semibold text-slate-300 mb-1">Width (px)</label>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1" data-i18n="label_width">Width (px)</label>
                   <input type="number" id="resize-width" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100" placeholder="Width">
                 </div>
                 <div>
-                  <label class="block text-xs font-semibold text-slate-300 mb-1">Height (px)</label>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1" data-i18n="label_height">Height (px)</label>
                   <input type="number" id="resize-height" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100" placeholder="Height">
                 </div>
               </div>
@@ -609,7 +609,7 @@
               <div class="flex items-center justify-between pt-2">
                 <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
                   <input type="checkbox" id="resize-aspect-ratio" checked class="rounded bg-slate-950 border-slate-700 text-blue-600 focus:ring-blue-500">
-                  <span>Lock Aspect Ratio</span>
+                  <span data-i18n="label_lock_ratio">Lock Aspect Ratio</span>
                 </label>
 
                 <div class="flex items-center gap-2">
@@ -622,7 +622,7 @@
                 </div>
               </div>
 
-              <button id="resize-execute-btn" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg transition">
+              <button id="resize-execute-btn" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg transition" data-i18n="btn_resize">
                 📐 Resize & Download
               </button>
             </div>
@@ -645,23 +645,23 @@
             <h2 class="text-xl font-bold text-white flex items-center gap-2">
               <span>📄</span> <span data-i18n="tool_pdf_merge">PDF Merger</span>
             </h2>
-            <p class="text-xs text-slate-400 mt-1">Combine multiple PDF documents into a single document.</p>
+            <p class="text-xs text-slate-400 mt-1" data-i18n="pdf_merge_sub">Combine multiple PDF documents into a single document.</p>
           </div>
         </div>
 
         <div id="pdf-dropzone" class="border-2 border-dashed border-slate-700 hover:border-rose-500 bg-slate-900/50 rounded-2xl p-8 text-center cursor-pointer transition">
           <div class="text-4xl mb-2">📑</div>
-          <p class="text-sm font-semibold text-slate-200">Drag & drop PDF files here or click to browse</p>
+          <p class="text-sm font-semibold text-slate-200" data-i18n="dropzone_pdf">Drag & drop PDF files here or click to browse</p>
           <input type="file" id="pdf-file-input" accept="application/pdf" multiple class="hidden">
         </div>
 
         <div id="pdf-file-list" class="space-y-3"></div>
 
         <div id="pdf-action-bar" class="hidden flex justify-between items-center pt-3 border-t border-slate-800">
-          <button id="pdf-clear-all" class="text-xs px-3 py-2 rounded-xl bg-slate-800 text-slate-400 hover:text-rose-400 transition">
+          <button id="pdf-clear-all" class="text-xs px-3 py-2 rounded-xl bg-slate-800 text-slate-400 hover:text-rose-400 transition" data-i18n="btn_clear_all">
             🗑️ Clear All
           </button>
-          <button id="pdf-merge-btn" class="py-3 px-6 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-sm shadow-lg shadow-rose-500/20 transition flex items-center gap-2">
+          <button id="pdf-merge-btn" class="py-3 px-6 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-sm shadow-lg shadow-rose-500/20 transition flex items-center gap-2" data-i18n="btn_merge_pdf">
             <span>✨ Merge PDFs Now</span>
           </button>
         </div>
@@ -675,21 +675,21 @@
             <h2 class="text-xl font-bold text-white flex items-center gap-2">
               <span>🔐</span> <span data-i18n="tool_pwd_gen">Password Generator</span>
             </h2>
-            <p class="text-xs text-slate-400 mt-1">Generate cryptographically secure passwords and readable passphrases.</p>
+            <p class="text-xs text-slate-400 mt-1" data-i18n="pwd_gen_sub">Generate cryptographically secure passwords and readable passphrases.</p>
           </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-5">
             <div class="flex border-b border-slate-800 space-x-4">
-              <button id="pwd-mode-random-btn" class="py-2 text-xs font-bold border-b-2 border-amber-500 text-amber-400">🔑 Random Password</button>
-              <button id="pwd-mode-passphrase-btn" class="py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200">📝 Passphrase (Memorable Words)</button>
+              <button id="pwd-mode-random-btn" class="py-2 text-xs font-bold border-b-2 border-amber-500 text-amber-400" data-i18n="pwd_tab_random">🔑 Random Password</button>
+              <button id="pwd-mode-passphrase-btn" class="py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200" data-i18n="pwd_tab_phrase">📝 Passphrase (Memorable Words)</button>
             </div>
 
             <div id="pwd-group-random" class="space-y-4">
               <div>
                 <div class="flex justify-between items-center mb-2">
-                  <label class="text-xs font-semibold text-slate-300">Password Length</label>
+                  <label class="text-xs font-semibold text-slate-300" data-i18n="label_pwd_len">Password Length</label>
                   <span id="pwd-length-val" class="text-xs font-bold text-amber-400">16 chars</span>
                 </div>
                 <input type="range" id="pwd-length" min="6" max="64" value="16" class="w-full cursor-pointer">
@@ -698,52 +698,52 @@
               <div class="grid grid-cols-2 gap-3 pt-2">
                 <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
                   <input type="checkbox" id="pwd-opt-upper" checked class="rounded bg-slate-950 border-slate-700 text-amber-500">
-                  <span>Uppercase (A-Z)</span>
+                  <span data-i18n="label_upper">Uppercase (A-Z)</span>
                 </label>
                 <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
                   <input type="checkbox" id="pwd-opt-lower" checked class="rounded bg-slate-950 border-slate-700 text-amber-500">
-                  <span>Lowercase (a-z)</span>
+                  <span data-i18n="label_lower">Lowercase (a-z)</span>
                 </label>
                 <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
                   <input type="checkbox" id="pwd-opt-num" checked class="rounded bg-slate-950 border-slate-700 text-amber-500">
-                  <span>Numbers (0-9)</span>
+                  <span data-i18n="label_num">Numbers (0-9)</span>
                 </label>
                 <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
                   <input type="checkbox" id="pwd-opt-sym" checked class="rounded bg-slate-950 border-slate-700 text-amber-500">
-                  <span>Symbols (!@#$%)</span>
+                  <span data-i18n="label_sym">Symbols (!@#$%)</span>
                 </label>
               </div>
 
               <label class="flex items-center gap-2 text-xs text-slate-400 pt-1 cursor-pointer">
                 <input type="checkbox" id="pwd-opt-avoid" checked class="rounded bg-slate-950 border-slate-700 text-amber-500">
-                <span>Exclude ambiguous characters (0, O, o, 1, I, l)</span>
+                <span data-i18n="label_avoid">Exclude ambiguous characters (0, O, o, 1, I, l)</span>
               </label>
             </div>
 
             <div id="pwd-group-phrase" class="space-y-4 hidden">
               <div>
                 <div class="flex justify-between items-center mb-2">
-                  <label class="text-xs font-semibold text-slate-300">Word Count</label>
+                  <label class="text-xs font-semibold text-slate-300" data-i18n="label_word_cnt">Word Count</label>
                   <span id="phrase-count-val" class="text-xs font-bold text-amber-400">4 words</span>
                 </div>
                 <input type="range" id="phrase-count" min="3" max="8" value="4" class="w-full cursor-pointer">
               </div>
             </div>
 
-            <button id="pwd-generate-btn" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-sm shadow-lg transition">
+            <button id="pwd-generate-btn" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-sm shadow-lg transition" data-i18n="btn_gen_pwd">
               ⚡ Generate Password
             </button>
           </div>
 
           <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between space-y-4">
             <div>
-              <label class="block text-xs font-semibold text-slate-400 mb-2">Generated Password</label>
+              <label class="block text-xs font-semibold text-slate-400 mb-2" data-i18n="label_gen_pwd">Generated Password</label>
               <textarea id="pwd-output" readonly rows="3" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 font-mono text-base text-amber-300 focus:outline-none resize-none break-all select-all"></textarea>
             </div>
 
             <div class="space-y-1.5">
               <div class="flex justify-between text-xs font-semibold">
-                <span class="text-slate-400">Security Strength</span>
+                <span class="text-slate-400" data-i18n="label_strength">Security Strength</span>
                 <span id="pwd-strength-label" class="text-emerald-400">Very Strong</span>
               </div>
               <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden">
@@ -751,7 +751,7 @@
               </div>
             </div>
 
-            <button id="pwd-copy-btn" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-100 font-bold text-xs transition flex items-center justify-center gap-2">
+            <button id="pwd-copy-btn" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-100 font-bold text-xs transition flex items-center justify-center gap-2" data-i18n="btn_copy_clip">
               📋 Copy to Clipboard
             </button>
           </div>
@@ -766,36 +766,36 @@
             <h2 class="text-xl font-bold text-white flex items-center gap-2">
               <span>🎲</span> <span data-i18n="tool_random_picker">Random Picker</span>
             </h2>
-            <p class="text-xs text-slate-400 mt-1">Draw random choices or raffle winners with animated effects.</p>
+            <p class="text-xs text-slate-400 mt-1" data-i18n="picker_sub">Draw random choices or raffle winners with animated effects.</p>
           </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
             <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-2">Candidate Items (One per line)</label>
+              <label class="block text-xs font-semibold text-slate-300 mb-2" data-i18n="label_candidates">Candidate Items (One per line)</label>
               <textarea id="picker-items-input" rows="8" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-slate-100 focus:ring-2 focus:ring-pink-500 focus:outline-none" placeholder="Pizza&#10;Burger&#10;Sushi&#10;Tacos&#10;Pasta"></textarea>
             </div>
 
             <div class="flex items-center justify-between">
               <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-1">Pick Count</label>
+                <label class="block text-xs font-semibold text-slate-300 mb-1" data-i18n="label_pick_cnt">Pick Count</label>
                 <input type="number" id="picker-count" min="1" value="1" class="w-24 bg-slate-950 border border-slate-700 rounded-xl px-3 py-1.5 text-sm text-slate-100 text-center">
               </div>
               <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer pt-4">
                 <input type="checkbox" id="picker-allow-dup" class="rounded bg-slate-950 border-slate-700 text-pink-600">
-                <span>Allow Duplicates</span>
+                <span data-i18n="label_allow_dup">Allow Duplicates</span>
               </label>
             </div>
 
-            <button id="picker-draw-btn" class="w-full py-3 rounded-xl bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-extrabold text-sm shadow-lg shadow-pink-500/25 transition">
+            <button id="picker-draw-btn" class="w-full py-3 rounded-xl bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-extrabold text-sm shadow-lg shadow-pink-500/25 transition" data-i18n="btn_start_draw">
               🎰 Start Random Draw!
             </button>
           </div>
 
           <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col items-center justify-center min-h-[300px] text-center space-y-4">
             <div id="picker-display-box" class="w-full py-12 px-6 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-center">
-              <span id="picker-result-text" class="text-3xl sm:text-5xl font-extrabold text-pink-400 tracking-wide animate-pulse">
+              <span id="picker-result-text" class="text-3xl sm:text-5xl font-extrabold text-pink-400 tracking-wide animate-pulse" data-i18n="status_ready">
                 🎲 Ready
               </span>
             </div>
@@ -812,59 +812,56 @@
             <h2 class="text-xl font-bold text-white flex items-center gap-2">
               <span>⏱️</span> <span data-i18n="tool_timer">Countdown & Timer</span>
             </h2>
-            <p class="text-xs text-slate-400 mt-1">D-Day countdown clock, Pomodoro focus timer, and millisecond stopwatch.</p>
+            <p class="text-xs text-slate-400 mt-1" data-i18n="timer_sub">D-Day countdown clock, Pomodoro focus timer, and millisecond stopwatch.</p>
           </div>
         </div>
 
-        <!-- Mode Selector -->
         <div class="flex border-b border-slate-800 space-x-4">
-          <button id="timer-tab-dday" class="py-2 text-xs font-bold border-b-2 border-cyan-500 text-cyan-400">📅 D-Day Target Countdown</button>
-          <button id="timer-tab-pomodoro" class="py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200">⏳ Quick Timer (Pomodoro)</button>
-          <button id="timer-tab-stopwatch" class="py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200">⏱️ Stopwatch</button>
+          <button id="timer-tab-dday" class="py-2 text-xs font-bold border-b-2 border-cyan-500 text-cyan-400" data-i18n="timer_tab_dday">📅 D-Day Target Countdown</button>
+          <button id="timer-tab-pomodoro" class="py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200" data-i18n="timer_tab_pomo">⏳ Quick Timer (Pomodoro)</button>
+          <button id="timer-tab-stopwatch" class="py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200" data-i18n="timer_tab_sw">⏱️ Stopwatch</button>
         </div>
 
-        <!-- Section 1: D-Day Countdown -->
         <div id="timer-group-dday" class="space-y-6">
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">Target Event Name</label>
+              <label class="block text-xs font-semibold text-slate-300 mb-1" data-i18n="label_event_name">Target Event Name</label>
               <input type="text" id="dday-title-input" value="Target Event" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100">
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">Target Date & Time</label>
+              <label class="block text-xs font-semibold text-slate-300 mb-1" data-i18n="label_target_datetime">Target Date & Time</label>
               <input type="datetime-local" id="dday-target-input" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100">
             </div>
             <div class="flex items-end">
-              <button id="dday-start-btn" class="w-full py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs transition">
+              <button id="dday-start-btn" class="w-full py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs transition" data-i18n="btn_start_countdown">
                 Start Countdown
               </button>
             </div>
           </div>
 
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center space-y-4">
-            <h3 id="dday-display-title" class="text-lg font-bold text-cyan-300">Set a Target Date Above</h3>
+            <h3 id="dday-display-title" class="text-lg font-bold text-cyan-300" data-i18n="dday_default_title">Set a Target Date Above</h3>
             <div class="grid grid-cols-4 gap-2 sm:gap-4 max-w-xl mx-auto">
               <div class="bg-slate-950 border border-slate-800 rounded-xl p-3">
                 <div id="dday-days" class="text-2xl sm:text-4xl font-extrabold text-white">00</div>
-                <div class="text-[11px] text-slate-400 mt-1">DAYS</div>
+                <div class="text-[11px] text-slate-400 mt-1" data-i18n="unit_days">DAYS</div>
               </div>
               <div class="bg-slate-950 border border-slate-800 rounded-xl p-3">
                 <div id="dday-hours" class="text-2xl sm:text-4xl font-extrabold text-white">00</div>
-                <div class="text-[11px] text-slate-400 mt-1">HOURS</div>
+                <div class="text-[11px] text-slate-400 mt-1" data-i18n="unit_hours">HOURS</div>
               </div>
               <div class="bg-slate-950 border border-slate-800 rounded-xl p-3">
                 <div id="dday-mins" class="text-2xl sm:text-4xl font-extrabold text-white">00</div>
-                <div class="text-[11px] text-slate-400 mt-1">MINS</div>
+                <div class="text-[11px] text-slate-400 mt-1" data-i18n="unit_mins">MINS</div>
               </div>
               <div class="bg-slate-950 border border-slate-800 rounded-xl p-3">
                 <div id="dday-secs" class="text-2xl sm:text-4xl font-extrabold text-white">00</div>
-                <div class="text-[11px] text-slate-400 mt-1">SECS</div>
+                <div class="text-[11px] text-slate-400 mt-1" data-i18n="unit_secs">SECS</div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Section 2: Quick Timer -->
         <div id="timer-group-pomodoro" class="space-y-6 hidden">
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center space-y-6">
             <div id="pomo-display" class="text-6xl font-extrabold font-mono text-cyan-400 tracking-wider">25:00</div>
@@ -875,20 +872,19 @@
               <button class="pomo-preset-btn text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold border border-slate-700" data-sec="3600">60 Mins</button>
             </div>
             <div class="flex justify-center gap-4">
-              <button id="pomo-start-btn" class="py-3 px-8 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-sm shadow-lg transition">Start</button>
-              <button id="pomo-reset-btn" class="py-3 px-6 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-sm border border-slate-700 transition">Reset</button>
+              <button id="pomo-start-btn" class="py-3 px-8 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-sm shadow-lg transition" data-i18n="btn_start">Start</button>
+              <button id="pomo-reset-btn" class="py-3 px-6 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-sm border border-slate-700 transition" data-i18n="btn_reset">Reset</button>
             </div>
           </div>
         </div>
 
-        <!-- Section 3: Stopwatch -->
         <div id="timer-group-stopwatch" class="space-y-6 hidden">
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center space-y-6">
             <div id="stopwatch-display" class="text-6xl font-extrabold font-mono text-cyan-400 tracking-wider">00:00.00</div>
             <div class="flex justify-center gap-4">
-              <button id="sw-start-btn" class="py-3 px-8 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-sm shadow-lg transition">Start</button>
-              <button id="sw-lap-btn" class="py-3 px-6 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-sm border border-slate-700 transition">Record Lap</button>
-              <button id="sw-reset-btn" class="py-3 px-6 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-sm border border-slate-700 transition">Reset</button>
+              <button id="sw-start-btn" class="py-3 px-8 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-sm shadow-lg transition" data-i18n="btn_start">Start</button>
+              <button id="sw-lap-btn" class="py-3 px-6 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-sm border border-slate-700 transition" data-i18n="btn_record_lap">Record Lap</button>
+              <button id="sw-reset-btn" class="py-3 px-6 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-sm border border-slate-700 transition" data-i18n="btn_reset">Reset</button>
             </div>
             <div id="sw-laps-container" class="max-w-md mx-auto text-left space-y-1.5 text-xs font-mono text-slate-300 pt-4"></div>
           </div>
@@ -903,54 +899,54 @@
             <h2 class="text-xl font-bold text-white flex items-center gap-2">
               <span>📅</span> <span data-i18n="tool_date_calc">Date Calculator</span>
             </h2>
-            <p class="text-xs text-slate-400 mt-1">Calculate date intervals, working days, and date offsets.</p>
+            <p class="text-xs text-slate-400 mt-1" data-i18n="date_calc_sub">Calculate date intervals, working days, and date offsets.</p>
           </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
-            <h3 class="font-bold text-sm text-teal-400 flex items-center gap-2">
-              <span>📏</span> Date Interval (Days & Working Days)
+            <h3 class="font-bold text-sm text-teal-400 flex items-center gap-2" data-i18n="title_date_diff">
+              📏 Date Interval (Days & Working Days)
             </h3>
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1">Start Date</label>
+                <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="label_start_date">Start Date</label>
                 <input type="date" id="date-diff-start" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1">End Date</label>
+                <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="label_end_date">End Date</label>
                 <input type="date" id="date-diff-end" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
               </div>
             </div>
 
             <div id="date-diff-result" class="p-4 bg-slate-950 rounded-xl text-xs space-y-1.5 text-slate-300">
-              <div>Total Interval: <span id="diff-total-days" class="font-bold text-teal-400 text-sm">0 Days</span></div>
-              <div>Working Days (Excl. Weekends): <span id="diff-work-days" class="font-bold text-slate-200">0 Days</span></div>
+              <div><span data-i18n="label_total_interval">Total Interval:</span> <span id="diff-total-days" class="font-bold text-teal-400 text-sm">0 Days</span></div>
+              <div><span data-i18n="label_work_days">Working Days (Excl. Weekends):</span> <span id="diff-work-days" class="font-bold text-slate-200">0 Days</span></div>
             </div>
           </div>
 
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
-            <h3 class="font-bold text-sm text-teal-400 flex items-center gap-2">
-              <span>➕</span> Add / Subtract Days
+            <h3 class="font-bold text-sm text-teal-400 flex items-center gap-2" data-i18n="title_date_offset">
+              ➕ Add / Subtract Days
             </h3>
             <div>
-              <label class="block text-xs font-semibold text-slate-400 mb-1">Base Date</label>
+              <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="label_base_date">Base Date</label>
               <input type="date" id="date-offset-base" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
             </div>
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1">Days to Add/Subtract</label>
+                <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="label_offset_days">Days to Add/Subtract</label>
                 <input type="number" id="date-offset-days" value="100" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
               </div>
               <div class="flex items-end">
-                <button id="date-offset-calc-btn" class="w-full py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs transition">
+                <button id="date-offset-calc-btn" class="w-full py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs transition" data-i18n="btn_calc_offset">
                   Calculate Target Date
                 </button>
               </div>
             </div>
 
             <div id="date-offset-result" class="p-4 bg-slate-950 rounded-xl text-xs text-slate-300">
-              Target Date Result: <span id="offset-result-text" class="font-bold text-teal-400 text-sm">-</span>
+              <span data-i18n="label_target_result">Target Date Result:</span> <span id="offset-result-text" class="font-bold text-teal-400 text-sm">-</span>
             </div>
           </div>
         </div>
@@ -964,15 +960,15 @@
             <h2 class="text-xl font-bold text-white flex items-center gap-2">
               <span>🔢</span> <span data-i18n="tool_unit_conv">Unit Converter</span>
             </h2>
-            <p class="text-xs text-slate-400 mt-1">Convert values across units in real-time.</p>
+            <p class="text-xs text-slate-400 mt-1" data-i18n="unit_conv_sub">Convert values across units in real-time.</p>
           </div>
         </div>
 
         <div class="flex border-b border-slate-800 space-x-4 overflow-x-auto">
-          <button class="unit-cat-btn py-2 text-xs font-bold border-b-2 border-violet-500 text-violet-400 whitespace-nowrap" data-cat="length">Length</button>
-          <button class="unit-cat-btn py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap" data-cat="area">Area (incl. Pyeong)</button>
-          <button class="unit-cat-btn py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap" data-cat="weight">Weight / Mass</button>
-          <button class="unit-cat-btn py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap" data-cat="data">Data Storage</button>
+          <button class="unit-cat-btn py-2 text-xs font-bold border-b-2 border-violet-500 text-violet-400 whitespace-nowrap" data-cat="length" data-i18n="unit_tab_length">Length</button>
+          <button class="unit-cat-btn py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap" data-cat="area" data-i18n="unit_tab_area">Area (incl. Pyeong)</button>
+          <button class="unit-cat-btn py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap" data-cat="weight" data-i18n="unit_tab_weight">Weight / Mass</button>
+          <button class="unit-cat-btn py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap" data-cat="data" data-i18n="unit_tab_data">Data Storage</button>
         </div>
 
         <div id="unit-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
@@ -985,7 +981,7 @@
 
   <!-- Application Script -->
   <script>
-    // i18n Translation Dictionary (Default: English)
+    // i18n Translation Dictionary
     const translations = {
       en: {
         tagline: "100% Client-Side Everyday Life Utilities",
@@ -1016,13 +1012,98 @@
         card_date_calc_desc: "Calculate intervals, working days (excluding weekends), and target date offsets.",
         card_unit_conv_desc: "Convert units for Length, Area, Weight, Speed, and Data storage.",
         qr_gen_sub: "Generate QR codes for text, links, Wi-Fi, and contacts.",
+        qr_tab_text: "Text / URL",
+        qr_tab_wifi: "Wi-Fi Network",
+        qr_tab_vcard: "Contact (vCard)",
         qr_label_text: "Text or URL Payload",
+        qr_label_ssid: "Wi-Fi Network Name (SSID)",
+        qr_label_pass: "Password",
+        qr_label_enc: "Encryption Type",
+        qr_label_name: "Full Name",
+        qr_label_phone: "Phone Number",
+        qr_label_email: "Email Address",
+        qr_label_org: "Organization",
+        qr_label_dark: "Foreground Color",
+        qr_label_light: "Background Color",
+        qr_label_ecl: "Error Correction",
         qr_btn_generate: "✨ Generate QR Code",
         btn_dl_png: "💾 Download PNG",
         btn_copy_img: "📋 Copy Image",
         qr_scan_sub: "Scan QR codes from image file uploads or live camera streams.",
+        qr_scan_tab_file: "📂 Upload Image File",
+        qr_scan_tab_cam: "🎥 Live Camera Stream",
         qr_scan_dropzone: "Drag & Drop QR image or click to browse",
-        dropzone_img: "Drag & drop images here or click to browse"
+        btn_start_cam: "🎥 Start Camera",
+        btn_switch_cam: "🔄 Switch Camera (Front/Back)",
+        btn_copy_text: "📋 Copy Text",
+        img_comp_sub: "Compress image files locally with instant size savings preview.",
+        dropzone_img: "Drag & drop images here or click to browse",
+        label_quality: "Compression Quality",
+        label_out_fmt: "Output Format",
+        btn_dl_zip: "📦 Download All as ZIP",
+        img_resize_sub: "Resize image dimensions in pixels or percentages.",
+        dropzone_resize: "Select Image to Resize",
+        label_presets: "Preset Resolutions",
+        label_width: "Width (px)",
+        label_height: "Height (px)",
+        label_lock_ratio: "Lock Aspect Ratio",
+        btn_resize: "📐 Resize & Download",
+        pdf_merge_sub: "Combine multiple PDF documents into a single document.",
+        dropzone_pdf: "Drag & drop PDF files here or click to browse",
+        btn_clear_all: "🗑️ Clear All",
+        btn_merge_pdf: "✨ Merge PDFs Now",
+        pwd_gen_sub: "Generate cryptographically secure passwords and readable passphrases.",
+        pwd_tab_random: "🔑 Random Password",
+        pwd_tab_phrase: "📝 Passphrase (Memorable Words)",
+        label_pwd_len: "Password Length",
+        label_upper: "Uppercase (A-Z)",
+        label_lower: "Lowercase (a-z)",
+        label_num: "Numbers (0-9)",
+        label_sym: "Symbols (!@#$%)",
+        label_avoid: "Exclude ambiguous characters (0, O, o, 1, I, l)",
+        label_word_cnt: "Word Count",
+        btn_gen_pwd: "⚡ Generate Password",
+        label_gen_pwd: "Generated Password",
+        label_strength: "Security Strength",
+        btn_copy_clip: "📋 Copy to Clipboard",
+        picker_sub: "Draw random choices or raffle winners with animated effects.",
+        label_candidates: "Candidate Items (One per line)",
+        label_pick_cnt: "Pick Count",
+        label_allow_dup: "Allow Duplicates",
+        btn_start_draw: "🎰 Start Random Draw!",
+        status_ready: "🎲 Ready",
+        timer_sub: "D-Day countdown clock, Pomodoro focus timer, and millisecond stopwatch.",
+        timer_tab_dday: "📅 D-Day Target Countdown",
+        timer_tab_pomo: "⏳ Quick Timer (Pomodoro)",
+        timer_tab_sw: "⏱️ Stopwatch",
+        label_event_name: "Target Event Name",
+        label_target_datetime: "Target Date & Time",
+        btn_start_countdown: "Start Countdown",
+        dday_default_title: "Set a Target Date Above",
+        unit_days: "DAYS",
+        unit_hours: "HOURS",
+        unit_mins: "MINS",
+        unit_secs: "SECS",
+        btn_start: "Start",
+        btn_pause: "Pause",
+        btn_reset: "Reset",
+        btn_record_lap: "Record Lap",
+        date_calc_sub: "Calculate date intervals, working days, and date offsets.",
+        title_date_diff: "📏 Date Interval (Days & Working Days)",
+        label_start_date: "Start Date",
+        label_end_date: "End Date",
+        label_total_interval: "Total Interval:",
+        label_work_days: "Working Days (Excl. Weekends):",
+        title_date_offset: "➕ Add / Subtract Days",
+        label_base_date: "Base Date",
+        label_offset_days: "Days to Add/Subtract",
+        btn_calc_offset: "Calculate Target Date",
+        label_target_result: "Target Date Result:",
+        unit_conv_sub: "Convert values across units in real-time.",
+        unit_tab_length: "Length",
+        unit_tab_area: "Area (incl. Pyeong)",
+        unit_tab_weight: "Weight / Mass",
+        unit_tab_data: "Data Storage"
       },
       ko: {
         tagline: "100% 클라이언트 사이드 실생활 도구 모음",
@@ -1053,13 +1134,98 @@
         card_date_calc_desc: "두 날짜 사이의 일수/평일 계산, 100일 후 날짜 계산 및 D-Day 메모 관리 기능.",
         card_unit_conv_desc: "길이, 넓이(평), 무게, 온도, 데이터, 속도 등 모든 단위값을 한눈에 동시 변환합니다.",
         qr_gen_sub: "원하는 입력값으로 QR 코드를 맞춤 생성하세요.",
+        qr_tab_text: "텍스트 / URL",
+        qr_tab_wifi: "Wi-Fi 접속",
+        qr_tab_vcard: "명함 (vCard)",
         qr_label_text: "내용 또는 URL 주소",
+        qr_label_ssid: "Wi-Fi 이름 (SSID)",
+        qr_label_pass: "비밀번호",
+        qr_label_enc: "암호화 방식",
+        qr_label_name: "이름",
+        qr_label_phone: "전화번호",
+        qr_label_email: "이메일",
+        qr_label_org: "회사 / 직함",
+        qr_label_dark: "전경색 (코드)",
+        qr_label_light: "배경색",
+        qr_label_ecl: "복구 수준",
         qr_btn_generate: "✨ QR 코드 생성하기",
         btn_dl_png: "💾 PNG 다운로드",
         btn_copy_img: "📋 이미지 복사",
         qr_scan_sub: "이미지 업로드 또는 스마트폰/웹캠 카메라로 실시간 스캔하세요.",
+        qr_scan_tab_file: "📂 이미지 파일 업로드",
+        qr_scan_tab_cam: "🎥 실시간 카메라 스캔",
         qr_scan_dropzone: "QR 코드 이미지를 드래그하거나 클릭하여 선택하세요",
-        dropzone_img: "압축할 이미지를 여기에 끌어다 놓거나 클릭하세요"
+        btn_start_cam: "🎥 카메라 시작",
+        btn_switch_cam: "🔄 카메라 전환 (전면/후면)",
+        btn_copy_text: "📋 복사하기",
+        img_comp_sub: "화질 손상 없이 이미지 파일 용량을 줄이세요.",
+        dropzone_img: "압축할 이미지를 여기에 끌어다 놓거나 클릭하세요",
+        label_quality: "압축 품질",
+        label_out_fmt: "출력 포맷",
+        btn_dl_zip: "📦 ZIP 일괄 다운로드",
+        img_resize_sub: "이미지의 크기를 pixel 단위나 비율(%)로 손쉽게 조정하세요.",
+        dropzone_resize: "리사이즈할 이미지 선택",
+        label_presets: "빠른 규격 프리셋",
+        label_width: "가로 너비 (Width px)",
+        label_height: "세로 높이 (Height px)",
+        label_lock_ratio: "종횡비 (비율) 유지",
+        btn_resize: "📐 크기 변경 및 저장",
+        pdf_merge_sub: "여러 PDF 파일을 드래그하여 하나의 파일로 합치세요.",
+        dropzone_pdf: "병합할 PDF 파일들을 여기에 드래그하거나 선택하세요",
+        btn_clear_all: "🗑️ 전체 삭제",
+        btn_merge_pdf: "✨ PDF 파일 하나로 병합하기",
+        pwd_gen_sub: "강력한 난수 기반 암호 및 기억하기 쉬운 패스프레이즈를 생성합니다.",
+        pwd_tab_random: "🔑 보안 무작위 암호",
+        pwd_tab_phrase: "📝 패스프레이즈 (단어 조합)",
+        label_pwd_len: "비밀번호 길이",
+        label_upper: "대문자 (A-Z)",
+        label_lower: "소문자 (a-z)",
+        label_num: "숫자 (0-9)",
+        label_sym: "특수문자 (!@#$%)",
+        label_avoid: "헷갈리는 문자 제외 (0, O, o, 1, I, l)",
+        label_word_cnt: "단어 개수",
+        btn_gen_pwd: "⚡ 새로 생성하기",
+        label_gen_pwd: "생성된 비밀번호",
+        label_strength: "보안 강도",
+        btn_copy_clip: "📋 클립보드 복사",
+        picker_sub: "점심 메뉴 선택, 순서 정하기, 이벤트 추첨에 사용하세요.",
+        label_candidates: "추첨 대상 목록 (줄바꿈으로 구분)",
+        label_pick_cnt: "뽑을 인원/개수",
+        label_allow_dup: "중복 추첨 허용",
+        btn_start_draw: "🎰 랜덤 추첨 시작!",
+        status_ready: "🎲 준비됨",
+        timer_sub: "D-Day 목표일 카운트다운, 뽀모도로 타이머 및 스톱워치.",
+        timer_tab_dday: "📅 D-Day 목표일 카운트다운",
+        timer_tab_pomo: "⏳ 타이머 (Pomodoro)",
+        timer_tab_sw: "⏱️ 스톱워치",
+        label_event_name: "목표 이벤트 제목",
+        label_target_datetime: "목표 날짜 및 시간",
+        btn_start_countdown: "카운트다운 시작",
+        dday_default_title: "목표 날짜를 설정하세요",
+        unit_days: "일",
+        unit_hours: "시간",
+        unit_mins: "분",
+        unit_secs: "초",
+        btn_start: "시작",
+        btn_pause: "일시정지",
+        btn_reset: "리셋",
+        btn_record_lap: "랩 타임",
+        date_calc_sub: "두 날짜 사이의 간격, 날짜 더하기/빼기 및 D-Day를 계산하세요.",
+        title_date_diff: "📏 날짜 간격 계산 (일수 / 평일)",
+        label_start_date: "시작일",
+        label_end_date: "종료일",
+        label_total_interval: "총 간격:",
+        label_work_days: "주말 제외 평일:",
+        title_date_offset: "➕ 날짜 더하기 / 빼기",
+        label_base_date: "기준 날짜",
+        label_offset_days: "더할/뺄 일수 (음수 가능)",
+        btn_calc_offset: "계산하기",
+        label_target_result: "계산 결과:",
+        unit_conv_sub: "모든 주요 단위를 입력 즉시 한눈에 동시 변환합니다.",
+        unit_tab_length: "길이 (Length)",
+        unit_tab_area: "넓이 (Area - 평 포함)",
+        unit_tab_weight: "무게 (Mass)",
+        unit_tab_data: "데이터 (Data)"
       }
     };
 
@@ -1085,6 +1251,11 @@
         btnKo.className = 'px-2.5 py-1 rounded-lg text-xs font-bold transition bg-indigo-600 text-white';
         btnEn.className = 'px-2.5 py-1 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white';
       }
+
+      // Re-trigger date calculator & unit converter dynamic text update
+      if (window.calcDateDiff) window.calcDateDiff();
+      if (window.calcDateOffset) window.calcDateOffset();
+      if (window.renderUnitGrid) window.renderUnitGrid();
     }
 
     document.getElementById('lang-btn-en').addEventListener('click', () => setLanguage('en'));
@@ -1233,7 +1404,7 @@
 
       document.getElementById('qr-download-png').addEventListener('click', () => {
         const img = document.querySelector('#qr-preview-box img') || document.querySelector('#qr-preview-box canvas');
-        if (!img) return showToast('Generate a QR Code first.', 'error');
+        if (!img) return showToast(currentLang === 'ko' ? '먼저 QR 코드를 생성하세요.' : 'Generate a QR Code first.', 'error');
         const src = img.tagName === 'CANVAS' ? img.toDataURL('image/png') : img.src;
         const a = document.createElement('a');
         a.href = src;
@@ -1243,7 +1414,7 @@
 
       document.getElementById('qr-copy-img').addEventListener('click', async () => {
         const canvas = document.querySelector('#qr-preview-box canvas');
-        if (!canvas) return showToast('No canvas to copy.', 'error');
+        if (!canvas) return showToast(currentLang === 'ko' ? '복사할 QR 코드가 없습니다.' : 'No canvas to copy.', 'error');
         canvas.toBlob(blob => {
           navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })])
             .then(() => showToast(currentLang === 'ko' ? '클립보드 복사 완료!' : 'Image copied to clipboard!'))
@@ -1330,7 +1501,7 @@
           link.href = text;
           link.target = '_blank';
           link.className = 'inline-flex items-center gap-1.5 text-xs font-bold text-indigo-400 hover:underline';
-          link.innerHTML = `🔗 Open URL (${text})`;
+          link.innerHTML = `🔗 ${currentLang === 'ko' ? '웹사이트 열기' : 'Open URL'} (${text})`;
           resultAction.appendChild(link);
         }
         showToast(currentLang === 'ko' ? 'QR 스캔 성공!' : 'QR Code Scanned!');
@@ -1359,7 +1530,7 @@
             video.srcObject = stream;
             video.play();
             isCamActive = true;
-            document.getElementById('toggle-cam-btn').textContent = '⏹️ Stop Camera';
+            document.getElementById('toggle-cam-btn').textContent = currentLang === 'ko' ? '⏹️ 카메라 중지' : '⏹️ Stop Camera';
             requestAnimationFrame(scanVideoFrame);
           })
           .catch(() => showToast('Camera permission required.', 'error'));
@@ -1371,7 +1542,7 @@
           currentStream = null;
         }
         isCamActive = false;
-        document.getElementById('toggle-cam-btn').textContent = '🎥 Start Camera';
+        document.getElementById('toggle-cam-btn').textContent = currentLang === 'ko' ? '🎥 카메라 시작' : '🎥 Start Camera';
       }
 
       function scanVideoFrame() {
@@ -1442,7 +1613,7 @@
           const card = document.createElement('div');
           card.className = 'bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4';
           card.id = `compress-card-${idx}`;
-          card.innerHTML = `<div class="text-xs text-slate-400">Compressing... (${file.name})</div>`;
+          card.innerHTML = `<div class="text-xs text-slate-400">${currentLang === 'ko' ? '압축 중...' : 'Compressing...'} (${file.name})</div>`;
           container.appendChild(card);
 
           const reader = new FileReader();
@@ -1472,7 +1643,7 @@
                     </div>
                   </div>
                   <a href="${URL.createObjectURL(blob)}" download="compressed_${file.name}" class="w-full sm:w-auto py-2 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-bold transition text-center">
-                    💾 Download
+                    💾 ${currentLang === 'ko' ? '다운로드' : 'Download'}
                   </a>
                 `;
               }, mimeType, quality);
@@ -1489,7 +1660,7 @@
         const quality = parseInt(qualitySlider.value) / 100;
         const mimeType = document.getElementById('compress-format').value;
 
-        showToast('Generating ZIP file...');
+        showToast(currentLang === 'ko' ? 'ZIP 파일 생성 중...' : 'Generating ZIP file...');
 
         const promises = filesToCompress.map((file) => {
           return new Promise((resolve) => {
@@ -1519,7 +1690,7 @@
         a.href = URL.createObjectURL(zipBlob);
         a.download = 'compressed_images.zip';
         a.click();
-        showToast('ZIP downloaded!');
+        showToast(currentLang === 'ko' ? 'ZIP 다운로드 완료!' : 'ZIP downloaded!');
       });
     }
 
@@ -1585,14 +1756,14 @@
         img.className = 'max-h-[250px] object-contain rounded-lg';
         previewBox.appendChild(img);
 
-        document.getElementById('resize-info-text').textContent = `Original: ${originalImg.width}x${originalImg.height} ➔ New: ${widthInput.value || 0}x${heightInput.value || 0}`;
+        document.getElementById('resize-info-text').textContent = currentLang === 'ko' ? `원본: ${originalImg.width}x${originalImg.height} ➔ 변경: ${widthInput.value || 0}x${heightInput.value || 0}` : `Original: ${originalImg.width}x${originalImg.height} ➔ New: ${widthInput.value || 0}x${heightInput.value || 0}`;
       }
 
       document.getElementById('resize-execute-btn').addEventListener('click', () => {
-        if (!originalImg) return showToast('Please select an image first.', 'error');
+        if (!originalImg) return showToast(currentLang === 'ko' ? '먼저 이미지를 선택하세요.' : 'Please select an image first.', 'error');
         const w = parseInt(widthInput.value);
         const h = parseInt(heightInput.value);
-        if (!w || !h) return showToast('Enter valid width and height.', 'error');
+        if (!w || !h) return showToast(currentLang === 'ko' ? '가로/세로 크기를 입력하세요.' : 'Enter valid width and height.', 'error');
 
         const canvas = document.createElement('canvas');
         canvas.width = w;
@@ -1608,7 +1779,7 @@
           a.href = URL.createObjectURL(blob);
           a.download = `resized_${w}x${h}.${ext}`;
           a.click();
-          showToast('Image Resized successfully!');
+          showToast(currentLang === 'ko' ? '이미지 리사이즈 완료!' : 'Image Resized successfully!');
         }, format);
       });
     }
@@ -1686,8 +1857,8 @@
       });
 
       document.getElementById('pdf-merge-btn').addEventListener('click', async () => {
-        if (pdfFiles.length < 2) return showToast('Please select at least 2 PDF files to merge.', 'error');
-        showToast('Merging PDF files...');
+        if (pdfFiles.length < 2) return showToast(currentLang === 'ko' ? '최소 2개 이상의 PDF 파일이 필요합니다.' : 'Please select at least 2 PDF files to merge.', 'error');
+        showToast(currentLang === 'ko' ? 'PDF 병합 중...' : 'Merging PDF files...');
 
         try {
           const mergedPdf = await PDFLib.PDFDocument.create();
@@ -1704,9 +1875,9 @@
           a.href = URL.createObjectURL(blob);
           a.download = 'merged_document.pdf';
           a.click();
-          showToast('PDF files merged successfully!');
+          showToast(currentLang === 'ko' ? 'PDF 병합 성공!' : 'PDF files merged successfully!');
         } catch (err) {
-          showToast('Error merging PDF files.', 'error');
+          showToast(currentLang === 'ko' ? 'PDF 병합 실패.' : 'Error merging PDF files.', 'error');
         }
       });
     }
@@ -1739,12 +1910,12 @@
 
       const lenSlider = document.getElementById('pwd-length');
       lenSlider.addEventListener('input', (e) => {
-        document.getElementById('pwd-length-val').textContent = `${e.target.value} chars`;
+        document.getElementById('pwd-length-val').textContent = `${e.target.value} ${currentLang === 'ko' ? '자' : 'chars'}`;
       });
 
       const phraseSlider = document.getElementById('phrase-count');
       phraseSlider.addEventListener('input', (e) => {
-        document.getElementById('phrase-count-val').textContent = `${e.target.value} words`;
+        document.getElementById('phrase-count-val').textContent = `${e.target.value} ${currentLang === 'ko' ? '개 단어' : 'words'}`;
       });
 
       document.getElementById('pwd-generate-btn').addEventListener('click', generatePassword);
@@ -1762,7 +1933,7 @@
             chars = chars.replace(/[0Oo1Il]/g, '');
           }
 
-          if (!chars) return showToast('Please select at least one character type.', 'error');
+          if (!chars) return showToast(currentLang === 'ko' ? '최소 하나 이상의 문자 종류를 선택하세요.' : 'Please select at least one character type.', 'error');
 
           const rand = new Uint32Array(len);
           window.crypto.getRandomValues(rand);
@@ -1791,19 +1962,19 @@
 
         if (len >= 16) {
           bar.className = 'h-full bg-emerald-500 w-full';
-          label.textContent = 'Very Strong';
+          label.textContent = currentLang === 'ko' ? '매우 강력함' : 'Very Strong';
           label.className = 'text-emerald-400';
         } else if (len >= 12) {
           bar.className = 'h-full bg-indigo-500 w-3/4';
-          label.textContent = 'Strong';
+          label.textContent = currentLang === 'ko' ? '강력함' : 'Strong';
           label.className = 'text-indigo-400';
         } else if (len >= 8) {
           bar.className = 'h-full bg-amber-500 w-1/2';
-          label.textContent = 'Moderate';
+          label.textContent = currentLang === 'ko' ? '보통' : 'Moderate';
           label.className = 'text-amber-400';
         } else {
           bar.className = 'h-full bg-rose-500 w-1/4';
-          label.textContent = 'Weak';
+          label.textContent = currentLang === 'ko' ? '취약함' : 'Weak';
           label.className = 'text-rose-400';
         }
       }
@@ -1811,7 +1982,7 @@
       document.getElementById('pwd-copy-btn').addEventListener('click', () => {
         const out = document.getElementById('pwd-output');
         if (!out.value) return;
-        navigator.clipboard.writeText(out.value).then(() => showToast('Copied password to clipboard!'));
+        navigator.clipboard.writeText(out.value).then(() => showToast(currentLang === 'ko' ? '비밀번호 복사 완료!' : 'Copied password to clipboard!'));
       });
 
       generatePassword();
@@ -1843,7 +2014,7 @@
 
       drawBtn.addEventListener('click', () => {
         const input = document.getElementById('picker-items-input').value.trim();
-        if (!input) return showToast('Please enter candidate items.', 'error');
+        if (!input) return showToast(currentLang === 'ko' ? '추첨 대상을 입력하세요.' : 'Please enter candidate items.', 'error');
 
         const items = input.split('\n').map(s => s.trim()).filter(Boolean);
         if (!items.length) return;
@@ -1852,7 +2023,7 @@
         const allowDup = document.getElementById('picker-allow-dup').checked;
 
         if (!allowDup && count > items.length) {
-          return showToast('Pick count cannot exceed unique items.', 'error');
+          return showToast(currentLang === 'ko' ? '중복 미허용 시 추첨 개수가 항목보다 많을 수 없습니다.' : 'Pick count cannot exceed unique items.', 'error');
         }
 
         let step = 0;
@@ -1875,7 +2046,7 @@
             }
 
             resultText.textContent = winners.join(' 🎉 ');
-            showToast(`Winner(s): ${winners.join(', ')}`);
+            showToast(`${currentLang === 'ko' ? '당첨자' : 'Winner(s)'}: ${winners.join(', ')}`);
           }
         }, 80);
       });
@@ -1883,15 +2054,15 @@
 
 
     /* ==========================================================================
-       8. COUNTDOWN & TIMER LOGIC (ROBUST FIXED VERSION)
+       8. COUNTDOWN & TIMER LOGIC
        ========================================================================== */
     function initCountdownSuite() {
       // 1. D-Day Timer
       let ddayInterval = null;
       document.getElementById('dday-start-btn').addEventListener('click', () => {
-        const title = document.getElementById('dday-title-input').value || 'Target Event';
+        const title = document.getElementById('dday-title-input').value || (currentLang === 'ko' ? '목표 이벤트' : 'Target Event');
         const targetVal = document.getElementById('dday-target-input').value;
-        if (!targetVal) return showToast('Please select a target date and time.', 'error');
+        if (!targetVal) return showToast(currentLang === 'ko' ? '목표 날짜와 시간을 선택하세요.' : 'Please select a target date and time.', 'error');
 
         const targetDate = new Date(targetVal).getTime();
         document.getElementById('dday-display-title').textContent = title;
@@ -1908,7 +2079,7 @@
             document.getElementById('dday-hours').textContent = '00';
             document.getElementById('dday-mins').textContent = '00';
             document.getElementById('dday-secs').textContent = '00';
-            showToast(`🎉 ${title} has arrived!`);
+            showToast(`🎉 ${title} ${currentLang === 'ko' ? '시간 종료!' : 'has arrived!'}`);
             return;
           }
 
@@ -1939,9 +2110,9 @@
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
           osc.type = 'sine';
-          osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
-          osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.2); // E5
-          osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.4); // G5
+          osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+          osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.2);
+          osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.4);
           gain.gain.setValueAtTime(0.3, ctx.currentTime);
           gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1.2);
           osc.connect(gain);
@@ -2030,14 +2201,12 @@
 
       swStartBtn.addEventListener('click', () => {
         if (swRunning) {
-          // Pause
           swRunning = false;
           swElapsedTime += performance.now() - swStartTime;
           cancelAnimationFrame(swTimerId);
           swStartBtn.textContent = currentLang === 'ko' ? '시작' : 'Start';
           swStartBtn.className = 'py-3 px-8 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-sm shadow-lg transition';
         } else {
-          // Start / Resume
           swRunning = true;
           swStartTime = performance.now();
           swTimerId = requestAnimationFrame(updateStopwatch);
@@ -2075,16 +2244,9 @@
         });
       }
 
-      // Tab switcher
-      document.getElementById('timer-tab-dday').addEventListener('click', (e) => {
-        switchTimerTab(e.target, 'timer-group-dday');
-      });
-      document.getElementById('timer-tab-pomodoro').addEventListener('click', (e) => {
-        switchTimerTab(e.target, 'timer-group-pomodoro');
-      });
-      document.getElementById('timer-tab-stopwatch').addEventListener('click', (e) => {
-        switchTimerTab(e.target, 'timer-group-stopwatch');
-      });
+      document.getElementById('timer-tab-dday').addEventListener('click', (e) => switchTimerTab(e.target, 'timer-group-dday'));
+      document.getElementById('timer-tab-pomodoro').addEventListener('click', (e) => switchTimerTab(e.target, 'timer-group-pomodoro'));
+      document.getElementById('timer-tab-stopwatch').addEventListener('click', (e) => switchTimerTab(e.target, 'timer-group-stopwatch'));
 
       function switchTimerTab(btn, groupName) {
         document.querySelectorAll('#view-countdown button[id^="timer-tab-"]').forEach(b => {
@@ -2100,7 +2262,7 @@
 
 
     /* ==========================================================================
-       9. DATE CALCULATOR LOGIC
+       9. DATE CALCULATOR LOGIC (FULLY BILINGUAL)
        ========================================================================== */
     function initDateCalculator() {
       const today = new Date().toISOString().split('T')[0];
@@ -2111,10 +2273,13 @@
       document.getElementById('date-diff-start').addEventListener('change', calcDateDiff);
       document.getElementById('date-diff-end').addEventListener('change', calcDateDiff);
 
-      function calcDateDiff() {
-        const start = new Date(document.getElementById('date-diff-start').value);
-        const end = new Date(document.getElementById('date-diff-end').value);
+      window.calcDateDiff = function() {
+        const startVal = document.getElementById('date-diff-start').value;
+        const endVal = document.getElementById('date-diff-end').value;
+        if (!startVal || !endVal) return;
 
+        const start = new Date(startVal);
+        const end = new Date(endVal);
         if (isNaN(start) || isNaN(end)) return;
 
         const diffTime = Math.abs(end - start);
@@ -2130,63 +2295,113 @@
           cur.setDate(cur.getDate() + 1);
         }
 
-        document.getElementById('diff-total-days').textContent = `${diffDays} Days`;
-        document.getElementById('diff-work-days').textContent = `${workDays} Days`;
-      }
+        const unitStr = currentLang === 'ko' ? '일' : 'Days';
+        document.getElementById('diff-total-days').textContent = `${diffDays} ${unitStr}`;
+        document.getElementById('diff-work-days').textContent = `${workDays} ${unitStr}`;
+      };
 
-      document.getElementById('date-offset-calc-btn').addEventListener('click', () => {
-        const base = new Date(document.getElementById('date-offset-base').value);
+      window.calcDateOffset = function() {
+        const baseVal = document.getElementById('date-offset-base').value;
         const days = parseInt(document.getElementById('date-offset-days').value) || 0;
+        if (!baseVal) return;
+
+        const base = new Date(baseVal);
         if (isNaN(base)) return;
 
         base.setDate(base.getDate() + days);
         const y = base.getFullYear();
         const m = String(base.getMonth() + 1).padStart(2, '0');
         const d = String(base.getDate()).padStart(2, '0');
-        const weekEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][base.getDay()];
 
-        document.getElementById('offset-result-text').textContent = `${y}-${m}-${d} (${weekEn})`;
-      });
+        if (currentLang === 'ko') {
+          const weekKo = ['일', '월', '화', '수', '목', '금', '토'][base.getDay()];
+          document.getElementById('offset-result-text').textContent = `${y}년 ${m}월 ${d}일 (${weekKo}요일)`;
+        } else {
+          const weekEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][base.getDay()];
+          document.getElementById('offset-result-text').textContent = `${y}-${m}-${d} (${weekEn})`;
+        }
+      };
+
+      document.getElementById('date-offset-calc-btn').addEventListener('click', window.calcDateOffset);
+
+      window.calcDateDiff();
+      window.calcDateOffset();
     }
 
 
     /* ==========================================================================
-       10. UNIT CONVERTER LOGIC
+       10. UNIT CONVERTER LOGIC (FULLY BILINGUAL)
        ========================================================================== */
     function initUnitConverter() {
       const unitsConfig = {
-        length: [
-          { name: 'Meters (m)', ratio: 1 },
-          { name: 'Kilometers (km)', ratio: 1000 },
-          { name: 'Centimeters (cm)', ratio: 0.01 },
-          { name: 'Millimeters (mm)', ratio: 0.001 },
-          { name: 'Inches (in)', ratio: 0.0254 },
-          { name: 'Feet (ft)', ratio: 0.3048 },
-          { name: 'Yards (yd)', ratio: 0.9144 },
-          { name: 'Miles (mi)', ratio: 1609.34 }
-        ],
-        area: [
-          { name: 'Square Meters (m²)', ratio: 1 },
-          { name: 'Pyeong (평)', ratio: 3.305785 },
-          { name: 'Square Kilometers (km²)', ratio: 1000000 },
-          { name: 'Square Feet (ft²)', ratio: 0.092903 },
-          { name: 'Acres (acre)', ratio: 4046.86 }
-        ],
-        weight: [
-          { name: 'Kilograms (kg)', ratio: 1 },
-          { name: 'Grams (g)', ratio: 0.001 },
-          { name: 'Milligrams (mg)', ratio: 0.000001 },
-          { name: 'Pounds (lb)', ratio: 0.453592 },
-          { name: 'Ounces (oz)', ratio: 0.0283495 },
-          { name: 'Metric Tons (t)', ratio: 1000 }
-        ],
-        data: [
-          { name: 'Bytes (B)', ratio: 1 },
-          { name: 'Kilobytes (KB)', ratio: 1024 },
-          { name: 'Megabytes (MB)', ratio: 1048576 },
-          { name: 'Gigabytes (GB)', ratio: 1073741824 },
-          { name: 'Terabytes (TB)', ratio: 1099511627776 }
-        ]
+        en: {
+          length: [
+            { name: 'Meters (m)', ratio: 1 },
+            { name: 'Kilometers (km)', ratio: 1000 },
+            { name: 'Centimeters (cm)', ratio: 0.01 },
+            { name: 'Millimeters (mm)', ratio: 0.001 },
+            { name: 'Inches (in)', ratio: 0.0254 },
+            { name: 'Feet (ft)', ratio: 0.3048 },
+            { name: 'Yards (yd)', ratio: 0.9144 },
+            { name: 'Miles (mi)', ratio: 1609.34 }
+          ],
+          area: [
+            { name: 'Square Meters (m²)', ratio: 1 },
+            { name: 'Pyeong (평)', ratio: 3.305785 },
+            { name: 'Square Kilometers (km²)', ratio: 1000000 },
+            { name: 'Square Feet (ft²)', ratio: 0.092903 },
+            { name: 'Acres (acre)', ratio: 4046.86 }
+          ],
+          weight: [
+            { name: 'Kilograms (kg)', ratio: 1 },
+            { name: 'Grams (g)', ratio: 0.001 },
+            { name: 'Milligrams (mg)', ratio: 0.000001 },
+            { name: 'Pounds (lb)', ratio: 0.453592 },
+            { name: 'Ounces (oz)', ratio: 0.0283495 },
+            { name: 'Metric Tons (t)', ratio: 1000 }
+          ],
+          data: [
+            { name: 'Bytes (B)', ratio: 1 },
+            { name: 'Kilobytes (KB)', ratio: 1024 },
+            { name: 'Megabytes (MB)', ratio: 1048576 },
+            { name: 'Gigabytes (GB)', ratio: 1073741824 },
+            { name: 'Terabytes (TB)', ratio: 1099511627776 }
+          ]
+        },
+        ko: {
+          length: [
+            { name: '미터 (m)', ratio: 1 },
+            { name: '킬로미터 (km)', ratio: 1000 },
+            { name: '센티미터 (cm)', ratio: 0.01 },
+            { name: '밀리미터 (mm)', ratio: 0.001 },
+            { name: '인치 (inch)', ratio: 0.0254 },
+            { name: '피트 (ft)', ratio: 0.3048 },
+            { name: '야드 (yd)', ratio: 0.9144 },
+            { name: '마일 (mile)', ratio: 1609.34 }
+          ],
+          area: [
+            { name: '제곱미터 (m²)', ratio: 1 },
+            { name: '평 (pyeong)', ratio: 3.305785 },
+            { name: '제곱킬로미터 (km²)', ratio: 1000000 },
+            { name: '제곱피트 (ft²)', ratio: 0.092903 },
+            { name: '에이커 (acre)', ratio: 4046.86 }
+          ],
+          weight: [
+            { name: '킬로그램 (kg)', ratio: 1 },
+            { name: '그램 (g)', ratio: 0.001 },
+            { name: '밀리그램 (mg)', ratio: 0.000001 },
+            { name: '파운드 (lb)', ratio: 0.453592 },
+            { name: '온스 (oz)', ratio: 0.0283495 },
+            { name: '톤 (ton)', ratio: 1000 }
+          ],
+          data: [
+            { name: '바이트 (B)', ratio: 1 },
+            { name: '킬로바이트 (KB)', ratio: 1024 },
+            { name: '메가바이트 (MB)', ratio: 1048576 },
+            { name: '기가바이트 (GB)', ratio: 1073741824 },
+            { name: '테라바이트 (TB)', ratio: 1099511627776 }
+          ]
+        }
       };
 
       let activeCat = 'length';
@@ -2202,10 +2417,11 @@
         });
       });
 
-      function renderUnitGrid() {
+      window.renderUnitGrid = function() {
         const grid = document.getElementById('unit-grid');
         grid.innerHTML = '';
-        const list = unitsConfig[activeCat] || [];
+        const catMap = unitsConfig[currentLang] || unitsConfig.en;
+        const list = catMap[activeCat] || [];
 
         list.forEach((u, idx) => {
           const card = document.createElement('div');
@@ -2232,9 +2448,9 @@
             });
           });
         });
-      }
+      };
 
-      renderUnitGrid();
+      window.renderUnitGrid();
     }
   </script>
 </body>
