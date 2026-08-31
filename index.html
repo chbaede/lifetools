@@ -1583,34 +1583,35 @@
         }
       }
 
-      document.getElementById(targetViewId).classList.remove('hidden');
+      const targetEl = document.getElementById(targetViewId);
+      if (targetEl) {
+        targetEl.classList.remove('hidden');
+      }
 
       const activeNav = document.querySelector(`.nav-item[data-path="${hash}"]`);
       if (activeNav) {
         activeNav.classList.add('bg-indigo-600/20', 'text-indigo-400', 'font-bold');
       }
 
-      document.getElementById('sidebar-drawer').classList.add('-translate-x-full');
-      document.getElementById('mobile-drawer-overlay').classList.add('hidden');
+      const drawer = document.getElementById('sidebar-drawer');
+      const overlay = document.getElementById('mobile-drawer-overlay');
+      if (drawer) drawer.classList.add('-translate-x-full');
+      if (overlay) overlay.classList.add('hidden');
+
       window.scrollTo(0, 0);
     }
 
     window.addEventListener('hashchange', handleRoute);
-    window.addEventListener('popstate', handleRoute);
 
     // Global Click Delegation for Link Navigation
     document.addEventListener('click', (e) => {
-      const link = e.target.closest('a[href*="#"]');
+      const link = e.target.closest('a[href^="#/"]');
       if (link) {
         const href = link.getAttribute('href');
-        if (href && href.startsWith('#')) {
-          e.preventDefault();
-          if (window.location.hash !== href) {
-            window.location.hash = href;
-          } else {
-            handleRoute();
-          }
+        if (window.location.hash !== href) {
+          window.location.hash = href;
         }
+        handleRoute();
       }
     });
     window.addEventListener('DOMContentLoaded', () => {
