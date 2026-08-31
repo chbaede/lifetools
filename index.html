@@ -2672,29 +2672,36 @@
        9. DATE CALCULATOR LOGIC (FULLY BILINGUAL)
        ========================================================================== */
     function initDateCalculator() {
+      const startInput = document.getElementById('date-diff-start');
+      const endInput = document.getElementById('date-diff-end');
+      const baseInput = document.getElementById('date-offset-base');
+      const daysInput = document.getElementById('date-offset-days');
+      const calcBtn = document.getElementById('date-offset-calc-btn');
+
       const today = new Date().toISOString().split('T')[0];
-      document.getElementById('date-diff-start').value = today;
-      document.getElementById('date-diff-end').value = today;
-      document.getElementById('date-offset-base').value = today;
+      if (startInput && !startInput.value) startInput.value = today;
+      if (endInput && !endInput.value) endInput.value = today;
+      if (baseInput && !baseInput.value) baseInput.value = today;
 
-      document.getElementById('date-diff-start').addEventListener('change', calcDateDiff);
-      document.getElementById('date-diff-end').addEventListener('change', calcDateDiff);
-
-      window.calcDateDiff = function() {
-        const startVal = document.getElementById('date-diff-start').value;
-        const endVal = document.getElementById('date-diff-end').value;
+      function calcDateDiff() {
+        if (!startInput || !endInput) return;
+        const startVal = startInput.value;
+        const endVal = endInput.value;
         if (!startVal || !endVal) return;
 
-        const start = new Date(startVal);
-        const end = new Date(endVal);
-        if (isNaN(start) || isNaN(end)) return;
+        const startParts = startVal.split('-').map(Number);
+        const endParts = endVal.split('-').map(Number);
+
+        const start = new Date(startParts[0], startParts[1] - 1, startParts[2]);
+        const end = new Date(endParts[0], endParts[1] - 1, endParts[2]);
+        if (isNaN(start.getTime()) || isNaN(end.getTime())) return;
 
         const diffTime = Math.abs(end - start);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
 
         let workDays = 0;
-        let cur = new Date(Math.min(start, end));
-        const stop = new Date(Math.max(start, end));
+        let cur = new Date(Math.min(start.getTime(), end.getTime()));
+        const stop = new Date(Math.max(start.getTime(), end.getTime()));
 
         while (cur <= stop) {
           const day = cur.getDay();
@@ -2703,36 +2710,69 @@
         }
 
         const unitStr = currentLang === 'ko' ? '일' : 'Days';
-        document.getElementById('diff-total-days').textContent = `${diffDays} ${unitStr}`;
-        document.getElementById('diff-work-days').textContent = `${workDays} ${unitStr}`;
-      };
+        const totalElem = document.getElementById('diff-total-days');
+        const workElem = document.getElementById('diff-work-days');
+        if (totalElem) totalElem.textContent = `${diffDays} ${unitStr}`;
+        if (workElem) workElem.textContent = `${workDays} ${unitStr}`;
+      }
 
-      window.calcDateOffset = function() {
-        const baseVal = document.getElementById('date-offset-base').value;
-        const days = parseInt(document.getElementById('date-offset-days').value) || 0;
+      function calcDateOffset() {
+        if (!baseInput || !daysInput) return;
+        const baseVal = baseInput.value;
+        const days = parseInt(daysInput.value, 10) || 0;
         if (!baseVal) return;
 
-        const base = new Date(baseVal);
-        if (isNaN(base)) return;
+        const baseParts = baseVal.split('-').map(Number);
+        const base = new Date(baseParts[0], baseParts[1] - 1, baseParts[2]);
+        if (isNaN(base.getTime())) return;
 
         base.setDate(base.getDate() + days);
         const y = base.getFullYear();
         const m = String(base.getMonth() + 1).padStart(2, '0');
         const d = String(base.getDate()).padStart(2, '0');
 
+        const resultElem = document.getElementById('offset-result-text');
+        if (!resultElem) return;
+
         if (currentLang === 'ko') {
           const weekKo = ['일', '월', '화', '수', '목', '금', '토'][base.getDay()];
-          document.getElementById('offset-result-text').textContent = `${y}년 ${m}월 ${d}일 (${weekKo}요일)`;
+          resultElem.textContent = `${y}년 ${m}월 ${d}일 (${weekKo}요일)`;
         } else {
           const weekEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][base.getDay()];
-          document.getElementById('offset-result-text').textContent = `${y}-${m}-${d} (${weekEn})`;
+          resultElem.textContent = `${y}-${m}-${d} (${weekEn})`;
         }
-      };
+      }
 
-      document.getElementById('date-offset-calc-btn').addEventListener('click', window.calcDateOffset);
+      window.calcDateDiff = calcDateDiff;
+      window.calcDateOffset = calcDateOffset;
 
-      window.calcDateDiff();
-      window.calcDateOffset();
+      if (startInput) {
+        startInput.addEventListener('change', calcDateDiff);
+        startInput.addEventListener('input', calcDateDiff);
+      }
+      if (endInput) {
+        endInput.addEventListener('change', calcDateDiff);
+        endInput.addEventListener('input', calcDateDiff);
+      }
+
+      if (baseInput) {
+        baseInput.addEventListener('change', calcDateOffset);
+        baseInput.addEventListener('input', calcDateOffset);
+      }
+      if (daysInput) {
+        daysInput.addEventListener('change', calcDateOffset);
+        daysInput.addEventListener('input', calcDateOffset);
+      }
+
+      if (calcBtn) {
+        calcBtn.addEventListener('click', (e) => {
+          if (e) e.preventDefault();
+          calcDateOffset();
+        });
+      }
+
+      calcDateDiff();
+      calcDateOffset();
     }
 
 
