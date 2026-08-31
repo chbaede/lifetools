@@ -3053,45 +3053,88 @@
         convertTimezone();
       });
 
+      function getZonedDate(isoStr, tz) {
+        if (!isoStr) return new Date();
+        const [dPart, tPart] = isoStr.split('T');
+        const [y, m, d] = (dPart || '').split('-').map(Number);
+        const [h, min] = (tPart || '00:00').split(':').map(Number);
+
+        if (!y || !m || !d) return new Date();
+
+        const utcGuess = Date.UTC(y, m - 1, d, h || 0, min || 0, 0);
+        
+        try {
+          const formatter = new Intl.DateTimeFormat('en-US', {
+            timeZone: tz,
+            year: 'numeric', month: '2-digit', day: '2-digit',
+            hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+          });
+          
+          const parts = formatter.formatToParts(new Date(utcGuess));
+          const getP = type => parseInt(parts.find(p => p.type === type)?.value || 0, 10);
+          
+          const pY = getP('year');
+          const pM = getP('month');
+          const pD = getP('day');
+          let pH = getP('hour');
+          if (pH === 24) pH = 0;
+          const pMin = getP('minute');
+
+          const tzUtcEquiv = Date.UTC(pY, pM - 1, pD, pH, pMin, 0);
+          const offset = tzUtcEquiv - utcGuess;
+          return new Date(utcGuess - offset);
+        } catch (e) {
+          return new Date();
+        }
+      }
+
       function convertTimezone() {
         const fromTz = fromSelect.value;
         const toTz = toSelect.value;
-        let targetDate = new Date();
+
+        ensureInputsValue();
+
+        let dateInFromTz;
+        const now = new Date();
+        const y = now.getFullYear();
+        const m = String(now.getMonth() + 1).padStart(2, '0');
+        const d = String(now.getDate()).padStart(2, '0');
 
         if (currentMode === 'time') {
           const timeVal = timeInput.value || '14:30';
-          const [hrs, mins] = timeVal.split(':').map(Number);
-          targetDate.setHours(hrs, mins, 0, 0);
-
-          const optionsTime = {
-            timeZone: toTz,
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-          };
-
-          const timeFormatted = new Intl.DateTimeFormat(currentLang === 'ko' ? 'ko-KR' : 'en-US', optionsTime).format(targetDate);
-          resultText.textContent = `${timeVal} (${fromTz.split('/')[1] || fromTz}) ➔ ${timeFormatted} (${toTz.split('/')[1] || toTz})`;
+          dateInFromTz = getZonedDate(`${y}-${m}-${d}T${timeVal}`, fromTz);
         } else {
-          ensureInputsValue();
-          const inputVal = datetimeInput.value;
-          targetDate = new Date(inputVal);
-          if (isNaN(targetDate.getTime())) targetDate = new Date();
+          dateInFromTz = getZonedDate(datetimeInput.value, fromTz);
+        }
 
-          const optionsDate = {
-            timeZone: toTz,
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            weekday: 'short',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-          };
+        const optionsTime = {
+          timeZone: toTz,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        };
 
-          resultText.textContent = new Intl.DateTimeFormat(currentLang === 'ko' ? 'ko-KR' : 'en-US', optionsDate).format(targetDate);
+        const optionsDate = {
+          timeZone: toTz,
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          weekday: 'short',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        };
+
+        const fromName = fromTz.split('/')[1] ? fromTz.split('/')[1].replace('_', ' ') : fromTz;
+        const toName = toTz.split('/')[1] ? toTz.split('/')[1].replace('_', ' ') : toTz;
+
+        if (currentMode === 'time') {
+          const timeFormatted = new Intl.DateTimeFormat(currentLang === 'ko' ? 'ko-KR' : 'en-US', optionsTime).format(dateInFromTz);
+          resultText.textContent = `${timeInput.value || '14:30'} (${fromName}) ➔ ${timeFormatted} (${toName})`;
+        } else {
+          const targetFormatted = new Intl.DateTimeFormat(currentLang === 'ko' ? 'ko-KR' : 'en-US', optionsDate).format(dateInFromTz);
+          resultText.textContent = `${datetimeInput.value.replace('T', ' ')} (${fromName}) ➔ ${targetFormatted} (${toName})`;
         }
 
         const dateNow = new Date();
