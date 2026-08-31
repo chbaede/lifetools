@@ -1513,6 +1513,7 @@
         tab_tz_time_only: "🕒 시간만 변환",
         tab_tz_datetime: "📅 날짜+시간 변환"
       }
+    };
 
     let currentLang = 'en';
     if (localStorage.getItem('lifetools_lang') === 'ko') {
@@ -1595,6 +1596,23 @@
     }
 
     window.addEventListener('hashchange', handleRoute);
+    window.addEventListener('popstate', handleRoute);
+
+    // Global Click Delegation for Link Navigation
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[href*="#"]');
+      if (link) {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          e.preventDefault();
+          if (window.location.hash !== href) {
+            window.location.hash = href;
+          } else {
+            handleRoute();
+          }
+        }
+      }
+    });
     window.addEventListener('DOMContentLoaded', () => {
       setLanguage(currentLang);
       handleRoute();
@@ -1610,6 +1628,8 @@
       initUnitConverter();
       initCurrencyConverter();
       initWorldClock();
+    });
+
     document.getElementById('mobile-menu-btn').addEventListener('click', () => {
       document.getElementById('sidebar-drawer').classList.remove('-translate-x-full');
       document.getElementById('mobile-drawer-overlay').classList.remove('hidden');
