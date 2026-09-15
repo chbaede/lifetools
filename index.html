@@ -371,6 +371,12 @@
           </button>
         </div>
 
+        <!-- Main Hub Link -->
+        <a href="https://main.yocto.co.kr/" target="_blank" rel="noopener" class="text-xs font-semibold px-3 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-md shadow-indigo-500/20 border border-indigo-400/30 transition flex items-center gap-1.5" title="Go to Main Hub (main.yocto.co.kr)">
+          <span>🌐</span>
+          <span class="hidden sm:inline" data-i18n="nav_main_hub">Main Hub</span>
+        </a>
+
         <a href="#/" class="text-xs font-semibold px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
           <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
           <span class="hidden sm:inline" data-i18n="nav_home">Home</span>
@@ -458,12 +464,21 @@
         </a>
       </nav>
 
-      <div class="p-4 border-t border-slate-800 text-xs text-slate-500">
-        <div class="flex items-center gap-2 text-emerald-400 font-medium mb-1">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          100% Client-Side Safe
+      <div class="p-4 border-t border-slate-800 text-xs space-y-3">
+        <a href="https://main.yocto.co.kr/" target="_blank" rel="noopener" class="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-indigo-300 hover:text-white border border-indigo-500/20 transition group">
+          <div class="flex items-center gap-2">
+            <span>🌐</span>
+            <span class="font-bold" data-i18n="nav_main_hub">Main Hub</span>
+          </div>
+          <span class="text-[10px] text-slate-400 group-hover:translate-x-0.5 transition-transform">main.yocto.co.kr ↗</span>
+        </a>
+        <div>
+          <div class="flex items-center gap-2 text-emerald-400 font-medium mb-1">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            100% Client-Side Safe
+          </div>
+          <span data-i18n="footer_privacy">Zero server uploads. Your data stays in your browser.</span>
         </div>
-        <span data-i18n="footer_privacy">Zero server uploads. Your data stays in your browser.</span>
       </div>
     </aside>
 
@@ -1522,6 +1537,7 @@
       en: {
         tagline: "100% Client-Side Everyday Life Utilities",
         nav_home: "Home",
+        nav_main_hub: "Main Hub",
         menu_title: "Tools Menu",
         sidebar_heading: "Everyday Tools",
         footer_privacy: "Zero server uploads. Your data stays in your browser.",
@@ -1665,6 +1681,7 @@
       ko: {
         tagline: "100% 클라이언트 사이드 실생활 도구 모음",
         nav_home: "홈 대시보드",
+        nav_main_hub: "메인 허브",
         menu_title: "도구 목록",
         sidebar_heading: "실생활 도구 바로가기",
         footer_privacy: "서버 전송 없이 브라우저 내에서만 안전하게 동작합니다.",
