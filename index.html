@@ -88,6 +88,12 @@
         "position": 5,
         "name": "Unit Converter",
         "item": "https://life.yocto.co.kr/#/unit-converter"
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
+        "name": "Age Calculator",
+        "item": "https://life.yocto.co.kr/#/age-calc"
       }
     ]
   }
@@ -462,6 +468,11 @@
           <span class="text-lg">🌐</span>
           <span data-i18n="tool_world_clock">World Clock & Timezone</span>
         </a>
+
+        <a href="#/age-calc" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" data-path="#/age-calc">
+          <span class="text-lg">🎂</span>
+          <span data-i18n="tool_age_calc">Age Calculator</span>
+        </a>
       </nav>
 
       <div class="p-4 border-t border-slate-800 text-xs space-y-3">
@@ -503,7 +514,7 @@
         <!-- Hero Header -->
         <div class="bg-gradient-to-r from-indigo-900/40 via-purple-900/30 to-slate-900 p-6 sm:p-8 rounded-2xl border border-indigo-500/20 shadow-xl">
           <h1 class="text-2xl sm:text-3xl font-extrabold text-white mb-2 tracking-tight" data-i18n="hero_title">
-            12 Essential Everyday Life Tools 🛠️
+            13 Essential Everyday Life Tools 🛠️
           </h1>
           <p class="text-slate-300 text-sm sm:text-base max-w-3xl leading-relaxed" data-i18n="hero_desc">
             No signup or app installation required. All data processing runs 100% inside your browser for maximum privacy and zero latency.
@@ -655,6 +666,18 @@
               </div>
             </div>
             <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_world_clock_desc">Convert date and time between world timezones with local timezone auto-detection.</p>
+          </a>
+
+          <!-- Card 13: Age Calculator -->
+          <a href="#/age-calc" class="block p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-pink-500/50 hover:bg-slate-800/80 transition-all duration-200 group shadow-md">
+            <div class="flex items-center gap-4 mb-3">
+              <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">🎂</div>
+              <div>
+                <h3 class="font-bold text-slate-100 text-base group-hover:text-pink-400 transition-colors" data-i18n="tool_age_calc">Age Calculator</h3>
+                <span class="text-xs text-pink-300 font-medium">Life & Age</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed" data-i18n="card_age_calc_desc">Calculate exact international age (Man-nai), traditional Korean counting age, and life milestones.</p>
           </a>
 
         </div>
@@ -1512,6 +1535,139 @@
         </div>
       </section>
 
+      <!-- View 13: Age Calculator (만 나이 & 한국식 세는나이 & 연 나이) -->
+      <section id="view-age-calc" class="view-section hidden space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <span>🎂</span> <span data-i18n="tool_age_calc">Age Calculator</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1" data-i18n="age_calc_sub">Calculate exact international age (Man-nai), traditional Korean counting age, and life milestones.</p>
+          </div>
+          <div class="px-3 py-1.5 rounded-xl bg-pink-600/20 text-pink-300 border border-pink-500/30 text-xs font-semibold">
+            <span data-i18n="badge_age_system">🇰🇷 Korean & Global Age</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Left Column: Inputs & Educational Guide -->
+          <div class="space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+              <h3 class="font-bold text-sm text-pink-400 flex items-center gap-2" data-i18n="title_age_inputs">
+                <span>⚙️</span> Date Settings
+              </h3>
+              
+              <div class="space-y-3">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="label_birth_date">Date of Birth</label>
+                  <input type="date" id="age-calc-birth" value="1995-05-15" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="label_reference_date">Calculation Reference Date (As of)</label>
+                  <input type="date" id="age-calc-ref" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
+                  <span class="block text-[11px] text-slate-500 mt-1" data-i18n="hint_reference_date">Defaults to today. Change date to calculate age at any past or future date.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Korean Age Guide Notice Card -->
+            <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-5 space-y-3">
+              <h4 class="font-bold text-xs text-slate-200 flex items-center gap-2" data-i18n="title_korean_age_guide">
+                <span>💡</span> Korean Age System Guide
+              </h4>
+              <ul class="text-xs text-slate-400 space-y-2 leading-relaxed">
+                <li class="flex items-start gap-1.5">
+                  <span class="text-indigo-400 font-bold shrink-0">•</span>
+                  <span><strong class="text-slate-200" data-i18n="guide_man_age_title">International Age (만 나이):</strong> <span data-i18n="guide_man_age_desc">Officially unified in Korea on June 28, 2023. Starts at 0, adds 1 on each birthday. Used for all legal, medical, and administrative matters.</span></span>
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-pink-400 font-bold shrink-0">•</span>
+                  <span><strong class="text-slate-200" data-i18n="guide_korean_age_title">Traditional Korean Age (세는나이):</strong> <span data-i18n="guide_korean_age_desc">Starts at 1 at birth, adds 1 every January 1st. Widely used in social hierarchy, friendship, and casual conversations.</span></span>
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-emerald-400 font-bold shrink-0">•</span>
+                  <span><strong class="text-slate-200" data-i18n="guide_year_age_title">Calendar Year Age (연 나이):</strong> <span data-i18n="guide_year_age_desc">Current Year minus Birth Year. Applied to selective Korean laws including the Juvenile Protection Act and Military Service Act.</span></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Right Column: Results & Lifetime Breakdown -->
+          <div class="space-y-6">
+            <!-- 2 Hero Comparison Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- 만 나이 Card -->
+              <div class="p-5 rounded-2xl bg-gradient-to-b from-indigo-950/40 to-slate-900 border-2 border-indigo-500/40 text-center space-y-2 shadow-lg">
+                <div class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20" data-i18n="badge_official_standard">
+                  🏛️ Legal Standard
+                </div>
+                <div class="text-xs font-bold uppercase tracking-wider text-slate-400" data-i18n="label_man_age">
+                  International Age (만 나이)
+                </div>
+                <div id="res-man-age" class="text-3xl font-extrabold text-indigo-400 font-mono tracking-tight">
+                  만 0세
+                </div>
+                <div id="res-man-sub" class="text-xs text-slate-400">
+                  0y 0m 0d
+                </div>
+                <div id="res-bday-status" class="inline-block px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">
+                  -
+                </div>
+              </div>
+
+              <!-- 한국식 일반 나이 Card -->
+              <div class="p-5 rounded-2xl bg-gradient-to-b from-pink-950/40 to-slate-900 border border-pink-500/30 text-center space-y-2 shadow-lg">
+                <div class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-pink-500/10 text-pink-400 border border-pink-500/20" data-i18n="badge_traditional_standard">
+                  🇰🇷 Traditional Korean
+                </div>
+                <div class="text-xs font-bold uppercase tracking-wider text-slate-400" data-i18n="label_korean_age">
+                  Korean Age (세는나이)
+                </div>
+                <div id="res-korean-age" class="text-3xl font-extrabold text-slate-100 font-mono tracking-tight">
+                  0세
+                </div>
+                <div id="res-korean-sub" class="text-xs text-slate-400" data-i18n="korean_age_formula_hint">
+                  Born at 1 yr, +1 every Jan 1st
+                </div>
+                <div id="res-year-age" class="inline-block px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">
+                  Year Age: 0
+                </div>
+              </div>
+            </div>
+
+            <!-- Detailed Lifetime Statistics -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
+              <h3 class="font-bold text-sm text-slate-200 flex items-center gap-2" data-i18n="title_lifetime_stats">
+                <span>📊</span> Lifetime Statistics
+              </h3>
+              <div class="divide-y divide-slate-800 text-xs">
+                <div class="py-2.5 flex justify-between items-center">
+                  <span class="text-slate-400 flex items-center gap-2"><span>🗓️</span> <span data-i18n="label_days_lived">Total Days Lived:</span></span>
+                  <span id="res-days-lived" class="font-bold text-slate-100 font-mono">-</span>
+                </div>
+                <div class="py-2.5 flex justify-between items-center">
+                  <span class="text-slate-400 flex items-center gap-2"><span>🎂</span> <span data-i18n="label_next_birthday">Next Birthday Countdown:</span></span>
+                  <span id="res-next-bday" class="font-bold text-emerald-400 font-mono">-</span>
+                </div>
+                <div class="py-2.5 flex justify-between items-center">
+                  <span class="text-slate-400 flex items-center gap-2"><span>📅</span> <span data-i18n="label_born_day">Day of Week Born:</span></span>
+                  <span id="res-born-day" class="font-medium text-slate-200">-</span>
+                </div>
+                <div class="py-2.5 flex justify-between items-center">
+                  <span class="text-slate-400 flex items-center gap-2"><span>🐾</span> <span data-i18n="label_zodiac_animal">Zodiac Animal (띠):</span></span>
+                  <span id="res-zodiac-animal" class="font-bold text-amber-400">-</span>
+                </div>
+                <div class="py-2.5 flex justify-between items-center">
+                  <span class="text-slate-400 flex items-center gap-2"><span>✨</span> <span data-i18n="label_western_zodiac">Star Sign (별자리):</span></span>
+                  <span id="res-western-zodiac" class="font-bold text-purple-400">-</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Bottom Single Google Ad Banner -->
       <div id="ad-container-bottom" class="w-full overflow-hidden text-center transition-all" style="display: none;">
         <ins class="adsbygoogle"
@@ -1676,7 +1832,33 @@
         label_converted_time: "Converted Target Time:",
         title_live_clocks: "Live Global City Clocks",
         tab_tz_time_only: "🕒 Time Only",
-        tab_tz_datetime: "📅 Date & Time"
+        tab_tz_datetime: "📅 Date & Time",
+        tool_age_calc: "Age Calculator",
+        card_age_calc_desc: "Calculate exact international age (Man-nai), traditional Korean counting age, and life milestones.",
+        age_calc_sub: "Accurate age calculator with Korean legal age (만 나이), traditional counting age, and lifetime statistics.",
+        badge_age_system: "🇰🇷 Korean & Global Age",
+        title_age_inputs: "Date Settings",
+        label_birth_date: "Date of Birth",
+        label_reference_date: "Calculation Reference Date (As of)",
+        hint_reference_date: "Defaults to today. Change date to calculate age at any past or future date.",
+        title_korean_age_guide: "Korean Age System Guide",
+        guide_man_age_title: "International Age (만 나이):",
+        guide_man_age_desc: "Officially unified in Korea on June 28, 2023. Starts at 0, adds 1 on each birthday. Used for all legal, medical, and administrative matters.",
+        guide_korean_age_title: "Traditional Korean Age (세는나이):",
+        guide_korean_age_desc: "Starts at 1 at birth, adds 1 every January 1st. Widely used in social hierarchy, friendship, and casual conversations.",
+        guide_year_age_title: "Calendar Year Age (연 나이):",
+        guide_year_age_desc: "Current Year minus Birth Year. Applied to selective Korean laws including the Juvenile Protection Act and Military Service Act.",
+        badge_official_standard: "🏛️ Legal Standard",
+        label_man_age: "International Age (만 나이)",
+        badge_traditional_standard: "🇰🇷 Traditional Korean",
+        label_korean_age: "Korean Age (세는나이)",
+        korean_age_formula_hint: "Born at 1 yr, +1 every Jan 1st",
+        title_lifetime_stats: "Lifetime Statistics",
+        label_days_lived: "Total Days Lived:",
+        label_next_birthday: "Next Birthday Countdown:",
+        label_born_day: "Day of Week Born:",
+        label_zodiac_animal: "Zodiac Animal (띠):",
+        label_western_zodiac: "Star Sign (별자리):"
       },
       ko: {
         tagline: "100% 클라이언트 사이드 실생활 도구 모음",
@@ -1685,7 +1867,7 @@
         menu_title: "도구 목록",
         sidebar_heading: "실생활 도구 바로가기",
         footer_privacy: "서버 전송 없이 브라우저 내에서만 안전하게 동작합니다.",
-        hero_title: "실생활에 꼭 필요한 12가지 스마트 도구 🛠️",
+        hero_title: "실생활에 꼭 필요한 13가지 스마트 도구 🛠️",
         hero_desc: "별도의 회원가입이나 앱 설치 없이 브라우저에서 바로 사용하세요. 개인정보나 작업한 파일은 서버로 절대 전송되지 않습니다.",
         tool_qr_gen: "QR 코드 생성기",
         tool_qr_scan: "QR 코드 스캐너",
@@ -1697,6 +1879,32 @@
         tool_timer: "카운트다운 / 타이머",
         tool_date_calc: "날짜 계산기",
         tool_unit_conv: "단위 변환기",
+        tool_age_calc: "나이 계산기 (만나이 / 세는나이)",
+        card_age_calc_desc: "생년월일을 입력하면 공식 표준 만 나이와 한국식 세는나이(일반 나이), 연 나이를 정확하게 비교 계산합니다.",
+        age_calc_sub: "공식 법적 표준 '만 나이'와 한국식 '세는나이', 살아온 날 수와 다음 생일 디데이를 한눈에 확인하세요.",
+        badge_age_system: "🇰🇷 만나이 & 한국식 세는나이",
+        title_age_inputs: "생년월일 및 기준일 설정",
+        label_birth_date: "생년월일 입력",
+        label_reference_date: "계산 기준일 (현재 또는 특정일)",
+        hint_reference_date: "기본값은 오늘 날짜입니다. 과거 또는 미래 특정 시점의 나이도 계산할 수 있습니다.",
+        title_korean_age_guide: "대한민국 나이 체계 완벽 가이드",
+        guide_man_age_title: "만 나이 (공식 법적 표준):",
+        guide_man_age_desc: "2023년 6월 28일 행정·사법상 전면 통일. 출생 시 0세로 시작하여 매 생일마다 1세 증가. 공문서, 병원, 법률에 적용.",
+        guide_korean_age_title: "세는나이 (한국식 일반 나이):",
+        guide_korean_age_desc: "출생 시 1세로 시작하여 매년 1월 1일마다 1세 증가. 일상 대화, 서열, 친구 관계 형성 시 여전히 널리 사용.",
+        guide_year_age_title: "연 나이 (제도적 적용):",
+        guide_year_age_desc: "현재 연도에서 출생 연도를 뺀 나이. 청소년보호법(술/담배 구매), 병역법 등 일부 법률에 적용.",
+        badge_official_standard: "🏛️ 공식 법적 기준",
+        label_man_age: "공식 표준 만 나이",
+        badge_traditional_standard: "🇰🇷 한국식 세는나이",
+        label_korean_age: "한국식 일반 나이 (세는나이)",
+        korean_age_formula_hint: "태어날 때 1세, 매년 1월 1일에 +1살",
+        title_lifetime_stats: "나의 생애 통계 & 기념일",
+        label_days_lived: "살아온 총 일수:",
+        label_next_birthday: "다음 생일까지 남은 날 (D-Day):",
+        label_born_day: "태어난 요일:",
+        label_zodiac_animal: "십이지 띠:",
+        label_western_zodiac: "별자리:",
         card_qr_gen_desc: "텍스트, URL, Wi-Fi 접속 정보, 명함(vCard)을 간편하게 QR 코드로 만들고 저장합니다.",
         card_qr_scan_desc: "스마트폰 웹캠 실시간 카메라 스캔 또는 QR 이미지 파일 업로드로 내용을 확인합니다.",
         card_img_comp_desc: "화질 손상을 최소화하여 이미지 용량을 수십 % 압축합니다. ZIP 다운로드 지원.",
@@ -1850,10 +2058,11 @@
         btnEn.className = 'px-2.5 py-1 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white';
       }
 
-      // Re-trigger date calculator & unit converter dynamic text update
+      // Re-trigger date calculator, age calculator & unit converter dynamic text update
       if (window.calcDateDiff) window.calcDateDiff();
       if (window.calcDateOffset) window.calcDateOffset();
       if (window.renderUnitGrid) window.renderUnitGrid();
+      if (window.calculateAge) window.calculateAge();
 
       const currentHash = window.location.hash || '#/';
       const viewName = currentHash.replace('#/', '') || 'home';
@@ -1886,8 +2095,8 @@
     const seoConfig = {
       en: {
         'view-home': {
-          title: 'LifeTools | 12 Free 100% Client-Side Web Utilities',
-          desc: '100% Private, offline-ready client-side daily tools: QR Code, Image Compressor, PDF Merger, Currency Converter, World Clock, Unit Converter & more. Zero server uploads.'
+          title: 'LifeTools | 13 Free 100% Client-Side Web Utilities',
+          desc: '100% Private, offline-ready client-side daily tools: Age Calculator, QR Code, Image Compressor, PDF Merger, Currency Converter, World Clock, Unit Converter & more. Zero server uploads.'
         },
         'view-qr-generator': {
           title: 'Free QR Code Generator with Print & SVG Download | LifeTools',
@@ -1936,12 +2145,16 @@
         'view-world-clock': {
           title: 'World Clock & Timezone Converter (Berlin ➔ Seoul) | LifeTools',
           desc: 'Auto-detect local timezone and convert times across major global cities (Seoul, Berlin, New York, London, Tokyo, Shanghai).'
+        },
+        'view-age-calc': {
+          title: 'Age Calculator - International Age (만 나이) & Korean Age | LifeTools',
+          desc: 'Calculate exact Korean legal age (만 나이), traditional counting age (세는나이), year age, and total lifetime days lived.'
         }
       },
       ko: {
         'view-home': {
-          title: 'LifeTools | 12가지 무료 실시간 웹 도구 모음',
-          desc: '서버 업로드 없는 100% 개인정보 보호 웹 도구: QR 생성기/스캐너, 이미지 압축, PDF 병합, 실시간 환율, 세계 시간, 단위 변환기.'
+          title: 'LifeTools | 13가지 무료 실시간 웹 도구 모음',
+          desc: '서버 업로드 없는 100% 개인정보 보호 웹 도구: 나이 계산기(만나이/세는나이), QR 생성기/스캐너, 이미지 압축, PDF 병합, 실시간 환율, 세계 시간, 단위 변환기.'
         },
         'view-qr-generator': {
           title: '무료 QR 코드 생성기 (인쇄 및 SVG/PNG 다운로드) | LifeTools',
@@ -1990,6 +2203,10 @@
         'view-world-clock': {
           title: '세계 시간 & 타임존 변환기 (베를린 ➔ 서울 시차 계산) | LifeTools',
           desc: '현재 사용자 위치의 타임존을 자동 감지하고 서울, 베를린, 뉴욕, 런던, 도쿄 등 세계 주요 도시의 시차를 계산합니다.'
+        },
+        'view-age-calc': {
+          title: '나이 계산기 - 만나이 & 한국식 세는나이 계산기 | LifeTools',
+          desc: '출생일을 입력하면 법적 기준 만 나이, 한국식 세는나이(일반 나이), 연 나이 및 살아온 날 수를 정확히 계산합니다.'
         }
       }
     };
@@ -2048,6 +2265,8 @@
         window.calculateCurrency();
       } else if (targetViewId === 'view-world-clock' && window.convertTimezone) {
         window.convertTimezone();
+      } else if (targetViewId === 'view-age-calc' && window.calculateAge) {
+        window.calculateAge();
       }
 
       const activeNav = document.querySelector(`.nav-item[data-path="${hash}"]`);
@@ -2165,6 +2384,7 @@
       initUnitConverter();
       initCurrencyConverter();
       initWorldClock();
+      initAgeCalculator();
       handleRoute();
     });
 
@@ -3746,6 +3966,215 @@
 
       setInterval(renderLiveClocks, 1000);
       renderLiveClocks();
+    }
+
+
+    /* ==========================================================================
+       13. AGE CALCULATOR LOGIC (만 나이 & 한국식 세는나이 & 연 나이)
+       ========================================================================== */
+    function initAgeCalculator() {
+      const birthInput = document.getElementById('age-calc-birth');
+      const refInput = document.getElementById('age-calc-ref');
+
+      const today = new Date().toISOString().split('T')[0];
+      if (refInput && !refInput.value) {
+        refInput.value = today;
+      }
+      if (birthInput && !birthInput.value) {
+        birthInput.value = '1995-05-15';
+      }
+
+      function getZodiacAnimal(year) {
+        const animalsEn = ['Rat 🐭', 'Ox 🐂', 'Tiger 🐅', 'Rabbit 🐇', 'Dragon 🐉', 'Snake 🐍', 'Horse 🐎', 'Goat 🐐', 'Monkey 🐒', 'Rooster 🐓', 'Dog 🐕', 'Pig 🐖'];
+        const animalsKo = ['자(子) - 쥐띠 🐭', '축(丑) - 소띠 🐂', '인(寅) - 호랑이띠 🐅', '묘(卯) - 토끼띠 🐇', '진(辰) - 용띠 🐉', '사(巳) - 뱀띠 🐍', '오(午) - 말띠 🐎', '미(未) - 양띠 🐐', '신(申) - 원숭이띠 🐒', '유(酉) - 닭띠 🐓', '술(戌) - 개띠 🐕', '해(亥) - 돼지띠 🐖'];
+        const index = ((year - 4) % 12 + 12) % 12;
+        return currentLang === 'ko' ? animalsKo[index] : animalsEn[index];
+      }
+
+      function getWesternZodiac(month, day) {
+        const signs = [
+          { m: 1, d: 20, en: 'Aquarius ♒', ko: '물병자리 ♒' },
+          { m: 2, d: 19, en: 'Pisces ♓', ko: '물고기자리 ♓' },
+          { m: 3, d: 21, en: 'Aries ♈', ko: '양자리 ♈' },
+          { m: 4, d: 20, en: 'Taurus ♉', ko: '황소자리 ♉' },
+          { m: 5, d: 21, en: 'Gemini ♊', ko: '쌍둥이자리 ♊' },
+          { m: 6, d: 22, en: 'Cancer ♋', ko: '게자리 ♋' },
+          { m: 7, d: 23, en: 'Leo ♌', ko: '사자자리 ♌' },
+          { m: 8, d: 23, en: 'Virgo ♍', ko: '처녀자리 ♍' },
+          { m: 9, d: 23, en: 'Libra ♎', ko: '천칭자리 ♎' },
+          { m: 10, d: 24, en: 'Scorpio ♏', ko: '전갈자리 ♏' },
+          { m: 11, d: 23, en: 'Sagittarius ♐', ko: '사수자리 ♐' },
+          { m: 12, d: 22, en: 'Capricorn ♑', ko: '염소자리 ♑' }
+        ];
+
+        let chosen = signs[11];
+        for (let i = 0; i < signs.length; i++) {
+          if (month === signs[i].m && day < signs[i].d) {
+            chosen = signs[(i - 1 + 12) % 12];
+            break;
+          } else if (month === signs[i].m && day >= signs[i].d) {
+            chosen = signs[i];
+            break;
+          }
+        }
+        return currentLang === 'ko' ? chosen.ko : chosen.en;
+      }
+
+      function calculateAge() {
+        if (!birthInput || !refInput) return;
+        const bVal = birthInput.value;
+        const rVal = refInput.value;
+        if (!bVal || !rVal) return;
+
+        const [by, bm, bd] = bVal.split('-').map(Number);
+        const [ry, rm, rd] = rVal.split('-').map(Number);
+
+        const birthDate = new Date(by, bm - 1, bd);
+        const refDate = new Date(ry, rm - 1, rd);
+
+        if (isNaN(birthDate.getTime()) || isNaN(refDate.getTime())) return;
+
+        // 1. 만 나이 (International Age)
+        let manAge = ry - by;
+        let hasBirthdayPassed = (rm > bm) || (rm === bm && rd >= bd);
+        let isBirthdayToday = (rm === bm && rd === bd);
+
+        if (!hasBirthdayPassed) {
+          manAge--;
+        }
+
+        // Years, Months, Days breakdown for Man Age
+        let calcYears = ry - by;
+        let calcMonths = rm - bm;
+        let calcDays = rd - bd;
+
+        if (calcDays < 0) {
+          calcMonths--;
+          // Days in previous month of refDate
+          const prevMonthLastDay = new Date(ry, rm - 1, 0).getDate();
+          calcDays += prevMonthLastDay;
+        }
+
+        if (calcMonths < 0) {
+          calcYears--;
+          calcMonths += 12;
+        }
+
+        // 2. 한국식 일반 나이 (세는나이 - Traditional Korean Age)
+        const koreanAge = (ry - by) + 1;
+
+        // 3. 연 나이 (Year Age)
+        const yearAge = ry - by;
+
+        // 4. 살아온 총 일수 (Total Days Lived)
+        const diffMs = refDate.getTime() - birthDate.getTime();
+        const totalDaysLived = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+        // 5. 다음 생일까지 남은 날짜 (D-Day Countdown to Next Birthday)
+        let nextBday = new Date(ry, bm - 1, bd);
+        if (nextBday < refDate) {
+          nextBday = new Date(ry + 1, bm - 1, bd);
+        }
+        const bdayDiffMs = nextBday.getTime() - refDate.getTime();
+        const nextBdayDays = Math.round(bdayDiffMs / (1000 * 60 * 60 * 24));
+
+        // 6. 태어난 요일 (Day of Week Born)
+        const weekDaysKo = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+        const weekDaysEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const bornDayStr = currentLang === 'ko' ? weekDaysKo[birthDate.getDay()] : weekDaysEn[birthDate.getDay()];
+
+        // 7. 띠 및 별자리 (Zodiac Animal & Western Star Sign)
+        const zodiacAnimal = getZodiacAnimal(by);
+        const westernZodiac = getWesternZodiac(bm, bd);
+
+        // Update DOM elements
+        const resManAgeElem = document.getElementById('res-man-age');
+        const resManSubElem = document.getElementById('res-man-sub');
+        const resBdayStatusElem = document.getElementById('res-bday-status');
+        const resKoreanAgeElem = document.getElementById('res-korean-age');
+        const resKoreanSubElem = document.getElementById('res-korean-sub');
+        const resYearAgeElem = document.getElementById('res-year-age');
+        const resDaysLivedElem = document.getElementById('res-days-lived');
+        const resNextBdayElem = document.getElementById('res-next-bday');
+        const resBornDayElem = document.getElementById('res-born-day');
+        const resZodiacElem = document.getElementById('res-zodiac-animal');
+        const resWesternElem = document.getElementById('res-western-zodiac');
+
+        if (resManAgeElem) {
+          resManAgeElem.textContent = currentLang === 'ko' ? `만 ${manAge}세` : `${manAge} years old`;
+        }
+
+        if (resManSubElem) {
+          if (currentLang === 'ko') {
+            resManSubElem.textContent = `${calcYears}년 ${calcMonths}개월 ${calcDays}일째`;
+          } else {
+            resManSubElem.textContent = `${calcYears}y ${calcMonths}m ${calcDays}d`;
+          }
+        }
+
+        if (resBdayStatusElem) {
+          if (isBirthdayToday) {
+            resBdayStatusElem.textContent = currentLang === 'ko' ? '🎉 오늘이 바로 생일입니다!' : '🎉 Today is your Birthday!';
+            resBdayStatusElem.className = 'inline-block px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
+          } else if (hasBirthdayPassed) {
+            resBdayStatusElem.textContent = currentLang === 'ko' ? '🎂 올해 생일 지남' : '🎂 Birthday passed this year';
+            resBdayStatusElem.className = 'inline-block px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300';
+          } else {
+            resBdayStatusElem.textContent = currentLang === 'ko' ? '⏳ 올해 생일 전' : '⏳ Birthday yet to come this year';
+            resBdayStatusElem.className = 'inline-block px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-400 border border-amber-500/30';
+          }
+        }
+
+        if (resKoreanAgeElem) {
+          resKoreanAgeElem.textContent = currentLang === 'ko' ? `${koreanAge}세` : `${koreanAge} yrs (Korean)`;
+        }
+
+        if (resKoreanSubElem) {
+          resKoreanSubElem.textContent = currentLang === 'ko' ? '태어날 때 1세, 매년 1월 1일에 +1살' : 'Born at 1 yr, +1 every Jan 1st';
+        }
+
+        if (resYearAgeElem) {
+          resYearAgeElem.textContent = currentLang === 'ko' ? `연 나이: ${yearAge}세` : `Year Age: ${yearAge}`;
+        }
+
+        if (resDaysLivedElem) {
+          const formattedDays = totalDaysLived.toLocaleString();
+          resDaysLivedElem.textContent = currentLang === 'ko' ? `${formattedDays}일째` : `${formattedDays} days`;
+        }
+
+        if (resNextBdayElem) {
+          if (nextBdayDays === 0) {
+            resNextBdayElem.textContent = currentLang === 'ko' ? 'D-Day (오늘 생일! 🎂)' : 'D-Day (Today! 🎂)';
+          } else {
+            resNextBdayElem.textContent = `D-${nextBdayDays} ${currentLang === 'ko' ? '일 남음' : 'days left'}`;
+          }
+        }
+
+        if (resBornDayElem) {
+          resBornDayElem.textContent = bornDayStr;
+        }
+
+        if (resZodiacElem) {
+          resZodiacElem.textContent = zodiacAnimal;
+        }
+
+        if (resWesternElem) {
+          resWesternElem.textContent = westernZodiac;
+        }
+      }
+
+      window.calculateAge = calculateAge;
+
+      if (birthInput) {
+        birthInput.addEventListener('change', calculateAge);
+        birthInput.addEventListener('input', calculateAge);
+      }
+      if (refInput) {
+        refInput.addEventListener('change', calculateAge);
+        refInput.addEventListener('input', calculateAge);
+      }
+
+      calculateAge();
     }
   </script>
 </body>
