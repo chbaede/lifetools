@@ -2106,6 +2106,16 @@
       currentLang = lang;
       localStorage.setItem('lifetools_lang', lang);
 
+      // Force HTML and form controls to follow Korean/US locale rather than German/host browser defaults
+      const localeCode = lang === 'ko' ? 'ko-KR' : 'en-US';
+      document.documentElement.lang = lang;
+      document.documentElement.setAttribute('xml:lang', lang);
+
+      // Explicitly set lang and date formatting attributes on all date/time and number inputs
+      document.querySelectorAll('input[type="date"], input[type="datetime-local"], input[type="time"], input[type="number"]').forEach(input => {
+        input.setAttribute('lang', localeCode);
+      });
+
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[lang] && translations[lang][key]) {
@@ -2128,6 +2138,8 @@
       if (window.calcDateOffset) window.calcDateOffset();
       if (window.renderUnitGrid) window.renderUnitGrid();
       if (window.calculateAge) window.calculateAge();
+      if (window.calculateCurrency) window.calculateCurrency();
+      if (window.convertTimezone) window.convertTimezone();
 
       const currentHash = window.location.hash || '#/';
       const viewName = currentHash.replace('#/', '') || 'home';
@@ -2436,7 +2448,6 @@
     window.addEventListener('DOMContentLoaded', () => {
       initThemeManager();
       initAdWatcher();
-      setLanguage(currentLang);
       initQRGenerator();
       initQRScanner();
       initImageCompressor();
@@ -2450,6 +2461,7 @@
       initCurrencyConverter();
       initWorldClock();
       initAgeCalculator();
+      setLanguage(currentLang);
       handleRoute();
     });
 
@@ -3749,8 +3761,9 @@
         const singleRate = rateTo / rateFrom;
 
         const sym = symbols[to] || '';
-        resultVal.textContent = `${sym}${converted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-        rateRatio.textContent = `1 ${from} = ${singleRate.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 })} ${to}`;
+        const localeCode = currentLang === 'ko' ? 'ko-KR' : 'en-US';
+        resultVal.textContent = `${sym}${converted.toLocaleString(localeCode, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        rateRatio.textContent = `1 ${from} = ${singleRate.toLocaleString(localeCode, { minimumFractionDigits: 2, maximumFractionDigits: 4 })} ${to}`;
       }
 
       document.querySelectorAll('.curr-quick-from').forEach(btn => {
