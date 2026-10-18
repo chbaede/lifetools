@@ -190,6 +190,24 @@
     html:not(.dark) header .text-white {
       color: #0f172a !important;
     }
+    html:not(.dark) header a[href="#/"] {
+      background-color: #f1f5f9 !important;
+      border-color: #cbd5e1 !important;
+      color: #1e293b !important;
+    }
+    html:not(.dark) header a[href="#/"]:hover {
+      background-color: #e2e8f0 !important;
+      color: #0f172a !important;
+    }
+    html:not(.dark) #header-main-hub-btn {
+      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+      color: #ffffff !important;
+      border-color: #4338ca !important;
+      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25) !important;
+    }
+    html:not(.dark) #header-main-hub-btn span {
+      color: #ffffff !important;
+    }
     html:not(.dark) aside#sidebar-drawer {
       background-color: #ffffff !important;
       border-color: #e2e8f0 !important;
@@ -219,6 +237,7 @@
 
     /* Inner Sub-Containers & Result Boxes */
     html:not(.dark) .bg-slate-950,
+    html:not(.dark) .bg-slate-900\/70,
     html:not(.dark) #tz-result-box,
     html:not(.dark) #date-diff-result,
     html:not(.dark) #date-offset-result,
@@ -229,6 +248,42 @@
       background-color: #f8fafc !important;
       border-color: #e2e8f0 !important;
       color: #0f172a !important;
+    }
+
+    /* Age Calculator & Special Cards in Light Mode */
+    html:not(.dark) .from-indigo-950\/40,
+    html:not(.dark) .from-pink-950\/40,
+    html:not(.dark) .from-indigo-900\/40 {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+      border-color: #e2e8f0 !important;
+      box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.04) !important;
+    }
+    html:not(.dark) .from-indigo-950\/40 {
+      border-color: #c7d2fe !important;
+      background: linear-gradient(180deg, #eef2ff 0%, #ffffff 100%) !important;
+    }
+    html:not(.dark) .from-pink-950\/40 {
+      border-color: #fbcfe8 !important;
+      background: linear-gradient(180deg, #fdf2f8 0%, #ffffff 100%) !important;
+    }
+
+    /* Sidebar Footer Main Hub Link in Light Mode */
+    html:not(.dark) #sidebar-main-hub-link,
+    html:not(.dark) a[href="https://main.yocto.co.kr/"].group {
+      background-color: #f1f5f9 !important;
+      border-color: #cbd5e1 !important;
+      color: #4338ca !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    }
+    html:not(.dark) #sidebar-main-hub-link:hover,
+    html:not(.dark) a[href="https://main.yocto.co.kr/"].group:hover {
+      background-color: #e0e7ff !important;
+      border-color: #818cf8 !important;
+      color: #312e81 !important;
+    }
+    html:not(.dark) #sidebar-main-hub-link span,
+    html:not(.dark) a[href="https://main.yocto.co.kr/"].group span {
+      color: #4338ca !important;
     }
 
     /* File Dropzone Boxes (Upload Boxes) */
@@ -308,9 +363,19 @@
     html:not(.dark) .text-indigo-300 {
       color: #4f46e5 !important;
     }
+    html:not(.dark) .text-pink-400,
+    html:not(.dark) .text-pink-300 {
+      color: #db2777 !important;
+    }
+    html:not(.dark) .text-amber-400 {
+      color: #d97706 !important;
+    }
     html:not(.dark) .border-slate-800,
     html:not(.dark) .border-slate-700 {
       border-color: #e2e8f0 !important;
+    }
+    html:not(.dark) .divide-slate-800 > :not([hidden]) ~ :not([hidden]) {
+      border-color: #f1f5f9 !important;
     }
     html:not(.dark) #theme-toggle-btn {
       background-color: #f1f5f9 !important;
@@ -378,7 +443,7 @@
         </div>
 
         <!-- Main Hub Link -->
-        <a href="https://main.yocto.co.kr/" target="_blank" rel="noopener" class="text-xs font-semibold px-3 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-md shadow-indigo-500/20 border border-indigo-400/30 transition flex items-center gap-1.5" title="Go to Main Hub (main.yocto.co.kr)">
+        <a id="header-main-hub-btn" href="https://main.yocto.co.kr/" target="_blank" rel="noopener" class="text-xs font-semibold px-3 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-md shadow-indigo-500/20 border border-indigo-400/30 transition flex items-center gap-1.5" title="Go to Main Hub (main.yocto.co.kr)">
           <span>🌐</span>
           <span class="hidden sm:inline" data-i18n="nav_main_hub">Main Hub</span>
         </a>
@@ -476,7 +541,7 @@
       </nav>
 
       <div class="p-4 border-t border-slate-800 text-xs space-y-3">
-        <a href="https://main.yocto.co.kr/" target="_blank" rel="noopener" class="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-indigo-300 hover:text-white border border-indigo-500/20 transition group">
+        <a id="sidebar-main-hub-link" href="https://main.yocto.co.kr/" target="_blank" rel="noopener" class="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-indigo-300 hover:text-white border border-indigo-500/20 transition group">
           <div class="flex items-center gap-2">
             <span>🌐</span>
             <span class="font-bold" data-i18n="nav_main_hub">Main Hub</span>
