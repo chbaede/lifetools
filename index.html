@@ -352,8 +352,16 @@
     html:not(.dark) .text-cyan-300 {
       color: #0284c7 !important;
     }
-    html:not(.dark) .text-teal-400 {
+    html:not(.dark) .text-teal-400,
+    html:not(.dark) .text-teal-300 {
       color: #0d9488 !important;
+    }
+    html:not(.dark) button[id^="btn-today-"] {
+      background-color: #f1f5f9 !important;
+      border-color: #cbd5e1 !important;
+    }
+    html:not(.dark) button[id^="btn-today-"]:hover {
+      background-color: #e2e8f0 !important;
     }
     html:not(.dark) .text-violet-400,
     html:not(.dark) .text-violet-300 {
@@ -1308,11 +1316,17 @@
             </h3>
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="label_start_date">Start Date</label>
+                <div class="flex items-center justify-between mb-1">
+                  <label class="block text-xs font-semibold text-slate-400" data-i18n="label_start_date">Start Date</label>
+                  <button type="button" id="btn-today-diff-start" class="text-[10px] px-1.5 py-0.5 rounded bg-teal-600/20 hover:bg-teal-600/40 text-teal-300 font-semibold border border-teal-500/30 transition" data-i18n="btn_set_today">Today</button>
+                </div>
                 <input type="date" id="date-diff-start" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="label_end_date">End Date</label>
+                <div class="flex items-center justify-between mb-1">
+                  <label class="block text-xs font-semibold text-slate-400" data-i18n="label_end_date">End Date</label>
+                  <button type="button" id="btn-today-diff-end" class="text-[10px] px-1.5 py-0.5 rounded bg-teal-600/20 hover:bg-teal-600/40 text-teal-300 font-semibold border border-teal-500/30 transition" data-i18n="btn_set_today">Today</button>
+                </div>
                 <input type="date" id="date-diff-end" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
               </div>
             </div>
@@ -1328,7 +1342,10 @@
               ➕ Add / Subtract Days
             </h3>
             <div>
-              <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="label_base_date">Base Date</label>
+              <div class="flex items-center justify-between mb-1">
+                <label class="block text-xs font-semibold text-slate-400" data-i18n="label_base_date">Base Date</label>
+                <button type="button" id="btn-today-offset-base" class="text-[10px] px-1.5 py-0.5 rounded bg-teal-600/20 hover:bg-teal-600/40 text-teal-300 font-semibold border border-teal-500/30 transition" data-i18n="btn_set_today">Today</button>
+              </div>
               <input type="date" id="date-offset-base" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
             </div>
             <div class="grid grid-cols-2 gap-3">
@@ -1629,7 +1646,10 @@
                 </div>
 
                 <div>
-                  <label class="block text-xs font-semibold text-slate-400 mb-1" data-i18n="label_reference_date">Calculation Reference Date (As of)</label>
+                  <div class="flex items-center justify-between mb-1">
+                    <label class="block text-xs font-semibold text-slate-400" data-i18n="label_reference_date">Calculation Reference Date (As of)</label>
+                    <button type="button" id="btn-today-age-ref" class="text-[10px] px-1.5 py-0.5 rounded bg-pink-600/20 hover:bg-pink-600/40 text-pink-300 font-semibold border border-pink-500/30 transition" data-i18n="btn_set_today">Today</button>
+                  </div>
                   <input type="date" id="age-calc-ref" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
                   <span class="block text-[11px] text-slate-500 mt-1" data-i18n="hint_reference_date">Defaults to today. Change date to calculate age at any past or future date.</span>
                 </div>
@@ -1866,6 +1886,7 @@
         title_date_diff: "📏 Date Interval (Days & Working Days)",
         label_start_date: "Start Date",
         label_end_date: "End Date",
+        btn_set_today: "Today",
         label_total_interval: "Total Interval:",
         label_work_days: "Working Days (Excl. Weekends):",
         title_date_offset: "➕ Add / Subtract Days",
@@ -2062,6 +2083,7 @@
         title_date_diff: "📏 날짜 간격 계산 (일수 / 평일)",
         label_start_date: "시작일",
         label_end_date: "종료일",
+        btn_set_today: "오늘",
         label_total_interval: "총 간격:",
         label_work_days: "주말 제외 평일:",
         title_date_offset: "➕ 날짜 더하기 / 빼기",
@@ -3543,9 +3565,30 @@
         daysInput.addEventListener('input', calcDateOffset);
       }
 
-      if (calcBtn) {
-        calcBtn.addEventListener('click', (e) => {
-          if (e) e.preventDefault();
+      const btnTodayStart = document.getElementById('btn-today-diff-start');
+      const btnTodayEnd = document.getElementById('btn-today-diff-end');
+      const btnTodayBase = document.getElementById('btn-today-offset-base');
+
+      if (btnTodayStart) {
+        btnTodayStart.addEventListener('click', () => {
+          const nowStr = new Date().toISOString().split('T')[0];
+          startInput.value = nowStr;
+          calcDateDiff();
+        });
+      }
+
+      if (btnTodayEnd) {
+        btnTodayEnd.addEventListener('click', () => {
+          const nowStr = new Date().toISOString().split('T')[0];
+          endInput.value = nowStr;
+          calcDateDiff();
+        });
+      }
+
+      if (btnTodayBase) {
+        btnTodayBase.addEventListener('click', () => {
+          const nowStr = new Date().toISOString().split('T')[0];
+          baseInput.value = nowStr;
           calcDateOffset();
         });
       }
@@ -4250,6 +4293,15 @@
       if (refInput) {
         refInput.addEventListener('change', calculateAge);
         refInput.addEventListener('input', calculateAge);
+      }
+
+      const btnTodayAgeRef = document.getElementById('btn-today-age-ref');
+      if (btnTodayAgeRef) {
+        btnTodayAgeRef.addEventListener('click', () => {
+          const nowStr = new Date().toISOString().split('T')[0];
+          refInput.value = nowStr;
+          calculateAge();
+        });
       }
 
       calculateAge();
